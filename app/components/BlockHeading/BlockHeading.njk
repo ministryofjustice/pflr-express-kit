@@ -1,0 +1,14 @@
+{% macro BlockHeading(name, heading='', size='medium') -%}
+{% set sizes = {
+  'xxlarge': 'h1',
+  'xlarge': 'h1',
+  'large': 'h2',
+  'medium': 'h3',
+  'small': 'h4'
+} %}
+{% set heading = getFormattedProp(name, 'heading', { value: heading }) %}
+{% if heading %}
+{% set size = getBlockProp(name, 'size', { value: size, defaultValue: 'medium' } ) %}
+  <{{ sizes[size] }} class="gv-u-heading-{{ size }} heading-{{ size }}">{{ heading | safe }}</{{ sizes[size] }}>
+{% endif %}
+{%- endmacro %}

@@ -1,0 +1,63 @@
+{% extends "templates/base/base.html" %}
+{% block Xcontent_class %}multi-page{% endblock %}
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="/public/stylesheets/application.css">
+<style type="text/css">
+.check-your-answers caption {
+  text-align: left;
+  margin-top: 1em;
+}
+.previous-question-body {
+  white-space: nowrap;
+  width: 40%;
+}
+table + form {
+  margin-top: 2em;
+}
+table + form p {
+  vertical-align: middle;
+}
+table + form .button {
+  vertical-align: baseline;
+  margin-right: 1em;
+}
+</style>
+{% endblock %}
+{% block grid_content %}
+<h1 class="heading-large">Thank you for telling us about your situation</h1>
+<p>Check your answers below before viewing your personalised action plan.</p>
+
+<table class="check-your-answers">
+<caption class="heading-medium">Your answers</caption>
+<tbody>
+
+{% for step in wizard.stepsFlat %}
+{% set stepRoute = routesFlattened[step] %}
+{% if not loop.last %}
+  {% for el in stepRoute.blocks %}
+{% if checkNoDependency(el) %}
+  {% set label = getFormattedProp(el, 'label') %}
+  {% set value = getDisplayValue(el, '<br>') %}
+              <tr class="section">
+  <td class="previous-question-title">{{ label | safe }}</td>
+    <td class="previous-question-body">
+    {{ value | safe }}</td>
+
+  <td class="change-answer">
+    <a href="{{ getRouteUrl(step, null, {edit:true}) }}">
+      Change<span class="visuallyhidden"> answer to “{{ label | safe }}”</span>
+</a>  </td>
+</tr>
+{% endif %}
+  {% endfor %}
+  {% endif %}
+{% endfor %}
+
+          </tbody>
+        </table>
+
+  <form method="post">
+  <p><button class="button">View your action plan</button> or <a class="start-again" href="{{ getRouteUrl(route.wizard) }}">Start again</a></p>
+  </form>
+{% endblock %}

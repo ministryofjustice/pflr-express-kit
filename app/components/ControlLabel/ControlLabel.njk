@@ -1,0 +1,19 @@
+{% from '../ControlError/ControlError.njk' import ControlError with context %}
+{% macro ControlLabel(name, label='', sublabel='', hint='', optional='', error='') -%}
+{% set label = getFormattedProp(name, 'label', name, { value: label }) %}
+{% set sublabel = getFormattedProp(name, 'sublabel', { value: sublabel }) %}
+{% set optional = getBlockProp(name, 'optional', { value: optional }) %}
+{% set hint = getFormattedProp(name, 'hint', { value: hint }) %}
+  <label xclass="form-label-bold" for="{{ name }}">
+    <span class="form-label-bold">{{ label | safe }}{% if optional %} (optional){% endif %}</span>
+      {% if sublabel %}
+      <span class="form-sublabel">{{ sublabel | safe }}</span>
+      {% endif %}
+    {% if hint %}
+      <span class="form-hint">
+        {{ hint | safe }}
+      </span>
+    {% endif %}
+    {{ ControlError(name, error) }}
+  </label>
+{%- endmacro %}

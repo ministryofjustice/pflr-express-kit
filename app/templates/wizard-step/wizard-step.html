@@ -1,0 +1,7 @@
+{% extends "templates/base/base.html" %}
+
+{% block content_actions %}
+<div class="action-buttons">
+  <p><button class="button next validation-submit" type="submit">{{ Block.String('string:continue-button') }}</button>{% if app.wizard.steps.length %} {{ getString('string:or') }} <button class="link-skip">{{ Block.String('string:skip-button') }}</button>{% endif %}</p>
+</div>
+{% endblock %}

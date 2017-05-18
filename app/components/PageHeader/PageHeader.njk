@@ -1,0 +1,8 @@
+{% from '../BlockHeading/BlockHeading.njk' import BlockHeading with context %}
+{% from '../BlockLede/BlockLede.njk' import BlockLede with context %}
+{% macro PageHeader(name, heading='', heading_size='', lede='', start_page='') %}
+{% set defaultHeadingSize = 'xlarge' if start_page else 'large' %}
+{% set heading_size = getBlockProp(name, 'heading_size', defaultHeadingSize, { value: heading_size }) %}
+  {{ BlockHeading(name, size=heading_size) }}
+  {{ BlockLede(name) }}
+{% endmacro %}

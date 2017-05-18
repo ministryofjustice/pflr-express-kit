@@ -1,0 +1,89 @@
+{% extends "templates/govuk_template.njk" %}
+
+{% import "components/Utils/Utils.njk" as Utils with context %}
+
+
+{{ Utils.registerBlocks([
+  "components/BlockHeading/BlockHeading.njk",
+  "components/BlockLede/BlockLede.njk",
+  "components/Body/Body.njk",
+  "components/CheckboxGroup/CheckboxGroup.njk",
+  "components/Control/Control.njk",
+  "components/ControlLabel/ControlLabel.njk",
+  "components/ControlError/ControlError.njk",
+  "components/DependsAria/DependsAria.njk",
+  "components/DependsHidden/DependsHidden.njk",
+  "components/Fieldset/Fieldset.njk",
+  "components/File/File.njk",
+  "components/FormGroup/FormGroup.njk",
+  "components/Group/Group.njk",
+  "components/Input/Input.njk",
+  "components/Inset/Inset.njk",
+  "components/Notice/Notice.njk",
+  "components/Number/Number.njk",
+  "components/OptionLabel/OptionLabel.njk",
+  "components/PageHeader/PageHeader.njk",
+  "components/Password/Password.njk",
+  "components/RadioGroup/RadioGroup.njk",
+  "components/Raw/Raw.njk",
+  "components/Reveal/Reveal.njk",
+  "components/Section/Section.njk",
+  "components/String/String.njk",
+  "components/SubBlock/SubBlock.njk",
+  "components/Text/Text.njk"
+]) }}
+
+{% block stylesheet %}
+<script>if(window.addEventListener){addEventListener('error', window.__e=function f(e){f.q=f.q||[];f.q.push(e)})}</script>
+{{ super() }}
+{% endblock %}
+
+{#{% block top_of_page %}$$top_of_page{% endblock %}#}
+{% block html_lang %}$$html_lang{% endblock %}
+{#{% block page_title %}$$page_title{% endblock %}#}
+{#{% block stylesheet %}$$stylesheet{% endblock %}#}
+{#{% block head %}<script>console.log('$$head')</script>{% endblock %}#}
+{#{% block body_classes %}$$body_classes{% endblock %}#}
+{#{% block body_start %}$$body_start{% endblock %}#}
+{#{% block skip_link_message %}$$skip_link_message{% endblock %}#}
+{#{% block cookie_message %}$$cookie_message{% endblock %}#}
+{% block header_class %}with-proposition{% endblock %}
+{#{% block homepage_url %}$$homepage_url{% endblock %}#}
+{#{% block logo_link_title %}$$logo_link_title{% endblock %}#}
+{#{% block global_header_text %}$$global_header_text{% endblock %}#}
+{#{% block inside_header %}$$inside_header{% endblock %}#}
+{#{% block proposition_header %}$$proposition_header{% endblock %}#}
+{#{% block after_header %}$$after_header{% endblock %}#}
+{#{% block phase_banner %}$$phase_banner{% endblock %}#}
+{#{% block content %}content{% endblock %}#}
+{#{% block footer_top %}$$footer_top{% endblock %}#}
+{#{% block footer_support_links %}$$footer_support_links{% endblock %}#}
+{#{% block licence_message %}$$licence_message{% endblock %}#}
+{#{% block crown_copyright_message %}$$crown_copyright_message{% endblock %}#}
+{#{% block body_end %}$$body_end{% endblock %}#}
+
+{% block proposition_header %}
+<div class="header-proposition">
+  <div class="content">
+    <a href="/" id="proposition-name" data-link-type="service-name">{% block proposition_name %}Propositon name{% endblock %}</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+{% block breadcrumbs_content %}{% endblock %}
+{% block main_content %}
+<main data-block-name="{{ route.id }}">
+{% block grid_content %}{{ Block.Group(blocks=route.blocks) }}{% endblock %}
+</main>
+{% endblock %}
+{% endblock %}
+
+{% block body_end %}
+{{ super() }}
+{% if flowchart or edit %}
+<script src="//cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js"></script>
+<script src="/public/javascripts/block-edit/block-edit.js"></script>
+<link href="/public/javascripts/block-edit/block-edit.css" rel="stylesheet"></script>
+{% endif %}
+{% endblock %}

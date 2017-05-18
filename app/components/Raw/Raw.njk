@@ -1,0 +1,3 @@
+{% macro Raw(name) %}
+  {{ getFormattedProp(name, 'body') | safe }}
+{% endmacro %}

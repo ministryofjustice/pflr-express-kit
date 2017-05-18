@@ -1,0 +1,181 @@
+{% extends "templates/base/base.html" %}
+
+{% block related_content %}
+
+<style type="text/css">
+
+.ap_action_tools li .block-edit{
+  margin-left: -72px;
+}
+.actions button .block-edit {
+  margin-left: -56px;
+}
+
+.checklist-progress {
+  background: #f2f2f2;
+  padding: 1em 1em 2em 5em;
+  text-align: left;
+  position: relative;
+  margin-top: 9em;
+}
+.checklist-progress > * {
+  margin: 0;
+}
+.progress {
+  font-size: 16px;
+  position: relative;
+  height: 7.5em;
+}
+.progress .data {
+  display: block;
+}
+
+.progress .progress-bar,
+.progress:before {
+  content: '';
+  position: absolute;
+  width: 0.5em;
+  left: -3em;
+  background: #b1b4b6;
+  margin-top: -0.75em;
+}
+.progress:before {
+  height: 100%;
+}
+.progress .progress-bar {
+  background: #128a3c;
+  box-shadow: 0px 1px 0px 0px #ffffff, 0px 4px 0px 0px #f16122, 0px 5px 0px 0px #ffffff;
+}
+
+.progress-intro {
+  padding: 1em 1em 0 0;
+  display: block;
+}
+
+.checklist-progress h2 {
+  font-weight: bold;
+}
+
+.checklist-progress .progress-heading:before {
+  position: absolute;
+  font-size: 12px;
+  left: 3.125em;
+  border: solid 0.375em #128a3c;
+  background: #ffffff;
+  border-radius: 50%;
+  content: '';
+  width: 1.5em;
+  height: 1.5em;
+  margin-top: -0.5em;
+  z-index: 10;
+}
+
+.checklist-progress .goal-heading {
+  position: absolute;
+  left: 2em;
+  font-size: 12px;
+  width: 4.5em;
+  height: 4.5em;
+  box-sizing: border-box;
+  word-spacing: 5em;
+  background: #ffffff;
+  border: solid 0.375em #b1b4b6;
+  border-radius: 50%;
+  padding-top: 0.625em;
+  margin-top: -1em;
+  text-align: center;
+}
+.progress-complete .goal-heading {
+  border-color: #128a3c;
+}
+
+.goal {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+
+
+.skipped ul {
+  border-top: solid 1px #000000;
+}
+.skipped li {
+  border-bottom: solid 1px #000000;
+  position: relative;
+  padding: 15px 0;
+}
+.skipped li .skipped-action {
+  position: absolute;
+  right: 0;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+
+</style>
+
+<div class="checklist-progress{% if autofields.progress.complete %} progress-complete{% endif %}">
+<h2 class="progress-heading">{{ Block.String('string:checklist-progress-heading') }}</h2>
+{% if autofields.progress.done === 900 %}
+<p class="progress"><span class="progress-intro">{{ Block.String('string:checklist-actions-start') }}</span></p>
+{% else %}
+<p class="progress"><i class="progress-bar" style="height:{{ autofields.progress.percentage }}%;"></i><span class="data bold-xxlarge">{{ autofields.progress.done }}/{{ autofields.progress.count }}</span> {{ Block.String('string:checklist-actions-complete') }}</p>
+{% endif %}
+
+<h2 class="goal-heading"><span>{{ Block.String('string:checklist-goal-heading') }}</span></h2>
+<p class="goal">{{ Block.String('string:checklist-goal') }}</p>
+
+</div>
+
+{{ Block.RelatedNav() }}
+
+
+{% endblock %}
+
+{% block body_end_extra %}
+if (window.localStorage) {
+  var doc = jQuery(document)
+  function setScrolled(el, offset){
+    localStorage.setItem('el', el)
+    localStorage.setItem('offset', offset)
+  }
+  var el = localStorage.getItem('el')
+  var offset = localStorage.getItem('offset')
+  if (el) {
+    var $el = jQuery('[data-block-name="' + el + '"]')
+    if ($el.offset()) {
+      var new_offset = $el.offset().top - offset
+      doc.scrollTop(new_offset)
+    }
+    localStorage.removeItem('el')
+    localStorage.removeItem('offset')
+  }
+  jQuery('.hide-details, .done, .not_interested, .show-details, .add-back')
+    .find('button')
+    .on('click', function(){
+      var $current_button = jQuery(this)
+      var $button_parent = $current_button.parent()
+      var offset_current = $button_parent.hasClass('show-details') || $button_parent.hasClass('add-back')
+      var $current_action = $current_button.closest('.ap_action')
+      var $next_action
+      if (offset_current) {
+        $next_action = $current_action
+      } else {
+        var action = $current_action.attr('data-block-name')
+        var $actions = jQuery('.ap_action')
+        $actions.each(function(index){
+          if (jQuery(this).attr('data-block-name') === action) {
+            $next_action = $actions.eq(index + 1)
+          }
+        })
+        if (!$next_action.length) {
+          $next_action = $current_action
+        }
+      }
+
+      if ($next_action.length) {
+        setScrolled($next_action.attr('data-block-name'), $next_action.offset().top - doc.scrollTop())
+      }
+    })
+}
+{% endblock %}

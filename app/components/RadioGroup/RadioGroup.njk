@@ -1,0 +1,52 @@
+{% macro RadioGroup(name, inline='', reveals='', visually_hidden=true, or=false) %}
+{% set error = getError(name) %}
+<div class="form-group{% if error %} error{% endif %}"{% if name %} data-block-name="{{name}}"{% endif %}>
+{% call fieldset(name, inline=inline) %}
+    {% set or = getBlockProp(name, 'or') %}
+    {% set reveals = getBlockProp(name, 'reveals') %}
+    {% set excludes = getBlockProp(name, 'reveals_exclude') %}
+    {% set open = false %}
+    {% set closed = false %}
+    {% for option_name in getBlockProp(name, 'options') %}
+      {% if option_name.value %}
+        {% set option = option_name %}
+      {% else %}
+        {% set option = getBlock(option_name) %}
+      {% endif %}
+      {% set checked = false %}
+      {% if option.value === getValue(name) %}
+        {% set checked = true %}
+      {% endif %}
+      {% set optionReveals = checkReveals(name, option.value) %}
+      {% if option.value === 'yes' %}{{ optionReveals }}{% endif %}
+      {#{% if excludes %}
+        {% for val in excludes %}
+          {% if val === option.value %}
+            {% set optionReveals = false %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}#}
+      {% if checked %}
+        {% set closed = true %}
+      {% endif %}
+      {% if optionReveals and checked %}
+        {% set open = true %}
+        {% set closed = false %}
+      {% endif %}
+      {% if loop.last %}
+        {% if or %}
+          <p class="form-block">{{ getString('string:or') }}</p>
+        {% endif %}	
+      {% endif %}
+      <div class="multiple-choice"{% if optionReveals %} data-target="reveals--{{ optionReveals }}"{% endif %}>
+        <input id="{{ name }}-option-{{ loop.index }}" type="radio" name="{{ name }}" value="{{ option.value }}"{% if checked %} checked{% endif %}{% if optionReveals %} aria-controls="reveals--{{ optionReveals }}"{% endif %}>
+      <label data-block-name={{option_name}} for="{{ name }}-option-{{ loop.index }}" class="block-label selection-button-radio">
+        {{ optionLabel(option) }}
+      </label>
+      {{ subblock(option.subblock) }}
+      </div>
+    {% endfor %}
+    {{ subblock(getBlockProp(name, 'subblock'), closed=closed) }}
+{% endcall %}
+</div>
+{% endmacro %}

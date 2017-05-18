@@ -1,0 +1,12 @@
+{% set layout = "templates/layout_branded.html" %}
+{% if flags.degovukify %}
+{% set layout = "templates/layout_unbranded.html" %}
+{% endif %}
+
+{% if mergeObjects %}
+{% import "Block/blocks.nunjucks" as blockBlock %}
+{% import "Block/custom_blocks.nunjucks" as customBlockBlock %}
+{% set blockBlock = mergeObjects(blockBlock, customBlockBlock) %}
+{% endif %}
+{% extends layout %}
+

@@ -1,0 +1,35 @@
+{% extends "templates/base/base.html" %}
+
+{% block page_title %}
+Overrides configuration - Prototype
+{% endblock %}
+
+{% block head %}
+{{ super() }}
+<style type="text/css">
+.inline {
+  position: relative;
+}
+.inline .panel {
+  padding-right: 0;
+}
+.panel .inline legend .form-label-bold {
+  font-size: 20px;
+  font-weight: normal;
+}
+.inline label {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  font-size: 14px;
+  padding-left: 45px;
+}
+
+.inline label + label {
+  margin-left: 8em;
+}
+.inline label + label + label {
+  margin-left: 16em;
+}
+</style>
+{% endblock %}

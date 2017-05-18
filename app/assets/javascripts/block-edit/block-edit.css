@@ -1,0 +1,64 @@
+[data-block-name].hover {
+  background-color: #fc9;
+}
+
+.block-edit {
+  position: absolute;
+  font-size: 24px;
+  margin-left: -25px;
+  margin-top: -5px;
+  padding: 0 0.5rem;
+  cursor: pointer;
+  text-decoration: none !important;
+  background-color: #fff;
+  color: #005ea5 !important;
+  border-radius: 50%;
+  border: solid 1px #005ea5;
+  opacity: 0.5;
+  width: 1.75rem;
+  height: 2.75rem;
+  z-index: 99999999;
+}
+
+.block-edit:hover {
+  opacity: 1;
+}
+
+li .block-edit {
+  margin-left: -41px;
+}
+
+label .block-edit {
+  margin-left: -75px;
+}
+
+.panel .block-edit {
+  margin-left: -43px;
+}
+
+.panel label .block-edit {
+  margin-left: -93px;
+}
+
+.panel-border-wide .block-edit {
+  margin-top: -26px;
+  margin-left: -48px;
+}
+
+.panel-border-wide li .block-edit {
+  margin-top: 0;
+  margin-left: -67px;
+}
+
+button span .block-edit {
+  margin-left: -35px;
+}
+
+main > .block-edit {
+  top: 0.25rem;
+  margin-top: 0;
+  margin-left: -4.5rem;
+  font-size: 3.5rem;
+  width: 3rem;
+  height: 4rem;
+}

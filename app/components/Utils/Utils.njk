@@ -1,0 +1,11 @@
+{% macro registerBlock(b) %}
+{{ addBlocks([b])}}
+{% endmacro %}
+
+{% macro registerBlocks(blockList) %}
+{% for tBlock in blockList %}
+{% import tBlock as temp with context %}
+{% set Block = Object.assign(Block, temp) %}
+{{ setGlobal('Block', Block) }}
+{% endfor %}
+{% endmacro %}

@@ -1,0 +1,10 @@
+{% macro BlockLede(name, lede='', lede_additional='') %}
+{% set lede = getFormattedProp(name, 'lede', { value: lede }) %}
+{% set lede_additional = getFormattedProp(name, 'lede_additional', { value: lede_additional }) %}
+{% if lede %}
+  <p class="gv-u-text-lede lede">{{ lede | safe }}</p>
+{% endif %}
+{% if lede_additional %}
+  <p>{{ lede_additional | safe }}</p>
+{% endif %}
+{% endmacro %}

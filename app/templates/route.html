@@ -1,0 +1,111 @@
+{% extends "templates/layout_blocks.html" %}
+
+{% block head %}
+<link href="/public/stylesheets/application.css" rel="stylesheet">
+<link href="/public/stylesheets/blocks.css" rel="stylesheet">
+{% include "head/main_style.css" %}
+{% endblock %}
+
+{% block page_title %}
+{% set title = getFormattedProp(route.id, ['title', 'heading']) %}
+{{ getString('string:title-prefix') }}{% if title %} - {{ title }}{% endif %}
+{% endblock %}
+
+{% block content %}
+<main id="content" role="main" class="route-{{ route.id }}{% if route.template %} route-{{ route.template }}{% endif %}{% if route.start_page %} wizard-start{% endif %}{% if route.wizardlastRoute %} wizard-last{% endif %}{% if edit %} route-edit{% endif %} {% block content_class %}{% endblock %}" data-block-name="{{ route.id }}">
+  <!--<p class="service-name">SERVICE-NAME</p>-->
+{% if flags.backbutton %}
+{% if app.wizard.steps.count > 1 and route.template != 'step-by-step' %}
+<a class="link-back" href="{{ getRouteUrl(wizard.stepsFlat[app.wizard.steps.count - 1]) }}">{{ Block.String('string:link-back') }}</a>
+{% endif %}
+{% endif %}
+  {% block grid_content %}
+	<div class="grid-row">
+		<div class="column-two-thirds">
+
+{% block main_content %}
+{% if app.wizard.steps.count %}
+{% if flags.questioncount %}
+{{ Block.String('string:question-count') }}
+{% endif %}
+{% if flags.remaining %}
+{{ Block.String('string:questions-remaining') }}
+{% endif %}
+{% if flags.section or flags.section_current %}
+<p class="wizard-section">{% if flags.section %}{{ getFormattedProp(route.hierarchy[1], 'heading') | safe }}{% endif %}
+{% if flags.section_current %}{% if flags.section %} - {% endif %}{{ Block.String('string:wizard-section-current') }}{% endif %}
+</p>
+{% endif %}
+{% endif %}
+{#
+      {% if route.wizard %}
+      <ul>
+      {% for step in wizard %}
+        {% set visited = routeVisited(step.route) %}
+        <li>{% if visited === true %}<a href="{{ getRouteUrl(step.route) }}">{% endif %}{{ getFormattedProp('route:'+step.route, 'heading') }}{% if visited === true %}</a>{% endif %}</li>
+      {% endfor %}
+      </ul>
+      {% endif %}
+#}
+
+      {% if errors %}
+<div class="error-summary" role="group" aria-labelledby="error-summary-heading" tabindex="-1">
+
+<h1 class="heading-medium error-summary-heading" id="error-summary-heading">
+{{ getString('string:error-header-heading') }}
+</h1>
+
+<ul class="error-summary-list">
+  {% for errorKey, errorValue in errors %}
+<li><a href="#form-control_{{ errorKey }}">{{ getFormattedError(errorKey, {header:true}) }} <!--{{errorKey}} - {{errorValue}}--></a></li>
+{% endfor %}
+</ul>
+
+</div>
+      {% endif %}
+			{{ Block.PageHeader(route.id, start_page=route.start_page) }}
+
+
+			<form action="{{ req.originalUrl }}" method="post" class="form">
+				<input type="hidden" name="updateForm">
+        {{ Block.Group(blocks=route.blocks) }}
+        {% block content_actions %}{% endblock %}
+			</form>
+
+			{% if not app.production and flags.devlinks %}
+      <h4 class="heading-medium" style="margin-top: 150px">Quick dev links</h4>
+			<ul>
+        {{ easyLink(route.wizard) }}
+        {% for step in wizard.stepsFlat %}
+          {{ easyLink(step) }}
+        {% endfor %}
+			</ul>
+			{% endif %}
+{% endblock %}
+
+		</div>
+
+    <div class="related-container column-one-third">
+    <aside class="related" id="related">
+      {% block related_content %}{% endblock %}
+    </aside>
+    </div>
+
+	</div>
+  {% endblock %}
+</main>
+
+{% endblock %}
+{% macro easyLink(name) %}
+<li><a href="{{ getRouteUrl(name) }}">{{ getFormattedProp(name, ['title', 'heading']) | safe }}</a> | <a href="{{ getRouteUrl(name, null, {edit:true}) }}">(edit)</a></li>
+{% endmacro %}
+
+{% block body_end %}
+{% include "includes/scripts.html" %}
+<script type="text/javascript">
+</script>
+<script type="text/javascript">
+{% block body_end_extra %}{% endblock %}
+</script>
+
+{% endblock %}

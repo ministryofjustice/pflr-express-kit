@@ -1,0 +1,15 @@
+{% extends "templates/base/base.html" %}
+{% block related_content %}
+No lord luv a duck
+{% if app.wizard.steps.count === app.wizard.steps.length %}Last question!{% else %}{{ app.wizard.steps.length + 1 -  app.wizard.steps.count }} questions remaining{% endif %}
+
+      {% if route.wizard %}
+      <ul>
+      {% for step in wizard %}
+        {% set visited = routeVisited(step.route) %}
+        <li>{% if visited === true %}<a href="{{ getRouteUrl(step.route) }}">{% endif %}{{ getFormattedProp('route:'+step.route, 'heading') }}{% if visited === true %}</a>{% endif %}</li>
+      {% endfor %}
+      </ul>
+      {% endif %}
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "templates/base/base.html" %}
+
+{% block page_title %}
+Wizard flow - Prototype
+{% endblock %}
+
+{% block content %}
+<div id="container">
+<div class="box-row">
+<div class="box">
+<div class="innerbox" data-block-name="{{stepRoute.id}}">
+{% set stepRoute = routesFlattened[route.wizard] %}
+<p class="routeKey">{{stepRoute.id}}</p>
+{{ Block.PageHeader(stepRoute.id, start_page=stepRoute.start_page) }}
+{{ Block.Group(blocks=stepRoute.blocks) }}
+</div>
+</div>
+{% for step in wizard.stepsFlat %}
+{% set stepRoute = routesFlattened[step] %}
+
+{% if not loop.last and stepRoute.blocks %}
+{% set previousDepends = depends %}
+{% set depends = getBlockProp(stepRoute.key, 'depends') %}
+<div class="gutter{% if depends %} gutter-depends{% endif %}" id="gutter-{{ stepRoute.key }}">
+{% if depends %}
+<ul class="xlist xlist-bullet">
+{% for depend in depends %}
+<li>
+{% for key, constraint in depend %}
+  <p class="dependKey" style="font-weight:bold;">{{ splitWord(key) | safe }}</p>
+  <p class="dependConstraint">{{ constraint }}</p>
+{% endfor %}
+</li>
+{% endfor %}
+</ul>
+{% endif %}
+</div>
+<div class="box{% if depends %} depends{% endif %}" id="{{ stepRoute.key }}">
+<div class="innerbox" data-block-name="{{stepRoute.id}}">
+<p class="routeKey">{{stepRoute.id}}</p>
+{{ Block.PageHeader(stepRoute.id, start_page=stepRoute.start_page) }}
+{{ Block.Group(blocks=stepRoute.blocks) }}
+</div>
+</div>
+{% endif %}
+{% endfor %}
+</div>
+{% if false %}
+<div class="box-row">
+<div class="action"></div>
+{% for step in wizard.stepsFlat %}
+{% set stepRoute = routesFlattened[step] %}
+{% if not loop.last and stepRoute.blocks %}
+<div class="gutter-action"></div>
+<div class="action">
+{% if getBlock('action:'+step) %}{{ Block.ApAction('action:'+step) }}{% endif %}
+</div>
+{% endif %}
+{% endfor %}
+</div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block body_end_extra %}
+jQuery("#children_resident, #communication_methods").addClass("depends-skip");
+// jQuery("#gutter-your_plan, #your_plan").hide();
+{% endblock %}

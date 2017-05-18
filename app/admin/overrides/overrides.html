@@ -1,0 +1,66 @@
+{% extends 'admin/admin-base/admin-base.html' %}
+
+{% block page_title %}
+Overrides - Prototype
+{% endblock %}
+
+{% block admin_content %}
+<h1 class="heading-large">Overrides</h1>
+{#
+<table>
+<tr><th>prop</th><th>value</th></tr>
+{% for prop, value in overrides %}
+<tr><td>{{ prop }}</td><td>{{ value }}</td></tr>
+{% endfor %}
+</table>
+#}
+
+<textarea id="overrides" cols="80" rows="20">{{json | safe}}</textarea>
+<p class="button" id="update">Update override values</p>
+{#<h3>Session values</h3>
+<pre>{{autofields | safe}}</pre>#}
+<script>
+var headers = new Headers({
+  "Content-Type": "application/json"
+});
+function updateOverrides() {
+  var overrides = document.querySelector('#overrides').value
+  try {
+    var valid = JSON.parse(overrides)
+  } catch (e) {
+    alert('JSON is invalid')
+    return
+  }
+  fetch("/api/overrides", {
+    method: 'POST',
+    credentials: 'include',
+    headers: headers,
+    body: overrides
+  })
+  .then(response => {
+    console.log(response)
+    document.location.reload()
+  })
+}
+document.querySelector('#update').addEventListener('click', updateOverrides)
+</script>
+<style type="text/css">
+textarea {
+  border: none;
+  height: 10px;
+  margin: 2em 0;
+  background: #fcfcfc;
+  padding: 1em;
+}
+</style>
+{% endblock %}
+
+{% block body_end_extra %}
+var $textarea = jQuery('textarea')
+$textarea.height('10px')
+var textarea = $textarea.get(0)
+var scrollHeight = textarea.scrollHeight
+var padding = parseInt(window.getComputedStyle(textarea).paddingTop, 10) + parseInt(window.getComputedStyle(textarea).paddingBottom, 10)
+scrollHeight -= padding
+$textarea.height(scrollHeight+'px')
+{% endblock %}

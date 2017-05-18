@@ -1,0 +1,13 @@
+{% from '../FormGroup/FormGroup.njk' import FormGroup with context %}
+{% from '../ControlLabel/ControlLabel.njk' import ControlLabel with context %}
+{% macro Input(name, type='text') -%}
+  {% call FormGroup(name, error=error) -%}
+    {{ ControlLabel(name, label=label, sublabel=sublabel, hint=hint, error=error) }}
+    {% set value = getValue(name) %}
+    {% if type === 'text' and getBlockProp(name, 'multiline') %}
+      <textarea class="form-control" name="{{ name }}" id="{{ name }}">{{ value | safe }}</textarea>
+    {% else %}
+      <input type="{{ type }}" class="form-control" name="{{ name }}" id="{{ name }}" value="{{ value | escape }}">
+    {% endif %}
+  {%- endcall %}
+{%- endmacro %}

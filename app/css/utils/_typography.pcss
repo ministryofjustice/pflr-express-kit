@@ -1,0 +1,126 @@
+@import '_mediaqueries.pcss';
+
+:root {
+  --gv-u-heading-defaults: {
+    font-family: "nta", Arial, sans-serif;
+    font-weight: 700;
+    text-transform: none;
+    font-size-adjust: 0.525;
+  }
+
+  --gv-u-heading-xxlarge-size: {
+    @apply --gv-u-heading-defaults;
+
+    font-size: 3.2rem;
+
+    @media (--medium-viewport) {
+      font-size: 4.8rem;
+    }
+  }
+
+  --gv-u-heading-xxlarge: {
+    @apply --gv-u-heading-xxlarge-size;
+
+    line-height: 1.09375;
+    margin-top: 0.46875em;
+    margin-bottom: 0.9375em;
+
+    @media (--medium-viewport) {
+      font-size: 4.8rem;
+    }
+  }
+
+  --gv-u-heading-xlarge: {
+    @apply --gv-u-heading-defaults;
+
+    font-size: 2.4rem;
+    line-height: 1.04167;
+    margin-top: 1.04167em;
+    margin-bottom: 0.41667em;
+
+    @media (--medium-viewport) {
+      font-size: 3.6rem;
+    }
+  }
+
+  --gv-u-heading-large: {
+    @apply --gv-u-heading-defaults;
+
+    font-size: 2rem;
+    line-height: 1.11111;
+    margin-top: 1.25em;
+    margin-bottom: 0.5em;
+
+    @media (--medium-viewport) {
+      font-size: 2.7rem;
+    }
+  }
+
+  --gv-u-heading-medium: {
+    @apply --gv-u-heading-defaults;
+
+    font-size: 1.8rem;
+    line-height: 1.2;
+    margin-top: 1.25em;
+    margin-bottom: 0.5em;
+
+    @media (--medium-viewport) {
+      font-size: 2.4rem;
+    }
+  }
+
+  --gv-u-heading-small-size: {
+    @apply --gv-u-heading-defaults;
+
+    font-size: 1.6rem;
+
+    @media (--medium-viewport) {
+      font-size: 1.9rem;
+    }
+  }
+
+  --gv-u-heading-small: {
+    @apply --gv-u-heading-small-size;
+
+    line-height: 1.25;
+    margin-top: 0.625em;
+    margin-bottom: 0.3125em;
+
+    @media (--medium-viewport) {
+      line-height: 1.31579;
+      margin-top: 1.05263em;
+    }
+  }
+
+  --gv-u-text-lede: {
+    font-size: 1.6rem;
+
+    @media (--medium-viewport) {
+      font-size: 1.9rem;
+    }
+  }
+
+  --gv-u-text: {
+    font-size: 1.6rem;
+
+    @media (--medium-viewport) {
+      font-size: 1.9rem;
+    }
+  }
+
+  --gv-u-text-small: {
+    font-size: 1.6rem;
+
+    @media (--medium-viewport) {
+      font-size: 1.9rem;
+    }
+  }
+
+  --gv-u-text-xsmall: {
+    font-size: 1.6rem;
+
+    @media (--medium-viewport) {
+      font-size: 1.9rem;
+    }
+  }
+}

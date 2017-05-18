@@ -1,0 +1,76 @@
+{% extends "templates/layout_blocks.html" %}
+
+{% macro wibble(hello) %}
+{{this}} {{self}}
+Hello - {{ hello }}, woot {{woot}}, toosh {{toosh}}
+{% endmacro %}
+
+{% block page_title %}
+  Action Plan
+{% endblock %}
+
+{% block content %}
+
+<main id="content" role="main">
+  <div class="grid-row">
+    <div class="xcolumn-two-thirds">
+
+      <h1 class="heading-xlarge">
+        Blocks
+      </h1>
+	{#% remote "shidazzle" %}
+	TWONK-A-DONK
+	{% endremote %#}
+	{#{ nibble('top')}#}
+
+	{{Block.Body('ermintrude')}}
+
+	  {{ wibble(woot='wazaa', toosh=23) }}
+
+<form action="/" method="post" class="form">
+{{ Block.Text('wham', error='Ay Caramba!', value='Ay wahey!') }}
+{{ Block.Control('wham', error='Caramba!', value='wahey!') }}
+{{ Block.Control('wham', label='Muy Labelo!', hint='A truly useful hint!') }}
+{{ Block.Password('spliffing', error='Ay Caramba!', value='Ay wahey!') }}
+{{ Block.Control('wham', type='password', error='Caramba!', value='wahey!') }}
+
+
+{{ Block.RadioGroup('housing-act') }}
+{{ Block.RadioGroup('twosh') }}
+	{{ Block.CheckboxGroup('nationality') }}
+
+{#
+{{ Block.Control('wham', _blockType='password') }}
+{{ Block.Control('wham', _blockType='number') }}
+{{ Block.Control('wham', _blockType='file') }}
+
+
+	{{ Block.Text('wham') }}
+	
+	{{ Block.Number('wham') }}
+	{{ Block.File('wham') }}
+	{{ Block.Input('foo', value='bar') }}
+	{{ Block.Password('pass', value='password') }}
+	{{ Block.RadioGroup('housing-act') }}
+	{{ Block.RadioGroup('twosh') }}
+	{{ Block.RadioGroup('gash', inline=false, or=true) }}
+	{{ Block.CheckboxGroup('nationality') }}
+	{{ Block.Control('foo', value='kooool') }}
+	{{ Block.Input('foo', value='whammo') }}
+	{% set controlType = 'Input' %}
+	{{ Block[controlType]('foo', value='blammo') }}
+#}
+</form>
+
+
+
+
+
+
+    </div>
+  </div>
+</main>
+
+{% endblock %}
+
+

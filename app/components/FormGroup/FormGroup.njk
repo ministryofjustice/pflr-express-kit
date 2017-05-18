@@ -1,0 +1,9 @@
+{% from '../DependsHidden/DependsHidden.njk' import DependsHidden with context %}
+{% from '../DependsAria/DependsAria.njk' import DependsAria with context %}
+{% macro FormGroup(name, error='', depends=false, open=false) -%}
+  <div class="form-group{% if error %} error{% endif %}{{ DependsHidden(depends=depends, open=open) }}"{{ DependsAria(depends=depends, open=open) }}{% if name %} data-block-name="{{name}}"{% endif %}>
+  {% if caller %}
+  {{ caller() }}
+  {% endif %}
+  </div>
+{%- endmacro %}

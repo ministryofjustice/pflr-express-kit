@@ -1,0 +1,108 @@
+{% extends 'admin/admin-base/admin-base.html' %}
+
+{% block page_title %}
+Report - Prototype
+{% endblock %}
+
+{% block Xcontent_class %}multi-page{% endblock %}
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="/public/stylesheets/application.css">
+<style type="text/css">
+.check-your-answers caption {
+  text-align: left;
+  margin-top: 1em;
+}
+.question-body {
+  xwhite-space: nowrap;
+  xwidth: 40%;
+}
+table + form {
+  margin-top: 2em;
+}
+table + form p {
+  vertical-align: middle;
+}
+table + form .button {
+  vertical-align: baseline;
+  margin-right: 1em;
+}
+</style>
+<style type="text/css">
+.check-your-answers td {
+  font-size: 14px;
+}
+.override--action-section--ensure_safety td.question-title,
+.override--action-section--prepare_arrangements td.question-title,
+.override--action-section--engage_other_parent td.question-title,
+.override--action-section--involve_professional td.question-title,
+.override--action-section--make_parenting_plan td.question-title
+{
+  font-weight: bold;
+  padding-left: 0;
+}
+
+.check-your-answers {
+  width: auto;
+  table-layout:fixed;
+}
+td.question-title {
+  width: 500px;
+  padding-left: 20px;
+}
+td.question-body {
+  width: 100px;
+  text-align: center;
+}
+
+@media print {
+  form {
+    display: none;
+  }
+}
+</style>
+{% endblock %}
+{% block main_content %}
+<h1 class="heading-large">Round 2 user testing</h1>
+
+
+  <table class="check-your-answers">
+  {% for structureProp, structureValue in report.structure %}
+{#<caption class="heading-medium">{{ structureProp }}</caption>#}
+<thead><th colspan="{{ report.participants.length + 1 }}">{{ structureProp }}</th></thead>
+  {% for question in structureValue %}
+  {% set label = getFormattedProp(question, 'label') %}
+  {% set value = getDisplayValue(el, '<br>') %} {#  {{ value | safe }} -  #}
+  <tr class="section {{ question }}">
+  <td class="question-title">{{ label | safe }}</td>
+    {% for participant in report.participants %}
+    <td class="question-body">{{ participant[structureProp][question] }}</td>
+    {% endfor %}
+  </tr>
+  {% endfor %}
+{% endfor %}
+  </table>
+
+
+  <form method="post">
+
+  <p><textarea name="report" cols="80" rows="10">{{ report | dump }}</textarea></p>
+  <p><button class="button">Generate report</button></p>
+  </form>
+<script>
+var tdMap = {
+  'less_than_6_months': '< 6mth',
+  '6_months_to_2_years': '6mth - 2yr',
+  'more_than_2_years': '> 2yr',
+  'show': '✔',
+  'hide': ''
+}
+var tds = document.querySelectorAll('.question-body')
+tds.forEach(function(td){
+  var textContent = td.textContent
+  if (tdMap[textContent] !== undefined) {
+    td.textContent = tdMap[textContent]
+  }
+})
+</script>
+{% endblock %}

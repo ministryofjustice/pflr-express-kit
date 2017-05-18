@@ -1,0 +1,8 @@
+{% macro Notice(name) %}
+<div class="notice"{% if name %} data-block-name="{{name}}"{% endif %}>
+  <i class="icon icon-important">
+    <span class="visuallyhidden">Warning</span>
+  </i>
+  <strong class="bold-small">{{ getFormattedProp(name, 'body') | safe }}</strong>
+</div>
+{% endmacro %}

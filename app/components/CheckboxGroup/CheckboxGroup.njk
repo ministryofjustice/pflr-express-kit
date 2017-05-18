@@ -1,0 +1,45 @@
+{% from '../Fieldset/Fieldset.njk' import Fieldset with context %}
+{% from '../OptionLabel/OptionLabel.njk' import OptionLabel with context %}
+{% from '../SubBlock/SubBlock.njk' import SubBlock with context %}
+{% macro CheckboxGroup(name, inline='', label='', or=false, options='') %}
+{% set error = getError(name) %}
+{% set inline = getBlockProp(name, 'inline', { value: inline }) %}
+{% set label = getBlockProp(name, 'label', { value: label }) %}
+{% set options = getBlockProp(name, 'options', { value: options }) %}
+<div class="form-group{% if error %} error{% endif %}"{% if name %} data-block-name="{{name}}"{% endif %}>
+{% call Fieldset(name, label=label, inline=inline) %}
+  {#% set or = getBlockProp(name, 'or') %#}
+  {% for option_name in options %}
+    {% if option_name.value %}
+      {% set option = option_name %}
+      {% set option_name = option.name %}
+    {% else %}
+      {% set option = getBlockProp(option_name) %}
+    {% endif %}
+    {% set checked = false %}
+    {% set option_value = 'yes' %}
+    {% if option.value %}
+      {% set option_value = option.value %}
+    {% endif %}
+    {% if option_value === getValue(option_name) %}
+      {% set checked = true %}
+    {% endif %}
+    {% if loop.last %}
+      {% set excludes = option.excludes %}
+      {% if excludes %}{% set or = true %}{% endif %}
+      {% if or %}
+        <p class="form-block">{{ getString('string:or') }}</p>
+      {% endif %}	
+    {% endif %}
+    {% set reveals = checkReveals(option_name, option_value) %}
+    <div class="multiple-choice"{% if reveals %} data-target="reveals--{{ reveals }}"{% endif %}>
+      <input id="{{ option_name }}" type="checkbox" name="{{ option_name }}" value="{{ option_value }}"{% if checked %} checked{% endif %}{% if reveals %} aria-controls="reveals--{{ reveals }}"{% endif %}>
+    <label data-block-name={{option_name}} for="{{ option_name }}" class="block-label selection-button-checkbox"{% if excludes %} data-excludes="true"{% endif %}>
+      {{ OptionLabel(option) }}
+    </label>
+    {{ SubBlock(option.subblock) }}
+    </div>
+  {% endfor %}
+{% endcall %}
+</div>
+{% endmacro %}

@@ -1,0 +1,17 @@
+{% extends 'admin/admin-base/admin-base.html' %}
+
+{% block page_title %}
+Session - Prototype
+{% endblock %}
+
+{% block admin_content %}
+<h1 class="heading-xlarge">User session</h1>
+<p>{{ sessionID }}</p>
+{% if cloned_session %}
+<div class="panel panel-wide"><p>Cloned user session</p></div>
+{% endif %}
+<pre>{{ autofieldsJSON }}</pre>
+<p>{{ cloned_session }}</p>
+<p><a href="/admin/session/{{ sessionID }}?clone=true">Clone session data</a></p>
+<p><a href="/admin/session/{{ sessionID }}?delete=true">Delete session data</a></p>
+{% endblock %}

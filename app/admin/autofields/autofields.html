@@ -1,0 +1,55 @@
+{% extends 'admin/admin-base/admin-base.html' %}
+
+{% block page_title %}
+Autofields - Prototype
+{% endblock %}
+
+{% block admin_content %}
+<h1 class="heading-large">Autofields</h1>
+{{ autofields | dump }}
+<table>
+<tr><th>prop</th><th>value</th></tr>
+{% for prop, value in autofields %}
+<tr><td>{{ prop }}</td><td>{{ value }}</td></tr>
+{% endfor %}
+</table>
+
+<textarea id="autofields" cols="80" rows="20">{{json | safe}}</textarea>
+<p><span class="button" id="update">Update autofield values</span></p>
+
+<script>
+var headers = new Headers({
+  "Content-Type": "application/json"
+});
+function setAutofields(autofields, update) {
+  if (typeof autofields === 'string') {
+    try {
+      var valid = JSON.parse(autofields)
+    } catch (e) {
+      return Promise.reject('JSON is invalid')
+    }
+  } else {
+    autofields = JSON.stringify(autofields)
+  }
+  var apiUrl = update ? '/api/autofield' : '/api/autofields'
+  return fetch(apiUrl, {
+    method: 'POST',
+    credentials: 'include',
+    headers: headers,
+    body: autofields
+  })
+}
+function updateAutofields() {
+  var autofields = document.querySelector('#autofields').value
+  setAutofields(autofields)
+  .then(response => {
+    console.log(response)
+    document.location.reload()
+  })
+  .catch(err => {
+    alert('JSON is invalid')
+  })
+}
+document.querySelector('#update').addEventListener('click', updateAutofields)
+</script>
+{% endblock %}

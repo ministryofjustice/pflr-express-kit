@@ -1,0 +1,9 @@
+{% from '../Control/Control.njk' import Control with context %}
+{% macro Reveal(reveals='', open=false) %}
+{# needs to be able to pass value through explicitly #}
+{% if reveals %}
+  <div class="panel panel-border-narrow{% if not open %} js-hidden{% endif %}" id="{{ reveals }}" aria-hidden="{% if open %}true{% else %}false{% endif %}">
+    {% call Control(reveals) %}{% endcall %}
+  </div>
+{% endif %}
+{% endmacro %}

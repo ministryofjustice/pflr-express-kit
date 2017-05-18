@@ -1,0 +1,8 @@
+{% extends 'admin/admin-base/admin-base.html' %}
+
+{% block main_content %}
+
+{{ blocks | dump}}
+{{ Block.CheckboxGroup('blah', label='Oh hai', options=blocks) }}
+
+{% endblock %}

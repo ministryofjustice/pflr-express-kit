@@ -1,0 +1,4 @@
+{% macro String(name, args) %}
+{% set options = { args: args } %}
+<span data-block-name="{{name}}">{{ getString(name, options) | safe }}</span>
+{% endmacro %}

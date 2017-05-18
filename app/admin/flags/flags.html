@@ -1,0 +1,100 @@
+{% extends 'admin/admin-base/admin-base.html' %}
+
+{% block page_title %}
+Flags - Prototype
+{% endblock %}
+
+{% block admin_content %}
+<h1 class="heading-large">Flags</h1>
+<table>
+{% for flag, value in flags %}
+<tr>
+{% set icon = 'cross' %}
+{% set state = 'off' %}
+{% set antistate = 'on' %}
+{% if value %}{% set icon = 'tick' %}{% set state = 'on' %}{% set antistate = 'off' %}{% endif %}
+<td><a class="switch switch-{{ state }}" href="/api/flag/{{flag}}/{{ antistate }}" title="Turn {{ flag }} {{ antistate }}">{{ antistate }}</a></td>
+<td class="flag">{{ getString('string:flag--'+flag, flag) }}</td>
+{#
+<td class="state state-{{ state }}"><img src="/public/images/{{ icon }}_icon.svg" alt="{{ state }}"></td>
+#}
+</tr>
+{% endfor %}
+</table>
+<style type="text/css">
+table {
+  width: 100%;
+}
+td.state {
+  width: 10px;
+  padding-left: 10px;
+}
+td.flag {
+  width: 100%;
+}
+td+td+td {
+  text-align: right;
+}
+tr:hover td {
+  background: #fcfcfc;
+}
+.switch {
+  display: block;
+  width: 3.5em;
+  height: 2em;
+  position: relative;
+  text-indent: 9999px;
+  text-decoration: none;
+  overflow: hidden;
+  border-radius: 1.25em;
+}
+.switch-on {
+  background: rgba(0, 153, 0, 1);
+}
+.switch-off {
+  background: #eeeeee;
+}
+.switch:before {
+  content: '';
+  position: absolute;
+  top: 0.125em;
+  width: 1.75em;
+  border-radius: 50%;
+  bottom: 0.125em;
+  background: #ffffff;
+  left: 0.125em;
+}
+.switch-on:before {
+  left: auto;
+  right: 0.125em;
+}
+{% set switch = 2 %}
+{% if switch > 0 %}
+.switch {
+  border: solid 1px #999999;
+}
+.switch:before {
+  border: solid 1px #999999;
+}
+{% endif %}
+{% if switch > 1 %}
+.switch {
+    border: none;
+    box-shadow: -1px -1px 1px rgba(0,0,0,0.5);
+}
+.switch:before {
+  width: 1.575em;
+  bottom: 0.175em;
+  border: solid 0.0125em #eeeeee;
+  box-shadow: 2px 1px 2px rgba(0,0,0,0.5);
+}
+.switch-on:before {
+  right: 0.175em;
+  border: solid 0.0125em rgba(0,102,0,0.25);
+}
+.switch-on {
+  box-shadow: -1px -1px 1px rgba(0,51,0,1);
+}
+{% endif %}
+</style>
+{% endblock %}

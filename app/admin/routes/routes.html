@@ -1,0 +1,23 @@
+{% extends 'admin/admin-base/admin-base.html' %}
+
+{% block page_title %}
+Routes - Prototype
+{% endblock %}
+
+{% block admin_content %}
+<h1 class="heading-large">Routes</h1>
+
+<table>
+{% for route in routes %}
+{% set url = getRouteUrl(route) %}
+<tr>
+<td>{{ route }}</td>
+<td><a href="{{ url }}" title="{{ getBlockProp(route, 'heading') }}">{{ url }}</a></td>
+<td><a href="{{ url }}{% if url != '/' %}/{% endif %}edit">Edit</a></td>
+<!-- <td><a href="/admin/manage/{{ route }}">Manage</a></td> -->
+<td>{% if getBlockProp(route, 'steps') and getBlockProp(route, 'template') != 'step-by-step' %}<a href="{{ url }}{% if url != '/' %}/{% endif %}flowchart">View wizard flow</a>{%endif%}</td>
+</tr>
+{% endfor %}
+</table>
+
+{% endblock %}

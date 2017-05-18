@@ -1,0 +1,17 @@
+{% extends 'admin/admin-base/admin-base.html' %}
+
+{% block page_title %}
+Sessions - Prototype
+{% endblock %}
+
+{% block admin_content %}
+<h1 class="heading-xlarge">User sessions</h1>
+<table>
+{% for session in  sessions %}
+<tr>
+<td><a href="/admin/session/{{ session }}">View {{ session }}</a></td>
+<!--<td><a href="/admin/session/{{ user}}">View {{ session }}</a></td>-->
+</tr>
+{% endfor %}
+</table>
+{% endblock %}

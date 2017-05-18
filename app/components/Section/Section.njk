@@ -1,0 +1,34 @@
+{% macro Section(name, className='', content='', postContent='', depth=2) %}
+{% set gv_depth = {
+  '2': 'gv-u-heading-xlarge',
+  '3': 'gv-u-heading-small',
+  '4': 'gv-u-heading-medium'
+} %}
+<section id="{{ name }}" class="moj-Section moj-Section--{{ depth }} {{ className }}" data-block-name="{{name}}">
+<h{{depth}} class="moj-Section__heading moj-Section__heading--{{ depth }} {{ gv_depth[depth] }}{% if className %} {{ className }}__heading{% endif %}">{{ getFormattedProp(name, 'heading') | safe }}</h{{depth}}>
+{% if content %}
+{{ content }}
+{% endif %}
+{% if caller %}
+{{ caller() }}
+{% endif %}
+{% set body = getFormattedBody(name, 'body') %}
+{% if body %}
+<div class="Section__content gv-s-prose">
+{{ body | safe }}
+</div>
+{% endif %}
+{% if depth < 5 %}
+{% set subsections = getBlockProp(name, 'blocks') %}
+{% if subsections.length %}
+{% for subsection in subsections %}
+{% set subsections = [] %}
+{{ Block.Control(subsection, depth=depth+1) }}
+{% endfor %}
+{% endif %}
+{% endif %}
+{% if postContent %}
+{{ postContent | safe }}
+{% endif %}
+</section>
+{% endmacro %}

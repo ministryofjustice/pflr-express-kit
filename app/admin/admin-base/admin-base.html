@@ -1,0 +1,13 @@
+{% extends "templates/base/base.html" %}
+
+{% block main_content %}
+<style type="text/css">
+.link-admin {
+  position: absolute;
+  top: 0;
+  right: 0.75em;
+}
+</style>
+<p><a class="link-admin link-back" href="/admin/quicklinks">Admin page</a></p>
+{% block admin_content %}{% endblock %}
+{% endblock %}
