@@ -6,6 +6,7 @@ REMOVED=$(docker rm -f $DOCKERTAG-lint 2>/dev/null \
 docker rm -f $DOCKERTAG-unit 2>/dev/null \
 docker rm -f $DOCKERTAG-app 2>/dev/null \
 docker rm -f $DOCKERTAG-selenium 2>/dev/null \
+docker rm -fv $DOCKERTAG-functional 2>/dev/null \
 docker rm -f $DOCKERTAG-accessibility 2>/dev/null)
 
 echo Removed docker volumes $REMOVED
