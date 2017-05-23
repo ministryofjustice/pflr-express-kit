@@ -69,7 +69,8 @@ then
     echo "Reports will be output to $REPORTS"
   fi
   # Now run the tests
-  docker run $REPORTS_VOLUME -e "baseUrl=$BASE_URL" -e "baseIp=$APP_IP" -e "seleniumIp=$SELENIUM_IP" $APP yarn test:functional
+  FUNCTIONAL=$DOCKERTAG-functional
+  docker run $REPORTS_VOLUME --name $FUNCTIONAL -e "baseUrl=$BASE_URL" -e "baseIp=$APP_IP" -e "seleniumIp=$SELENIUM_IP" $APP yarn test:functional
 
 fi
 
