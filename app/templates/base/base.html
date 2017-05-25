@@ -36,6 +36,7 @@
 {% block stylesheet %}
 <script>if(window.addEventListener){addEventListener('error', window.__e=function f(e){f.q=f.q||[];f.q.push(e)})}</script>
 {{ super() }}
+<link href="/public/stylesheets/core-layout-print.css" media="print" rel="stylesheet">
 {% endblock %}
 
 {#{% block top_of_page %}$$top_of_page{% endblock %}#}

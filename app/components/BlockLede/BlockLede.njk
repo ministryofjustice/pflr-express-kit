@@ -2,7 +2,7 @@
 {% set lede = getFormattedProp(name, 'lede', { value: lede }) %}
 {% set lede_additional = getFormattedProp(name, 'lede_additional', { value: lede_additional }) %}
 {% if lede %}
-  <p class="gv-u-text-lede lede">{{ lede | safe }}</p>
+  <p class="{{ govukClassname('lede') }}">{{ lede | safe }}</p>
 {% endif %}
 {% if lede_additional %}
   <p>{{ lede_additional | safe }}</p>
