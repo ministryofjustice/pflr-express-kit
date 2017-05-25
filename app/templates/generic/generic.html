@@ -4,7 +4,7 @@
 
 <div class="{{ govukClassname('grid-row') }}">
   <div class="{{ govukClassname('column-two-thirds') }}">
-  <h1 class="c-summary__heading {{ govukClassname('heading-xlarge') }}">{{ getFormattedProp(route.id, 'heading', route.id) }}</h1>
+  <h1 class="generic__heading {{ govukClassname('heading-xlarge') }}">{{ getFormattedProp(route.id, 'heading', route.id) }}</h1>
   {% set lede = getFormattedProp(route.id, 'lede') %}
   {% if lede %}
   <p class="c-summary__lede">{{lede }}</p>
