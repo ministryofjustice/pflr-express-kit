@@ -2,9 +2,9 @@
 
 {% block grid_content %}
 
-  <div><div class="gv-o-grid-row">
-  <div class="gv-o-grid-item gv-u-two-thirds">
-  <h1 class="c-summary__heading gv-u-heading-xxlarge">{{ getFormattedProp(route.id, 'heading', route.id) }}</h1>
+<div class="{{ govukClassname('grid-row') }}">
+  <div class="{{ govukClassname('column-two-thirds') }}">
+  <h1 class="generic__heading {{ govukClassname('heading-xlarge') }}">{{ getFormattedProp(route.id, 'heading', route.id) }}</h1>
   {% set lede = getFormattedProp(route.id, 'lede') %}
   {% if lede %}
   <p class="c-summary__lede">{{lede }}</p>
@@ -14,12 +14,12 @@
   {{lede_additional | safe }}
   {% endif %}
   {% if route.blocks %}
-  <div class="gv-s-prose">
+  <div class="{{ govukClassname('govuk-govspeak') }}">
   {{ Block.Group(blocks=route.blocks) }}
   </div>
   {% endif %}
   {% block grid_content_extra %}{% endblock %}
   </div>
-  </div>
+</div>
 
 {% endblock %}

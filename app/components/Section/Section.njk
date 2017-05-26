@@ -14,7 +14,7 @@
 {% endif %}
 {% set body = getFormattedBody(name, 'body') %}
 {% if body %}
-<div class="Section__content gv-s-prose">
+<div class="Section__content {{ govukClassname('govuk-govspeak') }}">
 {{ body | safe }}
 </div>
 {% endif %}
