@@ -1,6 +1,6 @@
 {
   "name": "pflr-express-kit",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "main": "lib/server.js",
   "repository": {},
   "license": "MIT",
@@ -42,6 +42,7 @@
     "postcss-discard-duplicates": "^2.1.0",
     "postcss-discard-empty": "^2.1.0",
     "postcss-import": "^9.1.0",
+    "raven": "^2.0.2",
     "request": "^2.81.0",
     "request-promise-native": "^1.0.3",
     "serve-favicon": "^2.4.2",
