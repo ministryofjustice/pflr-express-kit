@@ -6,9 +6,9 @@ Blocks - Prototype
 
 {% block admin_content %}
 <p><a class="link-back" href="/admin/blocks">Back to block types</a></p>
-<h1 class="heading-large">{{ _blockType }} blocks</h1>
+<h1 class="{{ govukClassname('heading-large') }}">{{ _blockType }} blocks</h1>
 
-<ul class="list list-bullet">
+<ul class="{{ govukClassname('list-bullet') }}">
 {% for key in keys %}
 <li><a href="/admin/block/{{ key }}">{{ key }}</a></li>
 {% endfor %}

@@ -5,7 +5,7 @@ Flags - Prototype
 {% endblock %}
 
 {% block admin_content %}
-<h1 class="heading-large">Flags</h1>
+<h1 class="{{ govukClassname('heading-large') }}">Flags</h1>
 <table>
 {% for flag, value in flags %}
 <tr>

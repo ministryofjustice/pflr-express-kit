@@ -5,9 +5,9 @@ Block types - Prototype
 {% endblock %}
 
 {% block admin_content %}
-<h1 class="heading-large">Block types</h1>
+<h1 class="{{ govukClassname('heading-large') }}">Block types</h1>
 
-<ul class="list list-bullet">
+<ul class="{{ govukClassname('list-bullet') }}">
 {% for _blockType in blockTypes %}
 {% if _blockType %}
 <li><a href="/admin/blocks/{{ _blockType }}">{{ _blockType }}</a></li>

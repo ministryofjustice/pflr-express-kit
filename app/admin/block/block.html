@@ -8,37 +8,19 @@ Block - Proto_blockType
 {% set _blockType = getBlockProp(block, '_blockType') %}
 <p><a class="link-back" href="/admin/blocks/{{ _blockType }}">Back to {{ _blockType }}</a></p>
 
-<h1 class="heading-large">Block - {{ block }}</h1>
-
-<form method="post">
-<textarea name="block" id="block" cols="80" rows="20">{{blockJSON | safe}}</textarea>
-<p><button class="button">Update block</button></p>
-</form>
+<h1 class="{{ govukClassname('heading-large') }}">{{ block }}</h1>
 
 {% if stringProps.length %}
-<ul class="list list-bullet">
+<ul class="{{ govukClassname('list-bullet') }}">
 {% for prop in stringProps %}
 <li><a href="/admin/block/{{ block }}/{{ prop }}">{{ prop }}</a></li>
 {% endfor %}
 </ul>
 {% endif %}
 
-<style type="text/css">
-textarea {
-  border: none;
-  margin: 2em 0;
-  background: #fcfcfc;
-  padding: 1em;
-}
-</style>
-{% endblock %}
+<form method="post">
+<textarea name="block" id="block" cols="80" rows="1">{{blockJSON | safe}}</textarea>
+<p><button class="{{ govukClassname('button') }}">Update block</button></p>
+</form>
 
-{% block body_end_extra %}
-var $textarea = jQuery('textarea')
-$textarea.height('10px')
-var textarea = $textarea.get(0)
-var scrollHeight = textarea.scrollHeight
-var padding = parseInt(window.getComputedStyle(textarea).paddingTop, 10) + parseInt(window.getComputedStyle(textarea).paddingBottom, 10)
-scrollHeight -= padding
-$textarea.height(scrollHeight+'px')
 {% endblock %}
