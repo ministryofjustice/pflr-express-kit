@@ -5,7 +5,7 @@ Sessions - Prototype
 {% endblock %}
 
 {% block admin_content %}
-<h1 class="heading-xlarge">User sessions</h1>
+<h1 class="{{ govukClassname('heading-large') }}">User sessions</h1>
 <table>
 {% for session in  sessions %}
 <tr>

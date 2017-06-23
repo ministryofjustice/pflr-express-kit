@@ -5,9 +5,37 @@
 .link-admin {
   position: absolute;
   top: 0;
-  right: 0.75em;
+  font-size: 3rem;
+  color: #ffffff;
+}
+.link-admin:visited {
+  color: #ffffff;
+}
+.header-logo *,
+.xheader-proposition * {
+  visibility: hidden;
 }
 </style>
 <p><a class="link-admin link-back" href="/admin/quicklinks">Admin page</a></p>
 {% block admin_content %}{% endblock %}
+{% endblock %}
+
+{% block body_end %}
+{{ super() }}
+<script src="/public/javascripts/autosize/autosize.js"></script>
+<script type="text/javascript">
+var textareas = jQuery('textarea')
+autosize(textareas)
+</script>
+<style type="text/css">
+textarea {
+  border: solid 1px #000;
+  margin: 2em 0;
+  background: #fcfcfc;
+  box-sizing: border-box;
+  padding: 1em;
+  min-height: 3.5em;
+  width: 100%;
+}
+</style>
 {% endblock %}

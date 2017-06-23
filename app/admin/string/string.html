@@ -10,35 +10,15 @@ String - Prototype
 {% endif %}
 <p><a class="link-back" href="/admin/blocks/{{ _blockType }}">Back to {{ _blockType }}</a></p>
 
-<h1 class="heading-large">{{ _blockType }}{% if prop %}.{{ prop }}{% endif %} - {{ block }}</h1>
+<h1 class="{{ govukClassname('heading-large') }}"><a class="link-back" href="/admin/block/{{ block }}">{{ block }}</a>{% if prop %}.{{ prop }}{% endif %}</h1>
 
 {% if doesNotExist %}
-<p>{{ block }} doesn't exist yet</p>
+<p>{{ block }} doesn’t exist yet</p>
 <p><a href="/admin/block/{{ block }}">Create {{ block }}</a></p>
 {% else %}
 <form method="post">
-<textarea name="value" id="value" cols="80" rows="20">{{ value | safe}}</textarea>
-<p><button class="button">Update block</button></p>
+<textarea name="value" id="value" cols="80" rows="1">{{ value | safe}}</textarea>
+<p><button class="{{ govukClassname('button') }}">Update block</button></p>
 </form>
 {% endif %}
-
-
-<style type="text/css">
-textarea {
-  border: none;
-  margin: 2em 0;
-  background: #fcfcfc;
-  padding: 1em;
-}
-</style>
-{% endblock %}
-
-{% block body_end_extra %}
-var $textarea = jQuery('textarea')
-$textarea.height('10px')
-var textarea = $textarea.get(0)
-var scrollHeight = textarea.scrollHeight
-var padding = parseInt(window.getComputedStyle(textarea).paddingTop, 10) + parseInt(window.getComputedStyle(textarea).paddingBottom, 10)
-scrollHeight -= padding
-$textarea.height(scrollHeight+'px')
 {% endblock %}
