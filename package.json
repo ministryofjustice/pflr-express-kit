@@ -1,6 +1,6 @@
 {
   "name": "pflr-express-kit",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "main": "lib/server.js",
   "repository": {},
   "license": "MIT",
@@ -29,6 +29,8 @@
     "jsonschema": "^1.1.1",
     "lodash": "^4.17.4",
     "markdown": "^0.5.0",
+    "markdown-it": "^8.3.1",
+    "markdown-it-deflist": "^2.0.2",
     "marked": "^0.3.6",
     "messageformat": "^1.0.2",
     "mkdirp": "^0.5.1",
