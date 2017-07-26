@@ -8,6 +8,10 @@ then
 
 		Runs functional (end-to-end) tests in a docker container
 
+		Used by Jenkins jobs:
+		  https://ci.service.dsd.io/view/family%20justice/job/BUILD-cait
+		  https://ci.service.dsd.io/view/family%20justice/job/FUNCTIONALTEST-cait
+
 		The following environment variables must be set:
 
 		  JOB_NAME
@@ -73,19 +77,3 @@ then
   docker run $REPORTS_VOLUME --name $FUNCTIONAL -e "baseUrl=$BASE_URL" -e "baseIp=$APP_IP" -e "seleniumIp=$SELENIUM_IP" $APP yarn test:functional
 
 fi
-
-HERE=$0
-SCRIPTPATH=$HERE
-SYMLINKPATH=$(ls -l $SCRIPTPATH | awk '{print $11}')
-if [ "$SYMLINKPATH" != "" ]
-  then
-  if [ "$SYMLINKPATH" == "../pflr-express-kit/bin/test-unit-functional.sh" ]
-    then
-    SCRIPTPATH=$(dirname $HERE)/$SYMLINKPATH
-    else
-    SCRIPTPATH=$SYMLINKPATH
-  fi
-fi
-CLEANUPSCRIPT=$(dirname $SCRIPTPATH)/clean-docker.sh
-
-sh $CLEANUPSCRIPT
