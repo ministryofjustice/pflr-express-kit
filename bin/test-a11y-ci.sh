@@ -50,7 +50,7 @@ if [ "$SKIP_A11Y" != "true" ]
 then
   DOCKERTAG=$(echo $JOB_NAME-$BUILD_NUMBER | tr '[:upper:]' '[:lower:]')
 
-  APP=$DOCKERTAG-app
+  APP=$DOCKERTAG-app-a11y
   docker build -t $APP .
 
   #### If no environment url passed, spin the app up
@@ -60,6 +60,7 @@ then
     APP_IP=$(docker inspect --format '{{.NetworkSettings.IPAddress}}' $APP)
   fi
 
+  REPORTS=reports
   if [ "$REPORTS" != "" ]
   then
     REPORTS_VOLUME="-v $REPORTS:/usr/app/reports"

@@ -22,6 +22,11 @@ echo Running a11y checks against $TARGET
 
 node_modules/.bin/a11ym -o reports/a11ym --no-verbose $TARGET
 
+echo BASEAPP
+ls -l
+echo REPORTS
+ls -l reports
+
 ERRORS=$(node -e "const results = require('./reports/a11ym/statistics.json'); console.log(results.reduce((sum, result) => sum + result.errorCount, 0))")
 
 if [ "$ERRORS" != "0" ]
