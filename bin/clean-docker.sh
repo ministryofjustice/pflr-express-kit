@@ -8,6 +8,7 @@ docker rm -fv $DOCKERTAG-app 2>/dev/null \
 docker rm -fv $DOCKERTAG-selenium 2>/dev/null \
 docker rm -fv $DOCKERTAG-functional 2>/dev/null \
 docker rm -fv $DOCKERTAG-a11y 2>/dev/null \
+docker rm -fv $DOCKERTAG-app-a11y 2>/dev/null \
 docker rm -f $DOCKERTAG-accessibility 2>/dev/null)
 
 echo Removed docker volumes $REMOVED
