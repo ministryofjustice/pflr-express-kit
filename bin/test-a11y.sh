@@ -11,8 +11,6 @@ fi
 
 echo Checking $TARGET is reachable
 
-exit 0
-
 curl -s $TARGET > /dev/null
 if [ "$?" != "0" ]
 then

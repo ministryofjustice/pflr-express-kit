@@ -67,6 +67,6 @@ then
   fi
   # Now run the tests
   A11Y=$DOCKERTAG-a11y
-  docker run $REPORTS_VOLUME --name $A11Y $APP yarn test:a11y
+  docker run $REPORTS_VOLUME --name $A11Y $APP yarn test:a11y http:$APP_IP:3000
 
 fi
