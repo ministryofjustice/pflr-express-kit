@@ -20,6 +20,13 @@ fi
 
 echo Running a11y checks against $TARGET
 
+echo BASEAPP
+ls -l
+echo REPORTS
+ls -l reports
+echo REPORTS-A11Y
+ls -l reports/a11ym
+
 node_modules/.bin/a11ym -o reports/a11ym --no-verbose $TARGET
 
 echo BASEAPP
