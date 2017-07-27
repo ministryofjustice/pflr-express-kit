@@ -26,6 +26,8 @@ echo BASEAPP
 ls -l
 echo REPORTS
 ls -l reports
+echo REPORTS-A11Y
+ls -l reports/a11ym
 
 ERRORS=$(node -e "const results = require('./reports/a11ym/statistics.json'); console.log(results.reduce((sum, result) => sum + result.errorCount, 0))")
 
