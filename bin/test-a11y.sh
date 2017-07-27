@@ -27,7 +27,7 @@ ls -l reports
 echo REPORTS-A11Y
 ls -l reports/a11ym
 
-node_modules/.bin/a11ym -o reports/a11ym --no-verbose $TARGET
+node_modules/.bin/a11ym -o $PWD/reports/a11ym --no-verbose $TARGET
 
 echo BASEAPP
 ls -l
