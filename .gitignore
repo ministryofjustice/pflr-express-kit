@@ -1,6 +1,7 @@
 .DS_Store
 dist/
 public/
+results/
 
 # Logs
 reports
