@@ -6,6 +6,12 @@ then
 		test-a11y-ci.sh
 		=======================
 
+    Currently does not work and not used by the build job
+
+    Phantomjs requires netstat to extract correct port but Jenkins instance does not allow the container access to that info
+
+    ---
+
 		Runs a11y tests on app running a docker container
 
 		Used by Jenkins jobs:
@@ -22,10 +28,6 @@ then
 		  BASE_URL
 		  base url to run the tests against
 		  - must include protocol, port and credentials (if necessary)
-
-		  REPORTS
-		  directory on host where reports should be written to
-		  - must be an absolute path
 
 		  SKIP_A11Y
 		  whether to run a11y tests or not
@@ -58,16 +60,24 @@ then
   then
     docker run --name $APP -d $APP
     APP_IP=$(docker inspect --format '{{.NetworkSettings.IPAddress}}' $APP)
+    BASE_URL=http://$APP_IP:3000
   fi
 
-  REPORTS=reports
-  if [ "$REPORTS" != "" ]
-  then
-    REPORTS_VOLUME="-v $REPORTS:/usr/app/reports"
-    echo "Reports will be output to $REPORTS"
+  HERE=$0
+  SCRIPTPATH=$HERE
+
+  SYMLINKPATH=$(ls -l $SCRIPTPATH | awk '{print $11}')
+  if [ "$SYMLINKPATH" != "" ]
+    then
+    if [ "$SYMLINKPATH" == "../pflr-express-kit/bin/test-ci.sh" ]
+      then
+      SCRIPTPATH=$(dirname $HERE)/$SYMLINKPATH
+      else
+      SCRIPTPATH=$SYMLINKPATH
+    fi
   fi
-  # Now run the tests
-  A11Y=$DOCKERTAG-a11y
-  docker run $REPORTS_VOLUME --name $A11Y $APP yarn test:a11y http://$APP_IP:3000
+  SCRIPTDIR=$(echo $SCRIPTPATH | sed 's/\/test-a11y-ci.sh//')
+
+  sh $SCRIPTDIR/test-a11y.sh $BASE_URL $PWD/spec/pa11y-ci.json
 
 fi
