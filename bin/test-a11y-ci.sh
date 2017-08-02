@@ -3,7 +3,7 @@
 if [[ $1 == "-h" || $1 == "--help" ]]
 then
   read -d '' USAGE <<- EndOfMessage
-		functional-tests-run.sh
+		test-a11y-ci.sh
 		=======================
 
 		Runs a11y tests on app running a docker container

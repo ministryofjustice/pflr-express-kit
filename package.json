@@ -75,6 +75,7 @@
     "lint-templates": "bin/lint-templates.js",
     "test-a11y": "bin/test-a11y.sh",
     "test-a11y-ci": "bin/test-a11y-ci.sh",
+    "test-ci": "bin/test-ci.sh",
     "test-functional": "bin/test-functional.sh",
     "test-functional-ci": "bin/test-functional-ci.sh",
     "test-unit": "bin/test-unit.sh",
