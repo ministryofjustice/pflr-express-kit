@@ -1,6 +1,6 @@
 const path = require('path')
 
-const app = process.env.APPDIR
+const app = process.env.PWD
 const frontendKitDir = __dirname
 
 const appDir = path.join(app, 'app')
