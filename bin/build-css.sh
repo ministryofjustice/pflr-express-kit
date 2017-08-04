@@ -1,6 +1,7 @@
 #!/bin/sh
 
-SCRIPTPATH=$0
+HERE=$0
+SCRIPTPATH=$HERE
 
 SYMLINKPATH=$(ls -l $SCRIPTPATH | awk '{print $11}')
 if [ "$SYMLINKPATH" != "" ]
