@@ -4,9 +4,9 @@ Private Family Law Express Kit
 
 ## Pre-requisites
 
-  [Node 7.7.1](https://nodejs.org)
+  [Node 8.1.4](https://nodejs.org)
 
-  [Yarn 0.21.3](https://yarnpkg.com)
+  [Yarn 0.27.5](https://yarnpkg.com)
 
 ## Optional
 
@@ -14,4 +14,4 @@ Private Family Law Express Kit
 
 ## Installing
 
-  yarn add https://github.com/ministryofjustice/pflr-express-kit.git#v0.0.1
+  yarn add https://github.com/ministryofjustice/pflr-express-kit.git#v0.0.15

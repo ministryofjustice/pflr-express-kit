@@ -50,5 +50,5 @@ glob(`${appDir}/metadata/blocks/**/*.json`)
   }
 })
 
-// env APPDIR=$PWD npm explore pflr-express-kit -- yarn lint:data
+// env APPDIR=$PWD npm explore pflr-express-kit -- npm run lint:data
 // find $APPDIR/metadata/**/*.json | xargs -P 20 -L 1 jsonlint -q

@@ -51,7 +51,7 @@ then
   docker build -t=$TEST_IMAGE .
   if [ "$SKIP_LINT" != "true" ]
   then
-    docker run --name $DOCKERTAG-lint $TEST_IMAGE yarn lint
+    docker run --name $DOCKERTAG-lint $TEST_IMAGE npm run lint
     if [ "$?" != "0" ]
     then
       exit 1
@@ -59,6 +59,6 @@ then
   fi
   if [ "$SKIP_UNIT" != "true" ]
   then
-    docker run --name $DOCKERTAG-unit $TEST_IMAGE yarn test:unit
+    docker run --name $DOCKERTAG-unit $TEST_IMAGE npm run test:unit
   fi
 fi
