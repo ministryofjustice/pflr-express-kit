@@ -1,6 +1,6 @@
 {
   "name": "pflr-express-kit",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "main": "lib/server.js",
   "repository": {},
   "license": "MIT",

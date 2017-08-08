@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 HERE=$0
 SCRIPTPATH=$HERE
