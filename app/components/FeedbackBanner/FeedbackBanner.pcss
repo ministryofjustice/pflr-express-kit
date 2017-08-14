@@ -1,0 +1,25 @@
+@import 'utils/_app.pcss';
+
+.FeedbackBanner {
+  background: var(--FeedbackBanner--background);
+  color: var(--FeedbackBanner--color);
+  padding: 0.5rem 0 1rem;
+
+  @media print {
+    display: none;
+  }
+}
+
+.FeedbackBanner a {
+  color: var(--FeedbackBanner_a--color);
+}
+
+.FeedbackBanner__heading {
+  font-size: 1.9rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.FeedbackBanner__link {
+  margin: 0;
+}

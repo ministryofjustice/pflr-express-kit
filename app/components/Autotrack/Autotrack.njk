@@ -1,0 +1,19 @@
+{% macro Autotrack(GA_TRACKING_ID) %}
+  {% if GA_TRACKING_ID %}
+  <script>
+  var GA_TRACKING_ID = '{{ GA_TRACKING_ID }}'
+  </script>
+  <script src="/public/javascripts/ga-custom/ga-custom.js"></script>
+  <script async src="https://www.google-analytics.com/analytics.js"></script>
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=IntersectionObserver"></script>
+  <script src="/public/javascripts/vendor/autotrack/autotrack_v2.0.4.js"></script>
+  <script src="/public/javascripts/ga-plugins/ga-plugins.js"></script>
+  <script>
+  jQuery('.gv-c-button').each(function() {
+    jQuery(this).attr('data-link-type', 'button')
+  })
+  </script>
+  <script src="/public/javascripts/tracking-video/tracking-video.js"></script>
+  <script src="/public/javascripts/tracking-element/tracking-element.js"></script>
+  {% endif %}
+{% endmacro %}

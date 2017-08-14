@@ -1,0 +1,15 @@
+{% macro SupportLinks() %}
+  <h2 class="visuallyhidden">{{ Block.String('SupportLinks__heading') }}</h2>
+  {% set supportLinks = getBlockProp('SupportLinks', 'links') %}
+  <ul data-block-name="SupportLinks">
+  {% for link in supportLinks %}
+  <li{% if link.linkType %} data-link-type="{{ link.linkType }}"{% endif %}{% if link.className %} class="{{ link.className }}"{% endif %}>
+    {% if link.route %}
+      <a href="{{ getRouteUrl(link.route) }}">{{ getBlockProp(link.route, ['heading_short', 'heading']) }}</a>
+    {% else %}
+      {{ markdown(link.link) | safe }}
+    {% endif %}
+  </li>
+  {% endfor %}
+  </ul>
+{% endmacro %}

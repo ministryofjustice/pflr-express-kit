@@ -1,0 +1,25 @@
+@import 'utils/_app.pcss';
+
+#global-cookie-message {
+  background-color: var(--global-cookie-message--background);
+  padding: 10px 0;
+}
+
+.cookie-seen {
+  display: none;
+}
+
+#global-cookie-message .CookieMessage {
+  max-width: 960px;
+  margin: 0 15px;
+  font-size: 1.4rem;
+
+  @media (--govuk-medium) {
+    margin: 0 30px;
+    font-size: 1.6rem;
+  }
+
+  @media (--govuk-large) {
+    margin: 0 auto;
+  }
+}

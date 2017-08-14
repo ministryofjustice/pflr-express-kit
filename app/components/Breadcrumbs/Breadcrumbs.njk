@@ -1,0 +1,13 @@
+{% import "components/components.njk" as govuk %}
+{% macro Breadcrumbs(route) %}
+{{ govuk.breadcrumbs(
+    items = [
+      {
+        "title": "Home",
+        "url": "/"
+      },
+      {
+        "title": getFormattedProp(route.id, 'heading')
+      }
+    ]) }}
+{% endmacro %}
