@@ -1,0 +1,23 @@
+@import '_utils.pcss';
+
+@custom-selector :--inset .panel-border-wide;
+
+:root {
+  --line-thin: solid 1px;
+  --line-medium: solid 5px;
+  --line-thick: solid 10px;
+  --border-divider: var(--line-thin) var(--grey-1);
+  --border-subdivider: var(--line-thin) var(--grey-2);
+  --border-brand: var(--line-medium) var(--govuk-blue);
+  --border-brand-thick: var(--line-thick) var(--govuk-blue);
+
+  --inset {
+    padding: 1rem 2rem;
+    border-left: var(--line-thick) var(--grey-2);
+    margin: 1rem 0 2rem;
+
+    & > p:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

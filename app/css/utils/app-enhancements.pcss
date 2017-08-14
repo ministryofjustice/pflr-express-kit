@@ -1,0 +1,65 @@
+@import 'utils/_app.pcss';
+
+#global-header .header-proposition {
+  padding-top: 0.5rem;
+}
+
+main {
+  padding-bottom: 3rem;
+}
+
+#footer {
+  border-top: var(--border-brand-thick);
+}
+
+:--inset {
+  @apply --inset;
+}
+
+:--button {
+  text-align: center;
+}
+
+dt {
+  font-weight: bold;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+@media (--kit-small-max) {
+  th {
+    display: none;
+  }
+
+  table td {
+    display: block;
+    border-bottom: none;
+  }
+
+  td::before {
+    content: attr(data-th);
+    display: block;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+}
+
+table th,
+table td {
+  vertical-align: top;
+  font-size: 1.4rem;
+
+  @media (--kit-mlarge) {
+    font-size: 1.6rem;
+  }
+}
+
+@media (--kit-mlarge) {
+  td:first-child {
+    width: 15rem;
+  }
+
+  td:last-child {
+    width: 11rem;
+  }
+}

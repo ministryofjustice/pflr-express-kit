@@ -1,0 +1,54 @@
+{% extends "templates/base/base.html" %}
+{% import "components/Utils/Utils.njk" as Utils with context %}
+{% from 'components/Autotrack/Autotrack.njk' import Autotrack with context %}
+{% from 'components/Breadcrumbs/Breadcrumbs.njk' import Breadcrumbs with context %}
+{% from 'components/CookieMessage/CookieMessage.njk' import CookieMessage with context %}
+{% from 'components/FeedbackBanner/FeedbackBanner.njk' import FeedbackBanner with context %}
+{% from 'components/PhaseBanner/PhaseBanner.njk' import PhaseBanner with context %}
+{% from 'components/SupportLinks/SupportLinks.njk' import SupportLinks with context %}
+
+{% block page_title %}{{ getFormattedProp(route.id, 'heading') }} - {{ getFormattedProp('route:summary', 'heading') }}{% endblock %}
+
+{% block body_classes %}{{ route.template }}{% if req.disqualified %} disqualified{% endif %}{% endblock %}
+
+{% block proposition_name %}{{ Block.String('ServiceName') }}{% endblock %}
+
+{% block stylesheet %}
+{{ super() }}
+<link href="/public/stylesheets/app.css" media="screen" rel="stylesheet">
+{% endblock %}
+
+{% block head %}
+{{ super() }}
+<link href="/public/stylesheets/app--print.css" media="print" rel="stylesheet">
+{% endblock %}
+
+{%block cookie_message %}
+{% if not req.disqualified %}
+{{ CookieMessage() }}
+{% endif %}
+{% endblock %}
+
+{% block after_header %}
+{% if not req.disqualified %}
+{{ FeedbackBanner() }}
+{% endif %}
+{% endblock %}
+
+{% block phase_banner %}
+{% if not req.disqualified %}
+{{ PhaseBanner() }}
+{% endif %}
+{% endblock %}
+
+{% block breadcrumbs_content %}
+{% if route.breadcrumbs %}
+{{ Breadcrumbs(route) }}
+{% endif %}
+{% endblock %}
+
+{% block footer_support_links %}
+  {% if not req.disqualified %}
+  {{ SupportLinks() }}
+  {% endif %}
+{% endblock %}
