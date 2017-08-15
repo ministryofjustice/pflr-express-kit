@@ -80,6 +80,7 @@
     "lint-javascript-server": "bin/lint-javascript-server.js",
     "lint-stylesheets": "bin/lint-stylesheets.js",
     "lint-templates": "bin/lint-templates.js",
+    "postinstall": "bin/postinstall.sh",
     "start": "bin/start.sh",
     "test-a11y": "bin/test-a11y.sh",
     "test-a11y-ci": "bin/test-a11y-ci.sh",
