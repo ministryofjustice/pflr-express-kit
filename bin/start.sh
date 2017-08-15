@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-node start.js
+node lib/start.js
