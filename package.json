@@ -68,6 +68,7 @@
   "bin": {
     "build": "bin/build.sh",
     "build-css": "bin/build-css.sh",
+    "build-javascript": "bin/build-javascript.sh",
     "clean-build": "bin/clean-build.sh",
     "clean-docker": "bin/clean-docker.sh",
     "clean-prepush": "bin/clean-prepush.sh",
@@ -79,6 +80,7 @@
     "lint-javascript-server": "bin/lint-javascript-server.js",
     "lint-stylesheets": "bin/lint-stylesheets.js",
     "lint-templates": "bin/lint-templates.js",
+    "start": "bin/start.sh",
     "test-a11y": "bin/test-a11y.sh",
     "test-a11y-ci": "bin/test-a11y-ci.sh",
     "test-all": "bin/test-all.sh",
@@ -88,10 +90,13 @@
     "test-prepush": "bin/test-prepush.sh",
     "test-unit": "bin/test-unit.sh",
     "test-unit-ci": "bin/test-unit-ci.sh",
-    "watch-css": "bin/watch-css.sh"
+    "watch-css": "bin/watch-css.sh",
+    "watch-javascript": "bin/watch-javascript.sh"
   },
   "scripts": {
+    "build:assets": "bin/build-assets.sh",
     "build:css": "bin/build-css.sh",
+    "build:javascript": "bin/build-javascript.sh",
     "clean:build": "bin/clean-build.sh",
     "githooks": "git config core.hooksPath .githooks",
     "githooksUnset": "git config --unset core.hooksPath",
@@ -105,6 +110,7 @@
     "test:unit": "bin/test-unit.sh",
     "test:docker": "echo no docker test set up",
     "test:docker:cleanup": "echo no docker test cleanup set up",
-    "watch:css": "bin/watch-css.sh"
+    "watch:css": "bin/watch-css.sh",
+    "watch:javascript": "bin/watch-javascript.sh"
   }
 }
