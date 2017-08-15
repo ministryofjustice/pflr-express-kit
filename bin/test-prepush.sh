@@ -19,7 +19,5 @@ export JOB_NAME=$(cat package.json | grep name | head -1 | awk -F: '{ print $2 }
 export BUILD_NUMBER=prepush
 
 sh $SCRIPTPATH/test-ci.sh
-sh $SCRIPTPATH/dockerfile-unclone.sh
-sh $SCRIPTPATH/clean-docker.sh
 
 npm run test:a11y

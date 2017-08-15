@@ -16,6 +16,7 @@ fi
 SCRIPTPATH=$(echo $SCRIPTPATH | sed 's/\/test-ci.sh//')
 
 sh $SCRIPTPATH/clean-docker.sh
+sh $SCRIPTPATH/dockerfile-unclone.sh
 sh $SCRIPTPATH/dockerfile-clone.sh
 
 sh $SCRIPTPATH/test-unit-ci.sh

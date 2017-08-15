@@ -93,6 +93,7 @@
     "test-functional": "bin/test-functional.sh",
     "test-functional-ci": "bin/test-functional-ci.sh",
     "test-prepush": "bin/test-prepush.sh",
+    "posttest-prepush": "bin/posttest-prepush.sh",
     "test-unit": "bin/test-unit.sh",
     "test-unit-ci": "bin/test-unit-ci.sh",
     "watch-css": "bin/watch-css.sh",
