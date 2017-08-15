@@ -1,8 +1,6 @@
 #!/bin/sh
 
-if [ "$SKIP_PRE_PUSH_CAIT" != "true" ]
+if [ "$SKIP_PREPUSH" != "true" ]
 then
-  export JOB_NAME=cait-test
-  export BUILD_NUMBER=pre-push
   node_modules/.bin/npm-run-all -p test:prepush
 fi

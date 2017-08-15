@@ -15,6 +15,9 @@ if [ "$SYMLINKPATH" != "" ]
 fi
 SCRIPTPATH=$(echo $SCRIPTPATH | sed 's/\/test-ci.sh//')
 
+sh $SCRIPTPATH/clean-docker.sh
+sh $SCRIPTPATH/dockerfile-clone.sh
+
 sh $SCRIPTPATH/test-unit-ci.sh
 # sh $SCRIPTPATH/test-a11y-ci.sh
 sh $SCRIPTPATH/test-functional-ci.sh
