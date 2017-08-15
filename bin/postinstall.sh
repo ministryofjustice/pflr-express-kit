@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ -d .git ] && [ -x \"$(command -v git)\" ]
+if [ -d .git ] && [ -x "$(command -v git)" ]
   then npm run githooks
   else echo 'git not installed'
 fi
