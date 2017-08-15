@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-npm-run-all posttest:prepush
+npm-run-all clean:prepush
