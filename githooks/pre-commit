@@ -1,0 +1,13 @@
+#!/bin/sh
+
+git_eng="env LANG=C git"
+# get current branch name or short SHA1 hash for detached head
+branch="$($git_eng symbolic-ref --short HEAD 2>/dev/null || $git_eng describe --tags --always 2>/dev/null)"
+
+if [ "$branch" = "master" ]
+then
+  echo "Aborting - committing to the master branch is not allowed"
+  exit 1
+fi
+
+node_modules/.bin/npm-run-all -p lint test:unit

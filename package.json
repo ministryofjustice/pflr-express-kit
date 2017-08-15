@@ -73,6 +73,8 @@
     "clean-docker": "bin/clean-docker.sh",
     "clean-prepush": "bin/clean-prepush.sh",
     "dev-start": "bin/dev-start.sh",
+    "githooks": "bin/githooks.sh",
+    "githooks-unset": "bin/githooks-unset.sh",
     "lint": "bin/lint.sh",
     "lint-data": "bin/lint-data.js",
     "lint-javascript": "bin/lint-javascript.js",

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# check package.json to see if node_modules need updating
+# check if yarn run build needs calling again
