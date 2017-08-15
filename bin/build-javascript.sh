@@ -1,3 +1,6 @@
 #!/usr/bin/env bash
 
-babel -d public/javascripts app/javascript $@
+if [ -e app/javascript ]
+  then
+  babel -d public/javascripts app/javascript $@
+fi
