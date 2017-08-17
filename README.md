@@ -14,4 +14,4 @@ Private Family Law Express Kit
 
 ## Installing
 
-  yarn add https://github.com/ministryofjustice/pflr-express-kit.git#v0.0.16
+  yarn add https://github.com/ministryofjustice/pflr-express-kit.git#v0.0.20
