@@ -1,0 +1,12 @@
+{% extends "templates/generic/generic.html" %}
+
+{% import "components/Utils/Utils.njk" as Utils with context %}
+
+{{ Utils.registerBlocks([
+  "components/CookieSection/CookieSection.njk"
+]) }}
+
+{% block stylesheet %}
+{{ super() }}
+<link href="{{ asset_path }}stylesheets/about.css" media="screen" rel="stylesheet">
+{% endblock %}

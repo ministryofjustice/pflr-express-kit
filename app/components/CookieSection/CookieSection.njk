@@ -1,0 +1,27 @@
+{% from 'components/Section/Section.njk' import Section with context %}
+{% macro CookieSection(name) %}
+<div class="CookieSection" data-block-name="{{name}}">
+<h3>{{ getFormattedProp(name, 'heading') }}</h3>
+{{ getFormattedBody(name) | safe }}
+<table>
+<tr>
+<th>Name</th>
+<th>Purpose</th>
+<th>Expires</th>
+</tr>
+{{ CookieRow(name) }}
+{{ CookieRow(name, suffix='_2') }}
+</table>
+</div>
+
+{% endmacro %}
+
+{% macro CookieRow(name, suffix='') %}
+{% if getBlockProp(name, 'cookie_name' + suffix) %}
+<tr>
+<td data-th="Name">{{ getFormattedProp(name, 'cookie_name' + suffix) }}</td>
+<td data-th="Purpose">{{ getFormattedProp(name, 'cookie_description' + suffix) }}</td>
+<td data-th="Expires">{{ getFormattedProp(name, 'cookie_expires' + suffix) }}</td>
+</tr>
+{% endif %}
+{% endmacro %}

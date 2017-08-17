@@ -52,3 +52,90 @@
   {{ SupportLinks() }}
   {% endif %}
 {% endblock %}
+
+{% block body_end %}
+{{ super() }}
+{# TODO: ensure that req.disqualified does what it should do #}
+{# TODO: normalize env, ENV, req.env, req.ENV #}
+{% if not req.disqualified %}
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
+  <script src="/public/javascripts/vendor/js-cookie/js-cookie_v2.1.3.js"></script>
+  <script>
+  if (Cookies.get('seen_cookie_message')) {
+    jQuery('#global-cookie-message').addClass('cookie-seen')
+  }
+  Cookies.set('seen_cookie_message', true, { expires: 28 })
+  </script>
+  <script>
+  window.APP_VERSION = '{{ env.APP_VERSION }}'
+
+  var searchArgs = {}
+  var search = document.location.search
+  if (search) {
+    search = search.replace(/^\?/, '')
+    var searchChunks = search.split('&')
+    for (var i = 0, sLength = searchChunks.length; i < sLength; i++) {
+      var argParts = searchChunks[i].split('=')
+      searchArgs[argParts[0]] = argParts[1]
+    }
+  }
+  var analytics = Cookies.getJSON('analytics') || {}
+  analytics.visited = analytics.visited || {}
+  if (!analytics.uuid && searchArgs.uuid) {
+    analytics.uuid = searchArgs.uuid
+  }
+  window.setValues = {}
+  window.setValues.dimension12 = analytics.uuid
+  window.setValues.dimension13 = window.APP_VERSION
+  window.setValues.dimension14 = analytics.referrer
+
+  var campaignFields = ['campaignName', 'campaignMedium', 'campaignKeyword', 'campaignContent', 'campaignID']
+  for (var j = 0; j < campaignFields.length; j++) {
+    var campaignField = campaignFields[j]
+    if (searchArgs[campaignField]) {
+      analytics[campaignField] = searchArgs[campaignField]
+      window.setValues[campaignField] = searchArgs[campaignField]
+    }
+  }
+
+  {% if route.template != 'about' %}
+  var pageStub = document.location.pathname
+                  .replace(/\/$/, '')
+                  .replace(/.*\//, '')
+                  || 'summary'
+  analytics.visited[pageStub] = true
+  {% endif %}
+  Cookies.set('analytics', analytics)
+
+  var visited = []
+  for (var page in analytics.visited) {
+    visited.push(page)
+  }
+
+  function addParam(str, param) {
+    if (analytics[param]) {
+      str += '&' + param +'=' + analytics[param]
+    }
+    return str
+  }
+  jQuery('.FeedbackBanner__link a').attr('data-link-type', 'feedback-banner')
+
+  </script>
+
+  {{ Autotrack(env.GA_TRACKING_ID) }}
+
+  <script>
+  // Ensure printed links are fully qualified
+  jQuery('a').each(function() {
+    var href = jQuery(this).attr('href')
+    if (href.match(/^(\/$|\/[^\/])/)) {
+      if (!window.location.origin) {
+        window.location.origin = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+      }
+      jQuery(this).attr('href', window.location.origin + href)
+    }
+  })
+  </script>
+
+{% endif %}
+{% endblock %}
