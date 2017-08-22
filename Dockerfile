@@ -1,4 +1,4 @@
-FROM node:8.1.4
+FROM node:8.4.0
 
 # Install yarn
 RUN curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 0.27.5
@@ -15,7 +15,7 @@ RUN yarn install --ignore-scripts --ignore-optional
 
 # Copy config files
 # COPY .babelrc .eslintrc.js ./
-COPY .babelrc ./
+# COPY .babelrc ./
 
 # Copy lib
 COPY lib ./lib
