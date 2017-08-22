@@ -6,3 +6,9 @@ if [ -f "nodockerfile" ]
     rm Dockerfile
     rm nodockerfile
 fi
+if [ -f "nodockerignore" ]
+  then
+    echo 'Removing cloned .dockerignore'
+    rm .dockerignore
+    rm nodockerignore
+fi

@@ -47,6 +47,51 @@
 {% endif %}
 {% endblock %}
 
+{% block grid_content %}
+{% block grid_content_prepend %}{% endblock %}
+<div class="{{ govukClassname('grid-row') }}">
+  <div class="{{ govukClassname('column-two-thirds') }}">
+  {% block grid_content_header %}
+  {% set section_heading = getFormattedProp(route.id, 'section_heading') %}
+  <div class="grid_content_header">
+  {% if section_heading %}
+  <p class="app__section_heading">{{ section_heading | safe }}</p>
+  {% endif %}
+  <h1 class="app__heading {{ govukClassname('heading-xlarge') }}">{{ getFormattedProp(route.id, 'heading', route.id) }}</h1>
+  {% block grid_content_header_post %}{% endblock %}
+  {% set lede = getFormattedProp(route.id, 'lede') %}
+  {% if lede %}
+  <p class="app__lede {{ govukClassname('lede') }}">{{lede }}</p>
+  {% endif %}
+  {% set lede_additional = getFormattedBody(route.id, 'lede_additional') %}
+  {% if lede_additional %}
+  {{lede_additional | safe }}
+  {% endif %}
+  {% block grid_content_header_extra %}{% endblock %}
+  </div>
+  {% endblock %}
+  {% block grid_content_body %}
+  {% if route.body %}
+  <div class="{{ govukClassname('govuk-govspeak') }}">
+  {{ getFormattedBody(route.id, 'body') | safe }}
+  </div>
+  {% endif %}
+  {% if route.blocks %}
+  <div class="{{ govukClassname('govuk-govspeak') }}">
+  {{ Block.Group(blocks=route.blocks) }}
+  </div>
+  {% endif %}
+  {% endblock %}
+  {% block grid_content_extra %}{% endblock %}
+  {% block grid_content_footer %}{% endblock %}
+  </div>
+  <div class="{{ govukClassname('column-one-third') }}">
+  {% block grid_aside %}{% endblock %}
+  </div>
+</div>
+{% block grid_content_append %}{% endblock %}
+{% endblock %}
+
 {% block footer_support_links %}
   {% if not req.disqualified %}
   {{ SupportLinks() }}

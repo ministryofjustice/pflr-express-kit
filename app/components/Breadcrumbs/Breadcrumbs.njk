@@ -1,9 +1,10 @@
 {% import "components/components.njk" as govuk %}
 {% macro Breadcrumbs(route) %}
+{% set home = getBlockProp('breadcrumb-home', 'value', 'Home') %}
 {{ govuk.breadcrumbs(
     items = [
       {
-        "title": "Home",
+        "title": home,
         "url": "/"
       },
       {

@@ -1,0 +1,6 @@
+{% macro MetadataElement(key='', value='', keyId='', valueId='', valueBlockId='', valueProp='', className='') %}
+{% if keyId %}{% set key = Block.String(keyId) %}{% endif %}
+{% if valueId %}{% set value = Block.String(valueId) %}{% endif %}
+{% if valueProp %}{% set value = getBlockProp(valueBlockId, valueProp) %}{% endif %}
+<p class="MetadataElement {{ className }}"><span class="MetadataElement__key">{{ key | safe }}</span> <span class="MetadataElement__value">{{ value | safe }}</span></p>
+{% endmacro %}

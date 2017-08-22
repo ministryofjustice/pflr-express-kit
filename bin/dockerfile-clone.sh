@@ -11,3 +11,14 @@ if [ -f "Dockerfile" ]
     fi
     cp $DOCKERFILE .
 fi
+if [ -f ".dockerignore" ]
+  then echo 'Using existing .dockerignore'
+  else
+    echo 'Cloning .dockerignore from pflr-express-kit'
+    touch nodockerignore
+    DOCKERIGNORE=pflr-express-kit/.dockerignore
+    if [ ! -d pflr-express-kit ]
+      then DOCKERIGNORE=node_modules/$DOCKERIGNORE
+    fi
+    cp $DOCKERIGNORE .
+fi

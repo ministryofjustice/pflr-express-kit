@@ -5,9 +5,13 @@
   '4': 'gv-u-heading-medium'
 } %}
 {% set heading = getFormattedProp(name, 'heading') %}
+{% set lede = getFormattedProp(name, 'lede') %}
 <section id="{{ name }}" class="moj-Section moj-Section--{{ depth }} {{ className }}" data-block-name="{{name}}">
 {% if heading %}
 <h{{depth}} class="moj-Section__heading moj-Section__heading--{{ depth }} {{ gv_depth[depth] }}{% if className %} {{ className }}__heading{% endif %}">{{ heading | safe }}</h{{depth}}>
+{% endif %}
+{% if lede %}
+<p class="Section__lede {{ govukClassname('lede') }}">{{ lede | safe }}</p>
 {% endif %}
 {% if content %}
 {{ content }}
