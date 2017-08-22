@@ -2,5 +2,5 @@
 
 if [ -e app/javascript ]
   then
-  babel -d public/javascripts app/javascript $@
+  babel --presets=es2015 -d public/javascripts app/javascript $@
 fi

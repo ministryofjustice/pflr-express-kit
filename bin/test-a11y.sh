@@ -33,4 +33,7 @@ then
   echo Using config from $CONFIG
 fi
 
-docker run $CONFIGVOLUME solidgoldpig/pa11y-ci:0.0.2 sh pa11y-ci-wrapper --rootUrl $TARGET $CONFIGOPTION
+DOCKERTAG=$(echo $JOB_NAME-$BUILD_NUMBER | tr '[:upper:]' '[:lower:]')
+A11Y=$DOCKERTAG-a11y
+
+docker run $CONFIGVOLUME --name $A11Y solidgoldpig/pa11y-ci:0.0.2 sh pa11y-ci-wrapper --rootUrl $TARGET $CONFIGOPTION
