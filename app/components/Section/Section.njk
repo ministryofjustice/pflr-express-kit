@@ -6,12 +6,12 @@
 } %}
 {% set heading = getFormattedProp(name, 'heading') %}
 {% set lede = getFormattedProp(name, 'lede') %}
-<section id="{{ name }}" class="moj-Section moj-Section--{{ depth }} {{ className }}" data-block-name="{{name}}">
+<section id="{{ name }}" class="moj-Section moj-Section--{{ depth }}{% if className %} {{ className }}{% endif %}" data-block-name="{{name}}">
 {% if heading %}
 <h{{depth}} class="moj-Section__heading moj-Section__heading--{{ depth }} {{ gv_depth[depth] }}{% if className %} {{ className }}__heading{% endif %}">{{ heading | safe }}</h{{depth}}>
 {% endif %}
 {% if lede %}
-<p class="Section__lede {{ govukClassname('lede') }}">{{ lede | safe }}</p>
+<p class="Section__lede {{ govukClassname('lede') }}{% if className %} {{ className }}__lede{% endif %}">{{ lede | safe }}</p>
 {% endif %}
 {% if content %}
 {{ content }}
@@ -21,7 +21,7 @@
 {% endif %}
 {% set body = getFormattedBody(name, 'body') %}
 {% if body %}
-<div class="Section__content {{ govukClassname('govuk-govspeak') }}">
+<div class="Section__content {{ govukClassname('govuk-govspeak') }}{% if className %} {{ className }}__content{% endif %}">
 {{ body | safe }}
 </div>
 {% endif %}
