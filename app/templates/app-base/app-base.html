@@ -7,7 +7,7 @@
 {% from 'components/PhaseBanner/PhaseBanner.njk' import PhaseBanner with context %}
 {% from 'components/SupportLinks/SupportLinks.njk' import SupportLinks with context %}
 
-{% block page_title %}{{ getFormattedProp(route.id, 'heading') }} - {{ getFormattedProp('route:summary', 'heading') }}{% endblock %}
+{% block page_title %}{{ getFormattedProp(route.id, 'heading') }}{% if route.id != 'route:index' %} - {{ getFormattedProp('route:index', 'heading') }}{% endif %}{% endblock %}
 
 {% block body_classes %}{{ route.template }}{% if req.disqualified %} disqualified{% endif %}{% endblock %}
 
