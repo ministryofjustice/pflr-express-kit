@@ -4,7 +4,7 @@ Private Family Law Express Kit
 
 ## Pre-requisites
 
-  [Node 8.1.4](https://nodejs.org)
+  [Node 8.4.0](https://nodejs.org)
 
   [Yarn 0.27.5](https://yarnpkg.com)
 
