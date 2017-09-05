@@ -860,3 +860,26 @@ input[type=number] {
   details summary:not([tabindex]) {
     display: list-item;
     display: revert; } }
+
+/* Tweaks */
+
+.form .app__heading {
+  margin-bottom: 3rem;
+}
+
+.form-submit {
+  margin-top: 3rem;
+}
+
+.error {
+  margin-right: 15px;
+  border-left: 4px solid #b10e1e;
+  padding-left: 10px;
+}
+
+@media (min-width: 641px) {
+  .error {
+    border-left: 5px solid #b10e1e;
+    padding-left: 15px;
+  }
+}

@@ -1,48 +1,13 @@
 {% extends "templates/app/app.html" %}
+{% from 'components/ErrorSummary/ErrorSummary.njk' import ErrorSummary with context %}
 
 {% block stylesheet %}
 {{ super() }}
-{# <link href="https://govuk-elements.herokuapp.com/public/stylesheets/govuk-template.css?0.22.3" media="screen" rel="stylesheet"> #}
-{# <link href="https://govuk-elements.herokuapp.com/public/stylesheets/govuk-elements-styles.css" media="screen" rel="stylesheet"> #}
-<link href="/public/stylesheets/govuk-form-styles.css" xmedia="screen" rel="stylesheet">
-<style>
-.form .app__heading {
-  margin-bottom: 30px;
-}
-.form-submit {
-  margin-top: 3rem;
-}
-
-.error {
-  margin-right: 15px;
-  border-left: 4px solid #b10e1e;
-  padding-left: 10px;
-}
-@media (min-width: 641px) {
-  .error {
-    border-left: 5px solid #b10e1e;
-    padding-left: 15px;
-  }
-}
-</style>
+<link href="/public/stylesheets/govuk-form-styles.css" rel="stylesheet">
 {% endblock %}
 
 {% block grid_content_body %}
-{% if errors %}
-<div class="error-summary" role="group" aria-labelledby="error-summary-heading" tabindex="-1">
-
-<h1 class="heading-medium error-summary-heading" id="error-summary-heading">
-{{ getFormattedProp('error-header', 'heading') }}
-</h1>
-
-<ul class="error-summary-list">
-  {% for errorKey, errorValue in errors %}
-<li><a href="#{{ errorKey }}">{{ getFormattedError(errorKey, {header:true}) }}{#{{errorKey}} - {{errorValue}}#}</a></li>
-{% endfor %}
-</ul>
-
-</div>
-{% endif %}
+{{ ErrorSummary(errors) }}
 <form method="post">
 {{ super() }}
 <div class="xform-group form-submit"><input class="button next validation-submit" type="submit" value="Save and continue"></div>
