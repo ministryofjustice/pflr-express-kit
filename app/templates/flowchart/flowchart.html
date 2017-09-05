@@ -1,4 +1,263 @@
-{% extends "templates/base/base.html" %}
+{% extends "templates/form/form.html" %}
+
+{% block stylesheet %}
+{{ super() }}
+<style>
+html {
+  background-color: #ffffff;
+  -webkit-print-color-adjust;
+}
+body {
+  background-color: transparent;
+}
+
+#global-cookie-message,
+#global-header,
+.FeedbackBanner,
+.PhaseBanner,
+#global-header-bar,
+#footer {
+  display: none;
+}
+
+div#content {
+  margin: 0;
+}
+#container {
+  margin: 120px 50px 50px 50px;
+  padding-right: 50px;
+  display: table;
+  table-layout: fixed;
+  width: 1px;
+  xborder-spacing: 20px;
+  xborder-collapse: separate;
+}
+.box-row {
+  display: table-row;
+}
+.box-row + .box-row {
+  background: #eeeeee;
+}
+.box-row + .box-row > * {
+  padding-top: 20px;
+}
+.box {
+  position: relative;
+  display: table-cell;
+  width: 360px;
+  vertical-align: top;
+  padding-bottom: 100px;
+}
+.innerbox:before {
+  content: '▶';
+  position: absolute;
+  font-size: 20px;
+  top: 37px;
+  right: 100%;
+}
+.box:first-child .innerbox:before {
+  content: '';
+}
+.innerbox {
+  padding: 10px 10px 10px 40px;
+  background: #fcfcfc;
+  display: table;
+  box-sizing: border-box;
+  width: 100%;
+  border: solid 1px #000000;
+}
+.gutter {
+  display: table-cell;
+  width: 100px;
+  position: relative;
+}
+.gutter-depends {
+  width: 360px;
+}
+.gutter:before {
+  top: 47px;
+  content: '';
+  display: block;
+  border-top: solid 5px #000000;
+  position: absolute;
+  left: 0;
+  right: 10px;
+}
+.gutter-depends:before {
+  left: 50%;
+}
+.gutter-depends:after {
+  top: -80px;
+  left: 50%;
+  content: '';
+  display: block;
+  border-top: solid 5px #000000;
+  border-left: solid 5px #000000;
+  position: absolute;
+  width: 50%;
+  height: 100px;
+}
+
+.matchProp__list,
+.gutter ul {
+  position: relative;
+  z-index: 10;
+  font-size: 16px;
+  padding: 10px;
+  top: 12px;
+}
+.matchProp__list li p,
+.gutter li p {
+  margin: 0;
+}
+.matchProp__list li + li:before,
+.gutter li + li:before {
+  display: block;
+  content: 'or';
+  font-style: italic;
+  font-size: 16px;
+  margin: 10px 16px;
+}
+.gutter ul {
+  background: #000000;
+  color: #ffffff;
+  margin: 0 100px 0 100px;
+  top: 12px;
+}
+
+
+.gutter ul:before {
+  color: #000000;
+  content: '▶';
+  position: absolute;
+  font-size: 20px;
+  top: 24px;
+  right: 100%;
+}
+.gutter ul:after {
+  content: '';
+  position: absolute;
+  top: 34px;
+  left: -100px;
+  width: 90px;
+  border-top: solid 5px #000000;
+}
+.depends:before {
+  top: -80px;
+  content: '';
+  display: block;
+  border-top: solid 5px #000000;
+  border-right: solid 5px #000000;
+  position: absolute;
+  width: 100%;
+  padding-right: 47px;
+  height: 125px;
+}
+.gutter-nextdepends + .depends:before {
+  border-right: none;
+}
+.gutter-previousdepends.gutter-depends {
+  width: 90px;
+}
+.gutter-previousdepends.gutter-depends:before {
+  left: 0;
+}
+.gutter-previousdepends.gutter-depends:after {
+  border-left: none;
+}
+.gutter-previousdepends + .depends:before {
+  
+}
+.depends-skip:before {
+  border-right: solid 5px #ff0000;
+  padding-right: 50%;
+}
+.box .form-group + .form-group + .form-group {
+  display: none;
+}
+a.block-edit {
+  margin-left: -35px;
+}
+@media print {
+ .block-edit {
+   display: none;
+ }
+ .innerbox {
+   padding-left: 10px;
+ }
+}
+
+.innerbox label .block-edit {
+  margin-left: -85px;
+}
+.innerbox > a.block-edit:first-child {
+  margin-top: -50px;
+}
+.innerbox .lede {
+  font-size: 18px;
+}
+
+p.matchProp__key {
+  text-indent: -12px;
+  padding-left: 12px;
+}
+p.depend__key {
+  text-indent: -12px;
+  padding-left: 12px;
+}
+.redirectConditions {
+  background: #eee;
+  border: solid 1px #000;
+  border-top: none;
+}
+.condition__key::before {
+  content: 'If ';
+}
+.condition__constraint {
+  padding-left: 20px;
+}
+.condition__constraint::before {
+  content: 'matches ';
+}
+.conditionalRedirect {
+  padding-left: 30px;
+}
+.conditionalRedirect::before {
+  content: 'Redirect to ';
+}
+.routeKey {
+  position: absolute;
+  top: -35px;
+}
+.routeKey + h1.heading-large, .routeKey + h2.heading-large {
+  margin: 0;
+}
+.action {
+  margin-top: 50px;
+  display: table-cell;
+  zbackground: pink;
+}
+.gutter-action {
+  display: table-cell;
+}
+.depends__yes,
+.depends__no {
+  position: absolute;
+  background: #fff;
+  padding: 3px;
+  z-index: 10000;
+}
+.depends__yes {
+  left: 80%;
+  top: 35px;
+}
+span.depends__no {
+  left: 50%;
+  top: -40px;
+  margin-left: -10px;
+}
+</style>
+{% endblock %}
 
 {% block page_title %}
 Wizard flow - Prototype
@@ -18,21 +277,36 @@ Wizard flow - Prototype
 {% for step in wizard.stepsFlat %}
 {% set stepRoute = routesFlattened[step] %}
 
-{% if not loop.last and stepRoute.blocks %}
+{% set dependsStore = [] %}
+{% if not loop.blast and stepRoute.blocks %}
 {% set previousDepends = depends %}
-{% set depends = getBlockProp(stepRoute.key, 'depends') %}
-<div class="gutter{% if depends %} gutter-depends{% endif %}" id="gutter-{{ stepRoute.key }}">
+{% set nextDepends = '' %}
+{% set continueDepends = '' %}
+{% set nextStep = '' %}
+{% if wizard.stepsFlat[loop.index] %}
+{% set nextStep = routesFlattened[wizard.stepsFlat[loop.index]] %}
+{% endif %}
+{% if nextStep %}
+{% set nextDepends = nextStep.depends %}
+{% endif %}
+{% set depends = stepRoute.depends %}
+{% if not depends %}
+{% for block in stepRoute.blocks %}
+  {% if not depends %}
+  {% set depends = getBlockProp(block, 'depends') %}
+  {% set dependsSoak = dependsStore.push(depends) %}
+  {% endif %}
+{% endfor %}
+{% set depends = dependsStore[0] %}
+{% endif %}
+{% set redirectConditions = stepRoute.redirectConditions %}
+<div class="gutter{% if nextDepends %}{% if depends == nextDepends %} gutter-nextdepends{% endif %}{% endif %}{% if depends %}{% if not nextDepends %} gutter-nonextdepends{% endif %}{% if depends == previousDepends %} gutter-previousdepends{% endif %} gutter-depends{% endif %}" id="gutter-{{ stepRoute._id }}">
 {% if depends %}
-<ul class="xlist xlist-bullet">
-{% for depend in depends %}
-<li>
-{% for key, constraint in depend %}
-  <p class="dependKey" style="font-weight:bold;">{{ splitWord(key) | safe }}</p>
-  <p class="dependConstraint">{{ constraint }}</p>
-{% endfor %}
-</li>
-{% endfor %}
-</ul>
+{% if depends != previousDepends %}
+<span class="depends__yes">Yes</span>
+<span class="depends__no">No</span>
+{{ matchProps(depends, type='depend') }}
+{% endif %}
 {% endif %}
 </div>
 <div class="box{% if depends %} depends{% endif %}" id="{{ stepRoute.key }}">
@@ -41,28 +315,36 @@ Wizard flow - Prototype
 {{ Block.PageHeader(stepRoute.id, start_page=stepRoute.start_page) }}
 {{ Block.Group(blocks=stepRoute.blocks) }}
 </div>
+{% if redirectConditions %}
+<ul class="redirectConditions">
+{% for redirect, condition in redirectConditions %}
+<li>
+{{ matchProps(condition, type='condition') }}
+<p class="conditionalRedirect">{{ redirect }}</p>
+</li>
+{% endfor %}
+</ul>
+{% endif %}
 </div>
 {% endif %}
 {% endfor %}
 </div>
-{% if false %}
-<div class="box-row">
-<div class="action"></div>
-{% for step in wizard.stepsFlat %}
-{% set stepRoute = routesFlattened[step] %}
-{% if not loop.last and stepRoute.blocks %}
-<div class="gutter-action"></div>
-<div class="action">
-{% if getBlock('action:'+step) %}{{ Block.ApAction('action:'+step) }}{% endif %}
-</div>
-{% endif %}
-{% endfor %}
-</div>
-</div>
-{% endif %}
 {% endblock %}
 
-{% block body_end_extra %}
+{% block Xbody_end_extra %}
 jQuery("#children_resident, #communication_methods").addClass("depends-skip");
 // jQuery("#gutter-your_plan, #your_plan").hide();
 {% endblock %}
+
+{% macro matchProps(props, type='depend') %}
+<ul class="matchProp__list {{ type }}-list xlist xlist-bullet">
+{% for prop in props %}
+<li>
+{% for key, constraint in prop %}
+  <p class="matchProp__key {{ type }}__key" style="font-weight:bold;">{{ splitWord(key) | safe }}</p>
+  <p class="{{ type }}__constraint">{{ constraint }}</p>
+{% endfor %}
+</li>
+{% endfor %}
+</ul>
+{% endmacro %}
