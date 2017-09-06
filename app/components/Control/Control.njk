@@ -1,6 +1,7 @@
 {% macro Control(name, _blockType='', value='', error='', label='', sublabel='', hint='', heading='', inline='', depth=2) -%}
-{% if checkNoDependency(name, true) %}
-{% set _blockType = getBlockProp(name, '_blockType', 'text', { value: _blockType }) %}
+{% set outputControl = checkNoDependency(name, true) %}
+{% if outputControl %}
+{% set _blockType = getBlockProp(name, '_blockType', 'Text', { value: _blockType }) %}
 {% if Block[_blockType] %}
 {{ Block[_blockType](name, value=value, error=error, label=label, sublabel=sublabel, hint=hint, heading=heading, inline=inline, depth=depth) }}
 {% else %}<p>NO SUCH MACRO :{{ _blockType }}:</p>{% endif %}

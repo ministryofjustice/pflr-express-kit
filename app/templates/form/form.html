@@ -7,9 +7,51 @@
 {% endblock %}
 
 {% block grid_content_body %}
+{# app.wizard.steps.count - {{ app.wizard.steps.count }}
+{% if app.wizard.steps.count > 1 and route.template != 'step-by-step' %}
+<a class="link-back" href="{{ getRouteUrl(wizard.stepsFlat[app.wizard.steps.count - 1]) }}">Back</a>
+{% endif %} #}
 {{ ErrorSummary(errors) }}
 <form method="post">
 {{ super() }}
 <div class="xform-group form-submit"><input class="button next validation-submit" type="submit" value="Save and continue"></div>
 </form>
+{% endblock %}
+
+{% block body_end %}
+{{ super() }}
+<script>
+function unsetCheckbox(inputs) {
+  inputs.prop('checked', false)
+  inputs.closest('label').removeClass('selected')
+}
+jQuery('[data-excludes] input').on('change', function(){
+  if (this.checked) {
+    var inputs = jQuery(this).closest('fieldset').find('> label > input').not(this)
+    unsetCheckbox(inputs)
+  }
+}).closest('fieldset').find('> label > input').not('[data-excludes] input').on('change', function(){
+  if (this.checked) {
+    var inputs = jQuery(this).closest('fieldset').find('> label[data-excludes] > input')
+    unsetCheckbox(inputs)
+  }
+})
+jQuery('input[type=radio][aria-controls]').each(function(){
+//on('change', function() {
+  var $this = jQuery(this)
+  var name = $this.attr('name')
+  var controls = $this.attr('aria-controls')
+  var revealsId = this.id
+  var $controls = jQuery('#' + controls)
+  jQuery('input[name="' + name + '"]').on('change', function(){
+    var state = this.id === revealsId
+    var classMethod = state ? 'removeClass' : 'addClass'
+    var ariaHidden = state ? 'false' : 'true'
+    $controls[classMethod]('js-hidden')
+    $controls.attr('aria-hidden', ariaHidden)
+    console.log(controls, state)
+  })
+  //console.log($this.attr('aria-controls'), $this.attr('name'))
+})
+</script>
 {% endblock %}

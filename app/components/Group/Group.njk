@@ -7,12 +7,18 @@
 {% set blocks = getBlockProp(name, 'blocks') %}
 {% endif %}
 {% for block in blocks %}
-  {% if block._blockType %}
-    {% if Block[block._blockType] %}
-    {#{% call Block[block._blockType](block.data) %}{% endcall %}#}
-    {{ Block[block._blockType](block.data) }}
+  {% set blockType = block._blockType %}
+  {% set blockData = block.data %}
+  {% if not blockType %}
+    {% set blockType = getBlockProp(block, '_blockType') %}
+    {% set blockData = block %}
+  {% endif %}
+  {% if blockType %}
+    {% if Block[blockType] %}
+    {#{% call Block[blockType](blockData) %}{% endcall %}#}
+    {{ Block[blockType](blockData) }}
     {% else %}
-    <p>NO SUCH MACRO : {{ block._blockType }}:</p>
+    <p>NO SUCH MACRO : {{ blockType }}:</p>
     {% endif %}
   {% else %}
   {#{% call Control(block) %}{% endcall %}#}

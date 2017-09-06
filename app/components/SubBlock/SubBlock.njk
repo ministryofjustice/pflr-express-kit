@@ -10,8 +10,8 @@
       {% set subopen = false %}
     {% endif %}
   {% endif %}
-  <div class="panel panel-border-narrow{{ DependsHidden(depends=subdepends, open=subopen) }}"{{ DependsAria(depends=subdepends, open=subopen) }}>	
-    {% call Control(name, skipDependencyCheck=true) %}{% endcall %}
+  <div class="panel panel-border-narrow{{ DependsHidden(depends=subdepends, open=subopen) }}"{{ DependsAria(name, depends=subdepends, open=subopen) }}>
+    {% call Control(name) %}{% endcall %}
   </div>
 {% endif %}
 {% endmacro %}

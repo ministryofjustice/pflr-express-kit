@@ -10,6 +10,15 @@
     {% set excludes = getBlockProp(name, 'reveals_exclude') %}
     {% set open = false %}
     {% set closed = false %}
+    {# {% set hasOptionReveals = false %}
+    {% for option_name in getBlockProp(name, 'options') %}
+      {% if option_name.value %}
+        {% set option = option_name %}
+      {% else %}
+        {% set option = getBlock(option_name) %}
+      {% endif %}
+      {% if checkReveals(name, option.value) %}{% set hasOptionReveals = true %}{% endif %}
+    {% endfor %} #}
     {% for option_name in getBlockProp(name, 'options') %}
       {% if option_name.value %}
         {% set option = option_name %}
@@ -21,7 +30,7 @@
         {% set checked = true %}
       {% endif %}
       {% set optionReveals = checkReveals(name, option.value) %}
-      {% if option.value === 'yes' %}{{ optionReveals }}{% endif %}
+      {# {% if option.value === 'yes' %}{{ optionReveals }}{% endif %} #}
       {#{% if excludes %}
         {% for val in excludes %}
           {% if val === option.value %}
@@ -46,8 +55,8 @@
       <label data-block-name={{option_name}} for="{{ name }}-option-{{ loop.index }}" class="block-label selection-button-radio">
         {{ OptionLabel(option) }}
       </label>
-      {{ SubBlock(option.subblock) }}
       </div>
+      {{ SubBlock(option.subblock) }}
     {% endfor %}
     {{ SubBlock(getBlockProp(name, 'subblock'), closed=closed) }}
 {% endcall %}

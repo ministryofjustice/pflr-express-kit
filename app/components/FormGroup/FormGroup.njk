@@ -4,7 +4,7 @@
 {% if not error %}
 {% set error = getFormattedError(name, { error: error }) %}
 {% endif %}
-  <div class="form-group{% if error %} error{% endif %}{{ DependsHidden(depends=depends, open=open) }}"{{ DependsAria(depends=depends, open=open) }}{% if name %} data-block-name="{{name}}"{% endif %}>
+  <div class="form-group{% if error %} error{% endif %}{{ DependsHidden(depends=depends, open=open) }}"{{ DependsAria(name, depends=depends, open=open) }}{% if name %} data-block-name="{{name}}"{% endif %}>
   {% if caller %}
   {{ caller() }}
   {% endif %}
