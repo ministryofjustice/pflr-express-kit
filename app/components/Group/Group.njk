@@ -1,22 +1,24 @@
 {% from '../BlockHeading/BlockHeading.njk' import BlockHeading with context %}
 {% from '../Control/Control.njk' import Control with context %}
+{% from '../Hidden/Hidden.njk' import Hidden with context %}
 {% macro Group(name='', heading='', blocks=[]) %}
 <div{% if name %} data-block-name="{{name}}"{% endif %}>
-{#{{ BlockHeading(name, heading=heading) }}#}
+{{ BlockHeading(name, heading=heading) }}
 {% if name %}
 {% set blocks = getBlockProp(name, 'blocks') %}
 {% endif %}
 {% for block in blocks %}
   {% set blockType = block._blockType %}
   {% set blockData = block.data %}
-  {% if not blockType %}
+  {# {% if not blockType %}
     {% set blockType = getBlockProp(block, '_blockType') %}
     {% set blockData = block %}
-  {% endif %}
+  {% endif %} #}
   {% if blockType %}
     {% if Block[blockType] %}
     {#{% call Block[blockType](blockData) %}{% endcall %}#}
-    {{ Block[blockType](blockData) }}
+    {# {{ Block[blockType](blockData) }} #}
+    {{ Control(blockData) }}
     {% else %}
     <p>NO SUCH MACRO : {{ blockType }}:</p>
     {% endif %}
@@ -25,5 +27,20 @@
   {{ Control(block) }}
   {% endif %}
 {% endfor %}
+{% if name %}
+{% set multiple_counter = getBlockProp(name, 'multiple_counter') %}
+{% if multiple_counter %}
+{% set multiple_start = getBlockProp(name, 'multiple_start') %}
+{% set multiple_max = getBlockProp(name, 'multiple_max') %}
+{% set multiple_counter_value = getValue(multiple_counter) %}
+{% if not multiple_counter_value %}{% set multiple_counter_value = multiple_start %}{% endif %}
+{% if multiple_counter_value > multiple_start %}
+<button class="button" type="submit" name="delete:{{ multiple_counter }}" value="{{ multiple_counter_value }}">{{ getBlockProp(name, 'multiple_delete', 'Delete') }}</button>
+{% endif %}
+{% if multiple_counter_value < multiple_max %}
+<button class="button" type="submit" name="add:{{ multiple_counter }}" value="{{ multiple_counter_value }}">{{ getBlockProp(name, 'multiple_add', 'Add another') }}</button>
+{% endif %}
+{% endif %}
+{% endif %}
 </div>
 {% endmacro %}

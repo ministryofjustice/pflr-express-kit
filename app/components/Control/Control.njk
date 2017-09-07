@@ -1,5 +1,5 @@
-{% macro Control(name, _blockType='', value='', error='', label='', sublabel='', hint='', heading='', inline='', depth=2) -%}
-{% set outputControl = checkNoDependency(name, true) %}
+{% macro Control(name, _blockType='', value='', error='', label='', sublabel='', hint='', heading='', inline='', depth=2, skipDependencyCheck=false) -%}
+{% set outputControl = checkNoDependency(name, skipDependencyCheck) %}
 {% if outputControl %}
 {% set _blockType = getBlockProp(name, '_blockType', 'Text', { value: _blockType }) %}
 {% if Block[_blockType] %}

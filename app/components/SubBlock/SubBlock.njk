@@ -11,7 +11,7 @@
     {% endif %}
   {% endif %}
   <div class="panel panel-border-narrow{{ DependsHidden(depends=subdepends, open=subopen) }}"{{ DependsAria(name, depends=subdepends, open=subopen) }}>
-    {% call Control(name) %}{% endcall %}
+    {% call Control(name, skipDependencyCheck=true) %}{% endcall %}
   </div>
 {% endif %}
 {% endmacro %}
