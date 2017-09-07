@@ -2,12 +2,14 @@
 {% from '../OptionLabel/OptionLabel.njk' import OptionLabel with context %}
 {% from '../SubBlock/SubBlock.njk' import SubBlock with context %}
 {% macro RadioGroup(name, inline='', reveals='', visually_hidden=true, or=false) %}
-{% set error = getError(name) %}
+{% set prefixedName = name %}
+{% if route._prefix %}{% set prefixedName = route._prefix + prefixedName %}{% endif %}
+{% set error = getError(prefixedName) %}
 <div class="form-group{% if error %} error{% endif %}"{% if name %} data-block-name="{{name}}"{% endif %}>
 {% call Fieldset(name, inline=inline) %}
     {% set or = getBlockProp(name, 'or') %}
-    {% set reveals = getBlockProp(name, 'reveals') %}
-    {% set excludes = getBlockProp(name, 'reveals_exclude') %}
+    {% set reveals = getBlockProp(name, 'reveals') %}{# ? #}
+    {% set excludes = getBlockProp(name, 'reveals_exclude') %}{# ? #}
     {% set open = false %}
     {% set closed = false %}
     {# {% set hasOptionReveals = false %}
@@ -26,10 +28,10 @@
         {% set option = getBlock(option_name) %}
       {% endif %}
       {% set checked = false %}
-      {% if option.value === getValue(name) %}
+      {% if option.value === getValue(prefixedName) %}
         {% set checked = true %}
       {% endif %}
-      {% set optionReveals = checkReveals(name, option.value) %}
+      {% set optionReveals = checkReveals(prefixedName, option.value) %}
       {# {% if option.value === 'yes' %}{{ optionReveals }}{% endif %} #}
       {#{% if excludes %}
         {% for val in excludes %}
@@ -51,8 +53,8 @@
         {% endif %}	
       {% endif %}
       <div class="multiple-choice"{% if optionReveals %} data-target="reveals--{{ optionReveals }}"{% endif %}>
-        <input id="{{ name }}-option-{{ loop.index }}" type="radio" name="{{ name }}" value="{{ option.value }}"{% if checked %} checked{% endif %}{% if optionReveals %} aria-controls="reveals--{{ optionReveals }}"{% endif %}>
-      <label data-block-name={{option_name}} for="{{ name }}-option-{{ loop.index }}" class="block-label selection-button-radio">
+        <input id="{{ prefixedName }}-option-{{ loop.index }}" type="radio" name="{{ prefixedName }}" value="{{ option.value }}"{% if checked %} checked{% endif %}{% if optionReveals %} aria-controls="reveals--{{ optionReveals }}"{% endif %}>
+      <label data-block-name={{option_name}} for="{{ prefixedName }}-option-{{ loop.index }}" class="block-label selection-button-radio">
         {{ OptionLabel(option) }}
       </label>
       </div>

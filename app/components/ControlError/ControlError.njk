@@ -1,6 +1,8 @@
 {% macro ControlError(name, error) -%}
-{% set error = getFormattedError(name, { error: error }) %}
+{% set prefixedName = name %}
+{% if route._prefix %}{% set prefixedName = route._prefix + prefixedName %}{% endif %}
+{% set error = getFormattedError(prefixedName, { error: error, prefix:route._prefix }) %}
 {% if error %}
-<span class="error-message" id="error-message-{{ name }}">{{ error }}</span>
+<span class="error-message" id="error-message-{{ prefixedName }}">{{ error }}</span>
 {% endif %}
 {%- endmacro %}

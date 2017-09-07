@@ -2,7 +2,9 @@
 {% from '../OptionLabel/OptionLabel.njk' import OptionLabel with context %}
 {% from '../SubBlock/SubBlock.njk' import SubBlock with context %}
 {% macro CheckboxGroup(name, inline='', label='', or=false, options='') %}
-{% set error = getError(name) %}
+{% set prefixedName = name %}
+{% if route._prefix %}{% set prefixedName = route._prefix + prefixedName %}{% endif %}
+{% set error = getError(prefixedName) %}
 {% set inline = getBlockProp(name, 'inline', { value: inline }) %}
 {% set label = getBlockProp(name, 'label', { value: label }) %}
 {% set options = getBlockProp(name, 'options', { value: options }) %}
@@ -21,7 +23,9 @@
     {% if option.value %}
       {% set option_value = option.value %}
     {% endif %}
-    {% if option_value === getValue(option_name) %}
+    {% set prefixedOptionName = option_name %}
+    {% if route._prefix %}{% set prefixedOptionName = route._prefix + prefixedOptionName %}{% endif %}
+    {% if option_value === getValue(prefixedOptionName) %}
       {% set checked = true %}
     {% endif %}
     {% if loop.last %}
@@ -31,10 +35,10 @@
         <p class="form-block">{{ getString('string:or') }}</p>
       {% endif %}	
     {% endif %}
-    {% set reveals = checkReveals(option_name, option_value) %}
+    {% set reveals = checkReveals(prefixedOptionName, option_value) %}
     <div class="multiple-choice"{% if reveals %} data-target="reveals--{{ reveals }}"{% endif %}>
-      <input id="{{ option_name }}" type="checkbox" name="{{ option_name }}" value="{{ option_value }}"{% if checked %} checked{% endif %}{% if reveals %} aria-controls="reveals--{{ reveals }}"{% endif %}>
-    <label data-block-name={{option_name}} for="{{ option_name }}" class="block-label selection-button-checkbox"{% if excludes %} data-excludes="true"{% endif %}>
+      <input id="{{ prefixedOptionName }}" type="checkbox" name="{{ prefixedOptionName }}" value="{{ option_value }}"{% if checked %} checked{% endif %}{% if reveals %} aria-controls="reveals--{{ reveals }}"{% endif %}>
+    <label data-block-name={{option_name}} for="{{ prefixedOptionName }}" class="block-label selection-button-checkbox"{% if excludes %} data-excludes="true"{% endif %}>
       {{ OptionLabel(option) }}
     </label>
     {{ SubBlock(option.subblock) }}

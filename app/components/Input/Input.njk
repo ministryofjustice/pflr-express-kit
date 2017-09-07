@@ -1,13 +1,15 @@
 {% from '../FormGroup/FormGroup.njk' import FormGroup with context %}
 {% from '../ControlLabel/ControlLabel.njk' import ControlLabel with context %}
 {% macro Input(name, type='text') -%}
+  {% set prefixedName = name %}
+  {% if route._prefix %}{% set prefixedName = route._prefix + prefixedName %}{% endif %}
   {% call FormGroup(name, error=error) -%}
     {{ ControlLabel(name, label=label, sublabel=sublabel, hint=hint, error=error) }}
-    {% set value = getValue(name) %}
+    {% set value = getValue(prefixedName) %}
     {% if type === 'text' and getBlockProp(name, 'multiline') %}
-      <textarea class="form-control" name="{{ name }}" id="{{ name }}">{{ value | safe }}</textarea>
+      <textarea class="form-control" name="{{ prefixedName }}" id="{{ prefixedName }}">{{ value | safe }}</textarea>
     {% else %}
-      <input type="{{ type }}" class="form-control" name="{{ name }}" id="{{ name }}" value="{{ value | escape }}">
+      <input type="{{ type }}" class="form-control" name="{{ prefixedName }}" id="{{ prefixedName }}" value="{{ value | escape }}">
     {% endif %}
   {%- endcall %}
 {%- endmacro %}
