@@ -33,12 +33,12 @@
 {% set multiple_counter = getBlockProp(name, 'multiple_counter') %}
 {% if multiple_counter %}
 {% if route._prefix %}{% set multiple_counter = route._prefix + multiple_counter %}{% endif %}
-{% set multiple_start = getBlockProp(name, 'multiple_start') %}
+{% set multiple_min = getBlockProp(name, 'multiple_min') %}
 {% set multiple_max = getBlockProp(name, 'multiple_max') %}
 {% set multiple_counter_value = getValue(multiple_counter) %}
-{% if not multiple_counter_value %}{% set multiple_counter_value = multiple_start %}{% endif %}
+{% if not multiple_counter_value %}{% set multiple_counter_value = multiple_min %}{% endif %}
 <input type="hidden" name="{{ multiple_counter }}" value="{{ multiple_counter_value }}">
-{% if multiple_counter_value > multiple_start %}
+{% if multiple_counter_value > multiple_min %}
 <button class="button" type="submit" name="delete:{{ multiple_counter }}" value="{{ multiple_counter_value }}">{{ getBlockProp(name, 'multiple_delete', 'Delete') }}</button>
 {% endif %}
 {% if multiple_counter_value < multiple_max %}
