@@ -184,7 +184,7 @@ hr {
   text-transform: none;
   font-size: 18px;
   line-height: 1.2;
-  background-image: url("/public/images/icon-pointer.png");
+  background-image: url(https://assets.publishing.service.gov.uk/static/icon-pointer-2x-8e9c31a486acd2de3aca823392c6d8667b60110cc8369ab1c9e03360b0d91dae.png);
   background-repeat: no-repeat;
   background-position: 100% 50%;
   padding: 0.36842em 2.15789em 0.21053em 0.84211em; }
@@ -196,7 +196,7 @@ hr {
   @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 20 / 10), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
     .button-start,
     .button-get-started {
-      background-image: url("/public/images/icon-pointer-2x.png");
+      background-image: url(https://assets.publishing.service.gov.uk/static/icon-pointer-2x-8e9c31a486acd2de3aca823392c6d8667b60110cc8369ab1c9e03360b0d91dae.png);
       background-size: 30px 19px; } }
 
 .icon {

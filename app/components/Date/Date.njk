@@ -1,0 +1,4 @@
+{% from '../Input/Input.njk' import Input with context %}
+{% macro Date(name, value='', error='', label='', sublabel='', hint='') -%}
+  {{ Input(name) }}
+{%- endmacro %}
