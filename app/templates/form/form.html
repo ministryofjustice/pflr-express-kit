@@ -15,12 +15,12 @@
 <form method="post">
 {{ super() }}
 <div class="xform-group form-submit"><input class="button next validation-submit" type="submit" value="Save and continue"></div>
-{% if route._counter %}
+{% if route.multiple_counter %}
 {% set addValue = 1 %}
-{% if autofields[route._counter] %}{% set addValue = autofields[route._counter] %}{% endif %}
+{% if autofields[route.multiple_counter] %}{% set addValue = autofields[route.multiple_counter] %}{% endif %}
 {% set addValue = addValue + 1 %}
-{% if route._max >= addValue %}{% if route._index == addValue - 1 %}
-<button class="button next" type="submit" name="{{ route._counter }}" value="{{ addValue }}">Add another</button>
+{% if route.multiple_max >= addValue %}{% if route._index == addValue - 1 %}
+<button class="button next" type="submit" name="{{ route.multiple_counter }}" value="{{ addValue }}">Add another</button>
 {% endif %}{% endif %}
 {% endif %}
 </form>
