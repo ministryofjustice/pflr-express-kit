@@ -3,6 +3,8 @@
 {% from '../Hidden/Hidden.njk' import Hidden with context %}
 {% macro Group(name='', heading='', blocks=[]) %}
 <div{% if name %} data-block-name="{{name}}"{% endif %}>
+{% set prefixedName = name %}
+{% if route._prefix %}{% set prefixedName = route._prefix + prefixedName %}{% endif %}
 {{ BlockHeading(name, heading=heading) }}
 {% if name %}
 {% set blocks = getBlockProp(name, 'blocks') %}
@@ -30,6 +32,7 @@
 {% if name %}
 {% set multiple_counter = getBlockProp(name, 'multiple_counter') %}
 {% if multiple_counter %}
+{% if route._prefix %}{% set multiple_counter = route._prefix + multiple_counter %}{% endif %}
 {% set multiple_start = getBlockProp(name, 'multiple_start') %}
 {% set multiple_max = getBlockProp(name, 'multiple_max') %}
 {% set multiple_counter_value = getValue(multiple_counter) %}
