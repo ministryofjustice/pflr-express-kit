@@ -34,11 +34,12 @@
 {% set multiple_max = getBlockProp(name, 'multiple_max') %}
 {% set multiple_counter_value = getValue(multiple_counter) %}
 {% if not multiple_counter_value %}{% set multiple_counter_value = multiple_start %}{% endif %}
+<input type="hidden" name="{{ multiple_counter }}" value="{{ multiple_counter_value }}">
 {% if multiple_counter_value > multiple_start %}
 <button class="button" type="submit" name="delete:{{ multiple_counter }}" value="{{ multiple_counter_value }}">{{ getBlockProp(name, 'multiple_delete', 'Delete') }}</button>
 {% endif %}
 {% if multiple_counter_value < multiple_max %}
-<button class="button" type="submit" name="add:{{ multiple_counter }}" value="{{ multiple_counter_value }}">{{ getBlockProp(name, 'multiple_add', 'Add another') }}</button>
+<button class="button" type="submit" name="add:{{ multiple_counter }}" value="true">{{ getBlockProp(name, 'multiple_add', 'Add another') }}</button>
 {% endif %}
 {% endif %}
 {% endif %}
