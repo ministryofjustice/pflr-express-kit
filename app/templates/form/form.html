@@ -14,7 +14,8 @@
 {{ ErrorSummary(errors) }}
 <form method="post">
 {{ super() }}
-<div class="xform-group form-submit"><input class="button {% if route.start %}button-start {% endif %}next validation-submit" type="submit" value="Save and continue"></div>
+{% set startPage = route.start %}
+<div class="xform-group form-submit"><input class="button {% if startPage %}button-start {% endif %}next validation-submit" type="submit" value="{% if startPage %}Start{% else %}Save and continue{% endif %}"></div>
 {% if route.multiple_counter %}
 {% set addValue = 1 %}
 {% if autofields[route.multiple_counter] %}{% set addValue = autofields[route.multiple_counter] %}{% endif %}

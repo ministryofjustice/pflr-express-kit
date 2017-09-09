@@ -14,7 +14,7 @@
   exports: {}
 }
 		factory(mod.exports, mod)
-		global.autosize = mod.exports
+		// global.autosize = mod.exports
 	}
 })(this, function (exports, module) {
   'use strict'

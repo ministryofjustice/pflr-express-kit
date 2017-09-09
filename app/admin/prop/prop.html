@@ -1,0 +1,62 @@
+{% extends 'admin/admin-base/admin-base.html' %}
+
+{% block page_title %}
+Prop - Prototype
+{% endblock %}
+
+{% block admin_content %}
+{% if not _blockType %}
+{% set _blockType = getBlockProp(block, '_blockType') %}
+{% endif %}
+<p><a class="link-back" href="/admin/blocks/{{ _blockType }}">Back to {{ _blockType }}</a></p>
+
+<h1 class="{{ govukClassname('heading-large') }}"><a class="link-back" href="/admin/block/{{ block }}">{{ block }}</a>{% if prop %}.{{ prop }}{% endif %}</h1>
+
+{% if doesNotExist %}
+<p>{{ block }} doesn’t exist yet</p>
+<p><a href="/admin/block/{{ block }}">Create {{ block }}</a></p>
+{% else %}
+<form method="post">
+{% if noValue %}{% if propType != 'array' %}
+<p><label><input type="radio" name="propType" value="string" checked> String</label></p>
+<p><label><input type="radio" name="propType" value="array"> Array</label></p>
+<p><label><input type="radio" name="propType" value="number"> Number</label></p>
+<p><label><input type="radio" name="propType" value="boolean"> Boolean</label></p>
+  {% else %}
+  <input type="hidden" name="propType" value="{{ propType }}">
+  {% endif %}
+{% else %}
+<input type="hidden" name="propType" value="{{ propType }}">
+{% endif %}
+
+{% if propType == 'string' %}
+<p><textarea name="value" id="value" cols="80" rows="1">{{ value | safe}}</textarea></p>
+{% endif %}
+{% if propType == 'number' %}
+<p><input type="number" name="value" id="value" value="{{ value }}"></p>
+{% endif %}
+{% if propType == 'boolean' %}
+<p><label><input type="radio" name="value" value="true"{% if value %} checked{% endif %}> True</label></p>
+<p><label><input type="radio" name="value" value="false"{% if not value %} checked{% endif %}> False</label></p>
+{% endif %}
+{% if propType == 'array' %}
+{% for valueItem in value %}
+<p><input class="arrayItem" name="value" value="{{ valueItem | safe}}"></p>
+{% endfor %}
+<p><input class="arrayItem" name="value" value=""></p>
+{% endif %}
+<p><button class="{{ govukClassname('button') }}">Update {{ prop }}</button></p>
+{% if not noValue %}
+<p class="deleteProp"><button name="action" value="delete" class="{{ govukClassname('button') }}">Delete {{ prop }}</button></p>
+{% endif %}
+</form>
+{% endif %}
+<style>
+.arrayItem {
+  width: 90%;
+}
+.deleteProp {
+  margin-top: 3rem;
+}
+</style>
+{% endblock %}

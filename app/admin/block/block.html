@@ -21,6 +21,11 @@ Block - Proto_blockType
 <form method="post">
 <textarea name="block" id="block" cols="80" rows="1">{{blockJSON | safe}}</textarea>
 <p><button class="{{ govukClassname('button') }}">Update block</button></p>
+
+<p>New _id <input name="cloneId"></p>
+<p><button name="clone" value="yes" class="{{ govukClassname('button') }}">Clone block</button></p>
 </form>
+
+<p class="expanded">{{blockJSONExpanded | safe}}</p>
 
 {% endblock %}

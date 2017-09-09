@@ -24,8 +24,10 @@
 {{ super() }}
 <script src="/public/javascripts/autosize/autosize.js"></script>
 <script type="text/javascript">
-var textareas = jQuery('textarea')
-autosize(textareas)
+var $textareas = jQuery('textarea')
+if ($textareas.length) {
+  autosize($textareas)
+}
 </script>
 <style type="text/css">
 textarea {
