@@ -38,9 +38,7 @@
     {% set reveals = checkReveals(prefixedOptionName, option_value) %}
     <div class="multiple-choice"{% if reveals %} data-target="reveals--{{ reveals }}"{% endif %}>
       <input id="{{ prefixedOptionName }}" type="checkbox" name="{{ prefixedOptionName }}" value="{{ option_value }}"{% if checked %} checked{% endif %}{% if reveals %} aria-controls="reveals--{{ reveals }}"{% endif %}>
-    <label data-block-name={{option_name}} for="{{ prefixedOptionName }}" class="block-label selection-button-checkbox"{% if excludes %} data-excludes="true"{% endif %}>
-      {{ OptionLabel(option) }}
-    </label>
+    <label data-block-name={{option_name}} for="{{ prefixedOptionName }}" class="block-label selection-button-checkbox"{% if excludes %} data-excludes="true"{% endif %}>{{ OptionLabel(option) -}}</label>
     {{ SubBlock(option.subblock) }}
     </div>
   {% endfor %}

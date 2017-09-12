@@ -1,8 +1,10 @@
 {% macro OptionLabel(option) %}
+  {% set label = format(option.label) %}
   {% if option.sublabel %}
-    <span class="heading-small">{{ option.label }}</span><br>
-    {{ option.sublabel }}
+    <span class="heading-small">{{ label | safe }}</span><br>
+    {{ format(option.sublabel) }}
   {% else %}
-    {{ option.label }}
+    {% set label = '<span class="labelLine">' + label + '</span>' %}
+    {{ label | replace('\r\n\r\n', '</span><br><span class="labelLine">') | replace('<span class="labelLine">(i', '<span class="labelLine labelLineBullet"><span class="labelBullet">(i') | replace('i)', 'i)</span>') | safe }}
   {% endif %}
 {% endmacro %}

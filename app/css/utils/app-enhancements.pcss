@@ -68,6 +68,28 @@ sup {
   font-size: 75%;
 }
 
+label br {
+  display: none;
+}
+
+.labelLine {
+  display: block;
+}
+
+br + .labelLine {
+  margin-top: 1.25rem;
+}
+
+.labelLineBullet {
+  position: relative;
+  padding-left: 4rem;
+}
+
+.labelBullet {
+  position: absolute;
+  left: 0.5rem;
+}
+
 .app__section_heading {
   @apply --gv-u-heading-small;
 }

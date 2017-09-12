@@ -44,7 +44,7 @@ div#content {
 .box {
   position: relative;
   display: table-cell;
-  width: 360px;
+  width: 500px;
   vertical-align: top;
   padding-bottom: 100px;
 }
@@ -182,14 +182,15 @@ div#content {
 a.block-edit {
   margin-left: -35px;
 }
-@media print {
- .block-edit {
+
+/* @media print */
+ .print .routeKey,
+ .print .block-edit {
    display: none;
  }
- .innerbox {
+ .print .innerbox {
    padding-left: 10px;
  }
-}
 
 .innerbox label .block-edit {
   margin-left: -85px;
@@ -286,7 +287,7 @@ Wizard flow - Prototype
 <div class="box">
 <div class="innerbox" data-block-name="{{stepRoute.id}}">
 {% set stepRoute = routesFlattened[route.wizard] %}
-<p class="routeKey">{{stepRoute.id}} <small><a href="{{ getRouteUrl(stepRoute.id) }}">{{ getRouteUrl(stepRoute.id) }}</a></small></a></p>
+<p class="routeKey">{{stepRoute.id}} <small><a href="{{ getRouteUrl(stepRoute.id) }}">{{ getRouteUrl(stepRoute.id) }}</a> <a href="{{ getRouteUrl(stepRoute.id) }}/edit">(edit)</a></small></p>
 {{ Block.PageHeader(stepRoute.id, start_page=stepRoute.start_page) }}
 {{ Block.Group(blocks=stepRoute.blocks) }}
 </div>
@@ -344,7 +345,7 @@ Wizard flow - Prototype
 <div class="box{% if depends %} depends{% endif %}" id="{{ stepRoute.key }}">
 <div class="innerbox{% if multiple %} innerbox-multiple{% endif %}" data-block-name="{{stepId}}">
 {# {{ stepId }}, {{ skipMultiple }}, {{multipleIndex}} #}
-<p class="routeKey">{{stepId}} <small><a href="{{ getRouteUrl(stepId) }}">{{ getRouteUrl(stepId) }}</a>
+<p class="routeKey">{{stepId}} <small><a href="{{ getRouteUrl(stepId) }}">{{ getRouteUrl(stepId) }}</a> <a href="{{ getRouteUrl(stepId) }}/edit">(edit)</a>
 {% if multiple %}
 <span class="mutiple-route">Multiple route: min={{ stepRoute.multiple_min }}; max={{ stepRoute.multiple_max }}</span>
 {% endif %}
