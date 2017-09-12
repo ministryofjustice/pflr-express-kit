@@ -24,6 +24,8 @@ Block - Proto_blockType
 
 <p>New _id <input name="cloneId"></p>
 <p><button name="clone" value="yes" class="{{ govukClassname('button') }}">Clone block</button></p>
+
+<p class="deleteBlock"><button name="action" value="delete" class="{{ govukClassname('button') }}">Delete {{ block }}</button></p>
 </form>
 
 <p class="expanded">{{blockJSONExpanded | safe}}</p>

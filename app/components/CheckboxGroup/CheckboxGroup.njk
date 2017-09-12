@@ -1,7 +1,7 @@
 {% from '../Fieldset/Fieldset.njk' import Fieldset with context %}
 {% from '../OptionLabel/OptionLabel.njk' import OptionLabel with context %}
 {% from '../SubBlock/SubBlock.njk' import SubBlock with context %}
-{% macro CheckboxGroup(name, inline='', label='', or=false, options='') %}
+{% macro CheckboxGroup(name, inline='', label='', or=false, options='', visually_hidden=false) %}
 {% set prefixedName = name %}
 {% if route._prefix %}{% set prefixedName = route._prefix + prefixedName %}{% endif %}
 {% set error = getError(prefixedName) %}
@@ -9,7 +9,7 @@
 {% set label = getBlockProp(name, 'label', { value: label }) %}
 {% set options = getBlockProp(name, 'options', { value: options }) %}
 <div class="form-group{% if error %} error{% endif %}"{% if name %} data-block-name="{{name}}"{% endif %}>
-{% call Fieldset(name, label=label, inline=inline) %}
+{% call Fieldset(name, label=label, inline=inline, visually_hidden=visually_hidden) %}
   {#% set or = getBlockProp(name, 'or') %#}
   {% for option_name in options %}
     {% if option_name.value %}

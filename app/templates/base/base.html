@@ -7,6 +7,7 @@
   "components/BlockHeading/BlockHeading.njk",
   "components/BlockLede/BlockLede.njk",
   "components/Body/Body.njk",
+  "components/Checkbox/Checkbox.njk",
   "components/CheckboxGroup/CheckboxGroup.njk",
   "components/Control/Control.njk",
   "components/ControlLabel/ControlLabel.njk",
@@ -88,5 +89,20 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js"></script>
 <script src="/public/javascripts/block-edit/block-edit.js"></script>
 <link href="/public/javascripts/block-edit/block-edit.css" rel="stylesheet">
+<style>
+.multiple-group {
+  position: relative;
+  border: solid 1px #ccc;
+  margin: 20px 0;
+  margin-right: 20px;
+  box-shadow: 1px 1px 0px 0px #fff, 2px 2px 0px 0px #ccc, 3px 3px 0px 0px #fff, 4px 4px 0px 0px #ccc, 5px 5px 0px 0px #fff, 6px 6px 0px 0px #ccc, 7px 7px 0px 0px #fff, 8px 8px 0px 0px #ccc;
+}
+.mutiple-group-details {
+  font-size: 1rem;
+  position: absolute;
+  right: 0;
+  top: -1.5rem;
+}
+</style>
 {% endif %}
 {% endblock %}

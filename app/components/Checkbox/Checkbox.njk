@@ -1,0 +1,7 @@
+{% from '../CheckboxGroup/CheckboxGroup.njk' import CheckboxGroup with context %}
+{% macro Checkbox(name, label='', options='') %}
+{% set prefixedName = name %}
+{% if route._prefix %}{% set prefixedName = route._prefix + prefixedName %}{% endif %}
+{% set options = [name] %}
+{{ CheckboxGroup(name, options=options, visually_hidden=true)}}
+{% endmacro %}

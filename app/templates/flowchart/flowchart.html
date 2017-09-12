@@ -66,6 +66,9 @@ div#content {
   width: 100%;
   border: solid 1px #000000;
 }
+.innerbox-multiple {
+  box-shadow: 1px 1px 0px 0px #fff, 2px 2px 0px 0px #000, 3px 3px 0px 0px #fff, 4px 4px 0px 0px #000, 5px 5px 0px 0px #fff, 6px 6px 0px 0px #000, 7px 7px 0px 0px #fff, 8px 8px 0px 0px #000;
+}
 .gutter {
   display: table-cell;
   width: 100px;
@@ -119,8 +122,9 @@ div#content {
   margin: 10px 16px;
 }
 .gutter ul {
-  background: #000000;
-  color: #ffffff;
+  background: #ddd;
+  border: solid 1px #000;
+  color: #000;
   margin: 0 100px 0 100px;
   top: 12px;
 }
@@ -227,11 +231,21 @@ p.depend__key {
 }
 .routeKey {
   position: absolute;
-  top: -35px;
+  top: -45px;
+  width: 100%;
+}
+.routeKey small {
+  display: block;
+  font-size: 1rem;
 }
 .routeKey + h1.heading-large, .routeKey + h2.heading-large {
   margin: 0;
 }
+.mutiple-route {
+  float: right;
+  margin-right: 40px;
+}
+
 .action {
   margin-top: 50px;
   display: table-cell;
@@ -256,6 +270,9 @@ span.depends__no {
   top: -40px;
   margin-left: -10px;
 }
+.control-group-actions {
+  display: none;
+}
 </style>
 {% endblock %}
 
@@ -269,14 +286,29 @@ Wizard flow - Prototype
 <div class="box">
 <div class="innerbox" data-block-name="{{stepRoute.id}}">
 {% set stepRoute = routesFlattened[route.wizard] %}
-<p class="routeKey">{{stepRoute.id}}</p>
+<p class="routeKey">{{stepRoute.id}} <small><a href="{{ getRouteUrl(stepRoute.id) }}">{{ getRouteUrl(stepRoute.id) }}</a></small></a></p>
 {{ Block.PageHeader(stepRoute.id, start_page=stepRoute.start_page) }}
 {{ Block.Group(blocks=stepRoute.blocks) }}
 </div>
 </div>
+
+
 {% for step in wizard.stepsFlat %}
 {% set stepRoute = routesFlattened[step] %}
+{% set stepId = step %}
+{% set multiple = false %}
+{% set multipleIndex = stepRoute._index %}
+{% set skipMultiple = false %}
+{% if stepRoute.multiple %}
+  {% set stepId = stepRoute.multiple_route %}
+  {% set stepRoute = routesFlattened[stepId] %}
+  {% set multiple = true %}
+  {% if multipleIndex > 1 %}
+    {% set skipMultiple = true %}
+  {% endif %}
+{% endif %}
 
+{% if not skipMultiple %}
 {% set dependsStore = [] %}
 {% if not loop.blast and stepRoute.blocks %}
 {% set previousDepends = depends %}
@@ -310,9 +342,15 @@ Wizard flow - Prototype
 {% endif %}
 </div>
 <div class="box{% if depends %} depends{% endif %}" id="{{ stepRoute.key }}">
-<div class="innerbox" data-block-name="{{stepRoute.id}}">
-<p class="routeKey">{{stepRoute.id}}</p>
-{{ Block.PageHeader(stepRoute.id, start_page=stepRoute.start_page) }}
+<div class="innerbox{% if multiple %} innerbox-multiple{% endif %}" data-block-name="{{stepId}}">
+{# {{ stepId }}, {{ skipMultiple }}, {{multipleIndex}} #}
+<p class="routeKey">{{stepId}} <small><a href="{{ getRouteUrl(stepId) }}">{{ getRouteUrl(stepId) }}</a>
+{% if multiple %}
+<span class="mutiple-route">Multiple route: min={{ stepRoute.multiple_min }}; max={{ stepRoute.multiple_max }}</span>
+{% endif %}
+</small></p>
+{{ Block.PageHeader(stepId, start_page=stepRoute.start_page) }}
+{# {{ stepRoute | json}} #}
 {{ Block.Group(blocks=stepRoute.blocks) }}
 </div>
 {% if redirectConditions %}
@@ -326,6 +364,7 @@ Wizard flow - Prototype
 </ul>
 {% endif %}
 </div>
+{% endif %}
 {% endif %}
 {% endfor %}
 </div>

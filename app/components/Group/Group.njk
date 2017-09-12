@@ -2,7 +2,21 @@
 {% from '../Control/Control.njk' import Control with context %}
 {% from '../Hidden/Hidden.njk' import Hidden with context %}
 {% macro Group(name='', heading='', blocks=[]) %}
-<div{% if name %} data-block-name="{{name}}"{% endif %}>
+{% set multipleCounterRef = getBlockProp(name, 'multiple_counter_ref') %}
+{% set multipleIndex = getBlockProp(name, 'multiple_index') %}
+{% if flowchart or edit %}
+{% if multipleCounterRef %}
+  {% set isMultiple = true %}
+{% endif %}
+{% if multipleIndex > 1 %}
+  {% set skipMultiple = true %}
+{% endif %}
+{% endif %}
+{% if not skipMultiple %}
+<div{% if name %} data-block-name="{{name}}"{% endif %}{% if isMultiple %} class="multiple-group"{% endif %}>
+{% if isMultiple %}
+<span class="mutiple-group-details">Multiple block: min={{ getBlockProp(name, 'multiple_min') }}; max={{ getBlockProp(name, 'multiple_max') }}</span>
+{% endif %}
 {% set prefixedName = name %}
 {% if route._prefix %}{% set prefixedName = route._prefix + prefixedName %}{% endif %}
 {{ BlockHeading(name, heading=heading) }}
@@ -32,6 +46,7 @@
 {% if name %}
 {% set multiple_counter = getBlockProp(name, 'multiple_counter') %}
 {% if multiple_counter %}
+<div class="control-group-actions">
 {% if route._prefix %}{% set multiple_counter = route._prefix + multiple_counter %}{% endif %}
 {% set multiple_min = getBlockProp(name, 'multiple_min') %}
 {% set multiple_max = getBlockProp(name, 'multiple_max') %}
@@ -44,7 +59,9 @@
 {% if multiple_counter_value < multiple_max %}
 <button class="button" type="submit" name="add:{{ multiple_counter }}" value="true">{{ getBlockProp(name, 'multiple_add', 'Add another') }}</button>
 {% endif %}
+</div>
 {% endif %}
 {% endif %}
 </div>
+{% endif %}
 {% endmacro %}

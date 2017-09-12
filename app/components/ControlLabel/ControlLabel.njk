@@ -4,6 +4,8 @@
 {% set sublabel = getFormattedProp(name, 'sublabel', { value: sublabel }) %}
 {% set optional = getBlockProp(name, 'optional', { value: optional }) %}
 {% set hint = getFormattedProp(name, 'hint', { value: hint }) %}
+{% set labelExtra = getFormattedBody(name, 'label_extra') %}
+{% set hintExtra = getFormattedBody(name, 'hint_extra') %}
   <label xclass="form-label-bold" for="{{ name }}">
     <span class="form-label-bold">{{ label | safe }}{% if optional %} (optional){% endif %}</span>
       {% if sublabel %}
@@ -16,4 +18,6 @@
     {% endif %}
     {{ ControlError(name, error) }}
   </label>
+  {% if labelExtra %}<div class="labelExtra">{{ labelExtra | safe }}</div>{% endif %}
+  {% if hintExtra %}<div class="hintExtra">{{ hintExtra | safe }}</div>{% endif %}
 {%- endmacro %}
