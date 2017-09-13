@@ -17,20 +17,6 @@ Prop - Prototype
 <p><a href="/admin/block/{{ block }}">Create {{ block }}</a></p>
 {% else %}
 <form method="post">
-{% if noValue %}{% if propType != 'array' %}
-{% set stringOption = { value: 'string', label: 'String', checked: true } %}
-{% set arrayOption = { value: 'array', label: 'Array' } %}
-{% set numberOption = { value: 'number', label: 'Number' } %}
-{% set booleanOption = { value: 'boolean', label: 'Boolean' } %}
-{% set propTypeOptions = [stringOption, arrayOption, numberOption, booleanOption] %}
-{{ Block.RadioGroup('propType', options=propTypeOptions) }}
-  {% else %}
-  <input type="hidden" name="propType" value="{{ propType }}">
-  {% endif %}
-{% else %}
-<input type="hidden" name="propType" value="{{ propType }}">
-{% endif %}
-
 
 <div class="propType {{ propType }}Prop">
 {% if propType == 'string' %}
@@ -52,7 +38,7 @@ Prop - Prototype
 {{ Block.Text('value', value=valueItem) }}
 <div class="blockActions">
 <p class="blockLink"><a href="/admin/block/{{ valueItem }}" title="{{valueItem}} block">{}</a></p>
-<p class="blockRemove"><span title="Remove {{valueItem}}">⌫</span></p>
+<p class="blockRemove"><span title="Remove {{valueItem}}">Remove</span></p>{# ⌫ #}
 </div>
 </div>
 {% endfor %}
@@ -61,6 +47,20 @@ Prop - Prototype
 </div>
 {% endif %}
 </div>
+
+{% if noValue %}{% if propType != 'array' %}
+{% set stringOption = { value: 'string', label: 'String', checked: true } %}
+{% set arrayOption = { value: 'array', label: 'Array' } %}
+{% set numberOption = { value: 'number', label: 'Number' } %}
+{% set booleanOption = { value: 'boolean', label: 'Boolean' } %}
+{% set propTypeOptions = [stringOption, arrayOption, numberOption, booleanOption] %}
+{{ Block.RadioGroup('propType', options=propTypeOptions) }}
+  {% else %}
+  <input type="hidden" name="propType" value="{{ propType }}">
+  {% endif %}
+{% else %}
+<input type="hidden" name="propType" value="{{ propType }}">
+{% endif %}
 
 <div class="admin-actions">
 <button class="{{ govukClassname('button') }}">{% if noValue %}Add{% else %}Save{% endif %} {{ prop }}</button>

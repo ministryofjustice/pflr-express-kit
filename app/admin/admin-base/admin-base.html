@@ -108,6 +108,9 @@ h1 small {
   font-size: 1.75rem;
 }
 
+tr:hover {
+  background: #f8f8f8;
+}
 textarea {
   border: solid 1px #000;
   margin: 2em 0;
@@ -163,7 +166,8 @@ textarea {
 .blockRemove {
   position: absolute;
   top: 0.5rem;
-  right: 45%;
+  left: 50%;
+  margin-left: 2rem;
 }
 .blockActions span,
 .blockActions a {
@@ -171,15 +175,18 @@ textarea {
   cursor: pointer;
   padding: 0.25rem;
 }
-.blockActions span {
-  color: #df3034;
+.blockActions span:hover {
+  text-decoration: underline;
 }
-.blockActions span:hover,
-.blockActions a:hover {
-  ztext-decoration: underline;
+.blockActions span {
+  font-size: 1.25rem;
+}
+.blockActions span {
+  color: #005ea5;
 }
 .blockActions span:hover {
-  color: #b10e1e;
+  color: #2b8cc4;
 }
+
 </style>
 {% endblock %}
