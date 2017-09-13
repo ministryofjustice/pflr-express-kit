@@ -95,6 +95,12 @@ dragula([itemContainer], {
   revertOnSpill: true,
   ignoreInputTextSelection: false
 })
+
+jQuery('.blockRemove span').on('click', function() {
+  var $form = jQuery(this).closest('form')
+  jQuery(this).closest('.propContainer').remove()
+  $form.submit()
+})
 </script>
 <style type="text/css">
 h1 small {
@@ -156,10 +162,12 @@ textarea {
   top: 0.5rem;
   right: 45%;
 }
+.blockActions span,
 .blockActions a {
   text-decoration: none;
   cursor: pointer;
 }
+.blockActions span:hover,
 .blockActions a:hover {
   text-decoration: underline;
 }
