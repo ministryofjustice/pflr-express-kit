@@ -1,4 +1,4 @@
 {% from '../Input/Input.njk' import Input with context %}
-{% macro Text(name, value='', error='', label='', sublabel='', hint='', multiline=false, cols=80, rows=5) -%}
-  {{ Input(name, value=value, label=label, multiline=multiline, cols=cols, rows=rows) }}
+{% macro Text(name, value='', error='', label='', sublabel='', hint='', multiline=false, cols=80, rows=5, placeholder='') -%}
+  {{ Input(name, value=value, label=label, multiline=multiline, cols=cols, rows=rows, placeholder=placeholder) }}
 {%- endmacro %}

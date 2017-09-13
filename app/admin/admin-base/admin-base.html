@@ -41,7 +41,7 @@ summary + .panel label,
 
 textarea.form-control[name=block],
 .stringProp input.form-control,
-.arrayProp input.form-control {
+.xarrayProp input.form-control {
   width: 100%;
 }
 .numberProp input.form-control {
@@ -145,6 +145,23 @@ textarea {
 }
 .propContainer:hover:before{
   background: #000;
+}
+.blockLink {
+  position: absolute;
+  top: 0.25rem;
+  left: -2rem;
+}
+.blockRemove {
+  position: absolute;
+  top: 0.5rem;
+  right: 45%;
+}
+.blockActions a {
+  text-decoration: none;
+  cursor: pointer;
+}
+.blockActions a:hover {
+  text-decoration: underline;
 }
 </style>
 {% endblock %}

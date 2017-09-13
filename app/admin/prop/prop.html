@@ -50,16 +50,20 @@ Prop - Prototype
 {% for valueItem in value %}
 <div class="container propContainer">
 {{ Block.Text('value', value=valueItem) }}
+<div class="blockActions">
+<p class="blockLink"><a href="/admin/block/{{ valueItem }}" title="{{valueItem}} block">{}</a></p>
+<p class="blockRemove"><a href="/admin/block/{{ valueItem }}" title="Remove {{valueItem}}">⌫</a></p>
+</div>
 </div>
 {% endfor %}
 <div class="container propContainer">
-{{ Block.Text('value', value='') }}
+{{ Block.Text('value', value='', placeholder='Add new item') }}
 </div>
 {% endif %}
 </div>
 
 <div class="admin-actions">
-<button class="{{ govukClassname('button') }}">{% if noValue %}Add{% else %}Update{% endif %} {{ prop }}</button>
+<button class="{{ govukClassname('button') }}">{% if noValue %}Add{% else %}Save{% endif %} {{ prop }}</button>
 {% if not noValue %}
 <button name="action" value="delete" class="{{ govukClassname('button') }} button--delete">Delete {{ prop }}</button>
 {% endif %}

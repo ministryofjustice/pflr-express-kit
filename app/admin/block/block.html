@@ -21,12 +21,18 @@ Block - Proto_blockType
 {% if stringProps.length %}
 <ul class="{{ govukClassname('list-bullet') }}">
 {% for prop in stringProps %}
+{% set blockProp = getBlockProp(block, prop) %}
+{% set blockPropType = typeof(blockProp ) %}
+{% set propBlockRef = '' %}
+{% if blockPropType == 'string' %}
+{% set propBlockRef = getBlockProp(blockProp, '_id') %}
+{% endif %}
 <li class="blockProp">{% if prop != 'depends' %}<a href="/admin/block/{{ block }}/{{ prop }}">{% endif %}{{ prop }}{% if prop != 'depends' %}</a>{% endif %}
 <small class="blockProp__value">
 {% if prop == 'depends' %}
-{{ getBlockProp(block, prop) | json | replace('[{"', '')  | replace('}]', '') | replace('":', ':') }}
+{{ blockProp | json | replace('[{"', '')  | replace('}]', '') | replace('":', ':') }}
 {% else %}
-{{ getBlockProp(block, prop) | json | truncate(120) }}
+{% if propBlockRef %}<a href="/admin/block/{{ blockProp }}">{% endif %}{{ blockProp | json | replace(r/^"(.*)"$/, '$1') | truncate(120) }}{% if propBlockRef %}</a>{% endif %}
 {% endif %}
 </small>
 </li>
