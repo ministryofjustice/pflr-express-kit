@@ -13,7 +13,7 @@ Block - Proto_blockType
 {% if _blockType == 'Route' %}
 {% set routeUrl = getRouteUrl(block) %}
 {% if routeUrl %}
-<small><a href="{{ routeUrl }}">{{ routeUrl }}</a></small>
+<small>route url <a href="{{ routeUrl }}">{{ routeUrl }}</a></small>
 {% endif %}
 {% endif %}
 </h1>
@@ -32,11 +32,16 @@ Block - Proto_blockType
   <div class="{{ govukClassname('summary-details') }}">
     {{ Block.Text('block', value=blockJSON, multiline=true, rows=1) }}
   </div>
+  <details>
+    <summary><span class="summary">View expanded block</span></summary>
+    <div class="{{ govukClassname('summary-details') }}">
+      {# <h2 class="{{ govukClassname('heading-medium') }}">Expanded JSON</h2> #}
+      <p class="blockJSONExpanded">{{blockJSONExpanded | safe}}</p>
+    </div>
+  </details>
   <div class="admin-actions">
   <button class="{{ govukClassname('button') }}">Update {{ block }}</button>
   </div>
-  <h2 class="{{ govukClassname('heading-medium') }}">Expanded JSON</h2>
-  <p class="blockJSONExpanded">{{blockJSONExpanded | safe}}</p>
 </details>
 
 
