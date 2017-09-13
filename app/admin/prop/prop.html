@@ -10,7 +10,7 @@ Prop - Prototype
 {% endif %}
 <p><a class="link-back" href="/admin/blocks/{{ _blockType }}">Back to {{ _blockType }}</a></p>
 
-<h1 class="{{ govukClassname('heading-large') }}"><a class="xlink-back" href="/admin/block/{{ block }}">{{ block }}</a>{% if prop %}.{{ prop }}{% endif %}</h1>
+<h1 class="{{ govukClassname('heading-large') }}"><a class="header-link-back" href="/admin/block/{{ block }}">{{ block }}</a>{% if prop %}.{{ prop }}{% endif %}</h1>
 
 {% if doesNotExist %}
 <p>{{ block }} doesn’t exist yet</p>

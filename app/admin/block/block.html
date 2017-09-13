@@ -19,7 +19,7 @@ Block - Proto_blockType
 </h1>
 
 {% if stringProps.length %}
-<ul class="{{ govukClassname('list-bullet') }}">
+<ul class="blockProperties {{ govukClassname('list-bullet') }}">
 {% for prop in stringProps %}
 {% set blockProp = getBlockProp(block, prop) %}
 {% set blockPropType = typeof(blockProp ) %}

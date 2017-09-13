@@ -11,11 +11,11 @@ Routes - Prototype
 {% for route in routes %}
 {% set url = getRouteUrl(route) %}
 <tr>
-<td>{{ route }}</td>
+<td><a href="/admin/block/{{ route }}" title="Block data">{{ route }}</a></td>
 <td><a href="{{ url }}" title="{{ getBlockProp(route, 'heading') }}">{{ url }}</a></td>
 <td>{% if getBlockProp(route, 'steps') and getBlockProp(route, 'template') != 'step-by-step' %}<a href="{{ url }}{% if url != '/' %}/{% endif %}flowchart" title="Flowchart mode">step flow</a>{%endif%}</td>
-<td><a href="{{ url }}{% if url != '/' %}/{% endif %}edit" title="Edit mode">✎</a></td>
-<td><a href="/admin/block/{{ route }}" title="Data mode">{}</a></td>
+<td class="routes-link"><a href="{{ url }}{% if url != '/' %}/{% endif %}edit" title="Edit mode">✎</a></td>
+{# <td class="routes-link"><a href="/admin/block/{{ route }}" title="Block data">{}</a></td> #}
 </tr>
 {% endfor %}
 </table>
