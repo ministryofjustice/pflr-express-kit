@@ -8,7 +8,15 @@ Block - Proto_blockType
 {% set _blockType = getBlockProp(block, '_blockType') %}
 <p><a class="link-back" href="/admin/blocks/{{ _blockType }}">Back to {{ _blockType }}</a></p>
 
-<h1 class="{{ govukClassname('heading-large') }}">{{ block }}</h1>
+<h1 class="{{ govukClassname('heading-large') }}">
+{{ block }}
+{% if _blockType == 'Route' %}
+{% set routeUrl = getRouteUrl(block) %}
+{% if routeUrl %}
+<small><a href="{{ routeUrl }}">{{ routeUrl }}</a></small>
+{% endif %}
+{% endif %}
+</h1>
 
 {% if stringProps.length %}
 <ul class="{{ govukClassname('list-bullet') }}">
@@ -33,7 +41,7 @@ Block - Proto_blockType
 
 
   <div class="admin-actions">
-  {{ Block.Text('cloneId', label='New block id')}}
+  {{ Block.Text('cloneId', label='New property / block id')}}
   <button name="action" value="prop" class="{{ govukClassname('button') }}">Add property</button>
   <button name="action" value="clone" class="{{ govukClassname('button') }}">Clone block</button>
   <button name="action" value="delete" class="{{ govukClassname('button') }} button--delete">Delete {{ block }}</button>
