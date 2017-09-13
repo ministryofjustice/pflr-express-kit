@@ -1,4 +1,4 @@
 {% from '../Input/Input.njk' import Input with context %}
 {% macro Number(name, value='', error='') -%}
-  {{ Input(name, type='number') }}
+  {{ Input(name, type='number', value=value) }}
 {%- endmacro %}

@@ -19,15 +19,26 @@ Block - Proto_blockType
 {% endif %}
 
 <form method="post">
-<textarea name="block" id="block" cols="80" rows="1">{{blockJSON | safe}}</textarea>
-<p><button class="{{ govukClassname('button') }}">Update block</button></p>
+<details>
+  <summary><span class="summary">Edit raw block</span></summary>
+  <div class="{{ govukClassname('summary-details') }}">
+    {{ Block.Text('block', value=blockJSON, multiline=true, rows=1) }}
+  </div>
+  <div class="admin-actions">
+  <button class="{{ govukClassname('button') }}">Update {{ block }}</button>
+  </div>
+  <h2 class="{{ govukClassname('heading-medium') }}">Expanded JSON</h2>
+  <p class="blockJSONExpanded">{{blockJSONExpanded | safe}}</p>
+</details>
 
-<p>New _id <input name="cloneId"></p>
-<p><button name="clone" value="yes" class="{{ govukClassname('button') }}">Clone block</button></p>
 
-<p class="deleteBlock"><button name="action" value="delete" class="{{ govukClassname('button') }}">Delete {{ block }}</button></p>
+  <div class="admin-actions">
+  {{ Block.Text('cloneId', label='New block id')}}
+  <button name="action" value="prop" class="{{ govukClassname('button') }}">Add property</button>
+  <button name="action" value="clone" class="{{ govukClassname('button') }}">Clone block</button>
+  <button name="action" value="delete" class="{{ govukClassname('button') }} button--delete">Delete {{ block }}</button>
+  </div>
+
 </form>
-
-<p class="expanded">{{blockJSONExpanded | safe}}</p>
 
 {% endblock %}

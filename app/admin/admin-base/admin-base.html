@@ -1,5 +1,10 @@
 {% extends "templates/base/base.html" %}
 
+{% block stylesheet %}
+{{ super() }}
+<link href="/public/stylesheets/govuk-form-styles.css" rel="stylesheet">
+{% endblock %}
+
 {% block main_content %}
 <style type="text/css">
 .link-admin {
@@ -15,6 +20,43 @@
 .xheader-proposition * {
   visibility: hidden;
 }
+
+summary + .panel {
+  margin-top: -1rem;
+  padding-top: 1px;
+}
+summary + .panel label,
+.container label[for=value],
+.propType label[for=value] {
+  position: absolute;
+  left: -9999px;
+}
+
+textarea.form-control[name=block],
+.stringProp input.form-control,
+.arrayProp input.form-control {
+  width: 100%;
+}
+.numberProp input.form-control {
+  width: 4rem;
+}
+
+.button--delete {
+  background-color: #df3034;
+  margin-left: 2rem;
+  float: right;
+}
+.button--delete:hover {
+  background-color: #b10e1e;
+}
+
+.admin-actions {
+  margin: 4rem 0 3rem;
+}
+
+.blockJSONExpanded {
+  white-space: pre-line;
+}
 </style>
 <p><a class="link-admin link-back" href="/admin/quicklinks">Admin page</a></p>
 {% block admin_content %}{% endblock %}
@@ -22,12 +64,23 @@
 
 {% block body_end %}
 {{ super() }}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.css" media="screen" rel="stylesheet">
+<script src='https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js'></script>
 <script src="/public/javascripts/autosize/autosize.js"></script>
 <script type="text/javascript">
 var $textareas = jQuery('textarea')
 if ($textareas.length) {
   autosize($textareas)
 }
+setInterval(function () {
+    autosize.update($textareas)
+  }, 100)
+
+var itemContainer = document.querySelector('.arrayProp')
+dragula([itemContainer], {
+  revertOnSpill: true,
+  ignoreInputTextSelection: false
+})
 </script>
 <style type="text/css">
 textarea {
@@ -38,6 +91,41 @@ textarea {
   padding: 1em;
   min-height: 3.5em;
   width: 100%;
+}
+
+.propContainer {
+  position: relative;
+  padding-left: 20px;
+}
+.propContainer:before,
+.propContainer:after {
+  background: #333;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  cursor: move;
+  content: '▲';
+  font-weight: bold;
+  color: #fff;
+  width: 20px;
+  z-index: 1000;
+  text-align: center;
+  font-size: 1.5rem;
+  padding-left: 0.125rem;
+}
+.propContainer:after {
+  z-index: 1001;
+  background: transparent;
+  content: '▼';
+  padding-top: 1.75rem;
+}
+.gu-mirror .form-group {
+  margin-top: 0;
+  width: 100%;
+}
+.propContainer:hover:before{
+  background: #000;
 }
 </style>
 {% endblock %}

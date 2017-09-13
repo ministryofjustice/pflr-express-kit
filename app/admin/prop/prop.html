@@ -10,7 +10,7 @@ Prop - Prototype
 {% endif %}
 <p><a class="link-back" href="/admin/blocks/{{ _blockType }}">Back to {{ _blockType }}</a></p>
 
-<h1 class="{{ govukClassname('heading-large') }}"><a class="link-back" href="/admin/block/{{ block }}">{{ block }}</a>{% if prop %}.{{ prop }}{% endif %}</h1>
+<h1 class="{{ govukClassname('heading-large') }}"><a class="xlink-back" href="/admin/block/{{ block }}">{{ block }}</a>{% if prop %}.{{ prop }}{% endif %}</h1>
 
 {% if doesNotExist %}
 <p>{{ block }} doesn’t exist yet</p>
@@ -18,10 +18,12 @@ Prop - Prototype
 {% else %}
 <form method="post">
 {% if noValue %}{% if propType != 'array' %}
-<p><label><input type="radio" name="propType" value="string" checked> String</label></p>
-<p><label><input type="radio" name="propType" value="array"> Array</label></p>
-<p><label><input type="radio" name="propType" value="number"> Number</label></p>
-<p><label><input type="radio" name="propType" value="boolean"> Boolean</label></p>
+{% set stringOption = { value: 'string', label: 'String', checked: true } %}
+{% set arrayOption = { value: 'array', label: 'Array' } %}
+{% set numberOption = { value: 'number', label: 'Number' } %}
+{% set booleanOption = { value: 'boolean', label: 'Boolean' } %}
+{% set propTypeOptions = [stringOption, arrayOption, numberOption, booleanOption] %}
+{{ Block.RadioGroup('propType', options=propTypeOptions) }}
   {% else %}
   <input type="hidden" name="propType" value="{{ propType }}">
   {% endif %}
@@ -29,34 +31,40 @@ Prop - Prototype
 <input type="hidden" name="propType" value="{{ propType }}">
 {% endif %}
 
+
+<div class="propType {{ propType }}Prop">
 {% if propType == 'string' %}
-<p><textarea name="value" id="value" cols="80" rows="1">{{ value | safe}}</textarea></p>
+{{ Block.Text('value', value=value, multiline=true, rows=1) }}
 {% endif %}
 {% if propType == 'number' %}
-<p><input type="number" name="value" id="value" value="{{ value }}"></p>
+{{ Block.Number('value', value=value) }}
 {% endif %}
 {% if propType == 'boolean' %}
-<p><label><input type="radio" name="value" value="true"{% if value %} checked{% endif %}> True</label></p>
-<p><label><input type="radio" name="value" value="false"{% if not value %} checked{% endif %}> False</label></p>
+{% set trueOption = { value: 'true', label: 'True', checked: value } %}
+{% if not value %}{% set falseChecked = true %}{% endif %}
+{% set falseOption = { value: 'false', label: 'False', checked: falseChecked } %}
+{% set valueOptions = [trueOption, falseOption] %}
+{{ Block.RadioGroup('value', options=valueOptions) }}
 {% endif %}
 {% if propType == 'array' %}
 {% for valueItem in value %}
-<p><input class="arrayItem" name="value" value="{{ valueItem | safe}}"></p>
+<div class="container propContainer">
+{{ Block.Text('value', value=valueItem) }}
+</div>
 {% endfor %}
-<p><input class="arrayItem" name="value" value=""></p>
+<div class="container propContainer">
+{{ Block.Text('value', value='') }}
+</div>
 {% endif %}
-<p><button class="{{ govukClassname('button') }}">Update {{ prop }}</button></p>
+</div>
+
+<div class="admin-actions">
+<button class="{{ govukClassname('button') }}">{% if noValue %}Add{% else %}Update{% endif %} {{ prop }}</button>
 {% if not noValue %}
-<p class="deleteProp"><button name="action" value="delete" class="{{ govukClassname('button') }}">Delete {{ prop }}</button></p>
+<button name="action" value="delete" class="{{ govukClassname('button') }} button--delete">Delete {{ prop }}</button>
 {% endif %}
+</div>
 </form>
 {% endif %}
-<style>
-.arrayItem {
-  width: 90%;
-}
-.deleteProp {
-  margin-top: 3rem;
-}
-</style>
+
 {% endblock %}
