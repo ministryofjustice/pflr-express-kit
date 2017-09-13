@@ -1,5 +1,7 @@
 {% extends "templates/base/base.html" %}
 
+{% block proposition_name %}{{ Block.String('ServiceName') }}{% endblock %}
+
 {% block stylesheet %}
 {{ super() }}
 <link href="/public/stylesheets/govuk-form-styles.css" rel="stylesheet">
@@ -11,7 +13,12 @@
   position: absolute;
   top: 0;
   font-size: 3rem;
+  font-weight: bold;
   color: #ffffff;
+  text-decoration: none;
+}
+.link-admin:hover {
+  text-decoration: underline;
 }
 .link-admin:visited {
   color: #ffffff;
@@ -41,6 +48,11 @@ textarea.form-control[name=block],
   width: 4rem;
 }
 
+.blockProp__value {
+  display: block;
+  font-size: 1.5rem;
+  color: #999999;
+}
 .button--delete {
   background-color: #df3034;
   margin-left: 2rem;
@@ -51,6 +63,8 @@ textarea.form-control[name=block],
 }
 
 .admin-actions {
+  xdisplay: table;
+  overflow: hidden;
   margin: 4rem 0 3rem;
 }
 
@@ -58,7 +72,7 @@ textarea.form-control[name=block],
   white-space: pre-line;
 }
 </style>
-<p><a class="link-admin link-back" href="/admin/quicklinks">Admin page</a></p>
+<p><a class="link-admin" href="/admin/quicklinks">Admin page</a></p>
 {% block admin_content %}{% endblock %}
 {% endblock %}
 

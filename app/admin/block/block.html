@@ -21,7 +21,15 @@ Block - Proto_blockType
 {% if stringProps.length %}
 <ul class="{{ govukClassname('list-bullet') }}">
 {% for prop in stringProps %}
-<li><a href="/admin/block/{{ block }}/{{ prop }}">{{ prop }}</a></li>
+<li class="blockProp">{% if prop != 'depends' %}<a href="/admin/block/{{ block }}/{{ prop }}">{% endif %}{{ prop }}{% if prop != 'depends' %}</a>{% endif %}
+<small class="blockProp__value">
+{% if prop == 'depends' %}
+{{ getBlockProp(block, prop) | json | replace('[{"', '')  | replace('}]', '') | replace('":', ':') }}
+{% else %}
+{{ getBlockProp(block, prop) | json | truncate(120) }}
+{% endif %}
+</small>
+</li>
 {% endfor %}
 </ul>
 {% endif %}
@@ -40,15 +48,26 @@ Block - Proto_blockType
     </div>
   </details>
   <div class="admin-actions">
-  <button class="{{ govukClassname('button') }}">Update {{ block }}</button>
+  <button name="action" value="update" class="{{ govukClassname('button') }}">Update {{ block }}</button>
   </div>
 </details>
 
 
   <div class="admin-actions">
-  {{ Block.Text('cloneId', label='New property / block id')}}
-  <button name="action" value="prop" class="{{ govukClassname('button') }}">Add property</button>
-  <button name="action" value="clone" class="{{ govukClassname('button') }}">Clone block</button>
+    <details>
+    <summary><span class="summary">Add property</span></summary>
+    <div class="{{ govukClassname('summary-details') }}">
+    {{ Block.Text('propName', label='Property name')}}
+    <button name="action" value="prop" class="{{ govukClassname('button') }}">Add property</button>
+    </div>
+  </details>
+    <details>
+    <summary><span class="summary">Clone block</span></summary>
+    <div class="{{ govukClassname('summary-details') }}">
+    {{ Block.Text('cloneId', label='New id')}}
+    <button name="action" value="clone" class="{{ govukClassname('button') }}">Clone block</button>
+    </div>
+  </details>
   <button name="action" value="delete" class="{{ govukClassname('button') }} button--delete">Delete {{ block }}</button>
   </div>
 
