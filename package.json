@@ -9,6 +9,7 @@
     "babel-cli": "^6.24.1",
     "babel-preset-es2015": "^6.24.1",
     "body-parser": "^1.17.1",
+    "cheerio": "^1.0.0-rc.2",
     "codeceptjs": "^0.6.3-pre",
     "compression": "^1.6.2",
     "cookie-parser": "^1.4.3",

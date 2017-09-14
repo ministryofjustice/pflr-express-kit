@@ -282,6 +282,7 @@ Wizard flow - Prototype
 {% endblock %}
 
 {% block content %}
+{{ route.wizard }} - {{ route.nonono }} - {{ route.wizardHierarchy }}
 {% set stepRoute = routesFlattened[route.wizard] %}
 {% set stepUrl = getRouteUrl(stepRoute.id) %}
 <div id="container">
@@ -351,10 +352,14 @@ Wizard flow - Prototype
 <span class="mutiple-route">Multiple route: min={{ stepRoute.multiple_min }}; max={{ stepRoute.multiple_max }}</span>
 {% endif %}
 </small></p>
+{% if route.flowchartOutput %}
+{{ route.flowchartOutput[stepId] | safe }}
+{% else %}
 {{ Block.PageHeader(stepId, start_page=stepRoute.start_page) }}
-{# {{ stepRoute | json}} #}
 {{ Block.Group(blocks=stepRoute.blocks) }}
+{% endif %}
 </div>
+
 {% if redirectConditions %}
 <ul class="redirectConditions">
 {% for redirect, condition in redirectConditions %}

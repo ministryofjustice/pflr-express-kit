@@ -3,8 +3,10 @@
 {% if outputControl %}
 {% set _blockType = getBlockProp(name, '_blockType', 'Text', { value: _blockType }) %}
 {% if Block[_blockType] %}
-{% if flowchart %}<!-- CONTROL.njk={{name}} -->{% endif %}
+{% if not getBlockProp(name, '_disabled') %}
 {{ Block[_blockType](name, value=value, error=error, label=label, sublabel=sublabel, hint=hint, heading=heading, inline=inline, depth=depth) }}
+{% endif %}
 {% else %}<p>NO SUCH MACRO :{{ _blockType }}:</p>{% endif %}
 {% endif %}
+{% if flowchart %}<span></span>{% endif %}
 {%- endmacro %}
