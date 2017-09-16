@@ -8,8 +8,10 @@
 
 <ul class="error-summary-list">
 {% for errorKey, errorValue in errors %}
+{% if not errorValue.noheader %}
 <li><a href="#{{ errorKey }}">{{ getFormattedError(errorKey, {header:true, prefix:route._prefix}) }}</a></li>
 {# <li>errorKey:{{errorKey}} - errorValue:{{errorValue}}</li> #}
+{% endif %}
 {% endfor %}
 </ul>
 

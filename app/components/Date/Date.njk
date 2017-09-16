@@ -5,10 +5,10 @@
     {% set prefixedName = name %}
     {% if route._prefix %}{% set prefixedName = route._prefix + prefixedName %}{% endif %}
   {% set error = getError(prefixedName) %}
-  <div class="form-group{% if error %} error{% endif %}"{% if name %} data-block-name="{{name}}"{% endif %}>
+  <div id="{{ prefixedName }}" class="form-group{% if error %} error{% endif %}"{% if name %} data-block-name="{{name}}"{% endif %}>
   {% call Fieldset(name) %}
     <div class="form-date">
-      {{ Input(name+'.day', type='number', label='Day', pattern='[0-9]*', min=0, max=31, controlError=true) }}
+      {{ Input(name+'.day', type='number', label='Day', pattern='[0-9]*', min=0, max=31) }}
       {{ Input(name+'.month', type='number', label='Month', pattern='[0-9]*', min=0, max=12) }}
       {{ Input(name+'.year', type='number', label='Year', pattern='[0-9]*') }}
     </div>

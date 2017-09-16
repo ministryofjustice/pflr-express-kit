@@ -5,6 +5,10 @@
 {% set prefixedName = name %}
 {% if route._prefix %}{% set prefixedName = route._prefix + prefixedName %}{% endif %}
 {% set error = getError(prefixedName) %}
+{% if not options %}
+  {% set options = getBlockProp(name, 'options') %}
+{% endif %}
+{% if options.length == 2 %}{% set inline=true %}{% endif %}
 <div class="form-group{% if error %} error{% endif %}"{% if name %} data-block-name="{{name}}"{% endif %}>
 {% call Fieldset(name, inline=inline) %}
     {% set or = getBlockProp(name, 'or') %}
@@ -21,9 +25,6 @@
       {% endif %}
       {% if checkReveals(name, option.value) %}{% set hasOptionReveals = true %}{% endif %}
     {% endfor %} #}
-    {% if not options %}
-      {% set options = getBlockProp(name, 'options') %}
-    {% endif %}
     {% for option_name in options %}
       {% if option_name.value %}
         {% set option = option_name %}
