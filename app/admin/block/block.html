@@ -21,7 +21,8 @@
 {% if stringProps.length %}
 <ul class="blockProperties {{ govukClassname('list-bullet') }}">
 {% for prop in stringProps %}
-{% set blockProp = getBlockProp(block, prop) %}
+{% set rawBlock = getBlockRaw(block) %}
+{% set blockProp = rawBlock[prop] %}
 {% set blockPropType = typeof(blockProp ) %}
 {% set propBlockRef = '' %}
 {% if blockPropType == 'string' %}

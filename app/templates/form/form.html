@@ -2,8 +2,8 @@
 {% from 'components/ErrorSummary/ErrorSummary.njk' import ErrorSummary with context %}
 
 {% block stylesheet %}
-{{ super() }}
 <link href="/public/stylesheets/govuk-form-styles.css" rel="stylesheet">
+{{ super() }}
 {% endblock %}
 
 {% block grid_content_body %}
@@ -15,15 +15,28 @@
 <form method="post">
 {{ super() }}
 {% set startPage = route.start %}
-<div class="xform-group form-submit"><input class="button {% if startPage %}button-start {% endif %}next validation-submit" type="submit" value="{% if startPage %}Start{% else %}Save and continue{% endif %}"></div>
+<div class="xform-group form-submit">
+
+{% set formContinue = 'Save and continue' %}
+{% if startPage %}{% set formContinue = 'Start' %}{% endif %}
+<button class="button {% if startPage %}button-start {% endif %}next validation-submit" type="submit">{{ formContinue }}</button>
 {% if route.multiple_counter %}
 {% set addValue = 1 %}
 {% if autofields[route.multiple_counter] %}{% set addValue = autofields[route.multiple_counter] %}{% endif %}
 {% set addValue = addValue + 1 %}
 {% if route.multiple_max >= addValue %}{% if route._index == addValue - 1 %}
-<button class="button next" type="submit" name="{{ route.multiple_counter }}" value="{{ addValue }}">Add another</button>
-{% endif %}{% endif %}
+<button class="button button--add" type="submit" name="{{ route.multiple_counter }}" value="{{ addValue }}">{{ getFormattedProp(route.id, 'multiple_add', 'Add another') }}</button>
 {% endif %}
+{% endif %}
+{% if autofields[route.multiple_counter] > route.multiple_min %}
+  {% if autofields[route.multiple_counter] ==  route._index %}
+<buttton class="button button--delete button--destructive">{{ getFormattedProp(route.id, 'multiple_delete', 'Delete') }}</button>
+  {% endif %}
+{% endif %}
+{% endif %}
+
+</div>
+
 </form>
 {% endblock %}
 

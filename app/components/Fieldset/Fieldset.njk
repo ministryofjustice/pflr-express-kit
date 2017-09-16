@@ -1,8 +1,9 @@
 {% from '../ControlError/ControlError.njk' import ControlError with context %}
 {% from '../Group/Group.njk' import Group with context %}
-{% macro Fieldset(name, content='', label='', sublabel='', inline='', blocks='', group='', visually_hidden=false, error='') %}
+{% macro Fieldset(name, content='', label='', sublabel='', hint='', inline='', blocks='', group='', visually_hidden=false, error='') %}
 {% set label = getFormattedProp(name, 'label', { value: label }) %}
 {% set sublabel = getFormattedProp(name, 'sublabel', { value: sublabel }) %}
+{% set hint = getBlockProp(name, 'hint', { value: hint }) %}
 {% set inline = getBlockProp(name, 'inline', { value: inline }) %}
 {% if not blocks and getBlockProp(name, 'blocks') %}
 {% set blocks = getBlockProp(name, 'blocks') %}
@@ -31,6 +32,7 @@
     {{ caller() }}
   {% endif %}
   {% if blocks %}
+  {{ blocks | json}}
     {{ Group(blocks=blocks) }}
   {% endif %}
   </fieldset>

@@ -282,7 +282,6 @@ Wizard flow - Prototype
 {% endblock %}
 
 {% block content %}
-{{ route.wizard }} - {{ route.nonono }} - {{ route.wizardHierarchy }}
 {% set stepRoute = routesFlattened[route.wizard] %}
 {% set stepUrl = getRouteUrl(stepRoute.id) %}
 <div id="container">

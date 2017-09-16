@@ -97,3 +97,23 @@ br + .labelLine {
 .app__section_heading + .app__heading {
   margin-top: 1rem;
 }
+
+.button--destructive {
+  margin-left: 2rem;
+  background-color: var(--mellow-red);
+
+  &:hover {
+    background-color: var(--red);
+  }
+}
+
+.form-group {
+  & .form-group:first-child,
+  & .form-group:last-child {
+    margin-top: 0;
+  }
+}
+
+.form-date .form-label-bold {
+  font-weight: normal;
+}

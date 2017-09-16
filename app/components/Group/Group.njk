@@ -4,18 +4,30 @@
 {% macro Group(name='', heading='', blocks=[]) %}
 {% set multipleCounterRef = getBlockProp(name, 'multiple_counter_ref') %}
 {% set multipleIndex = getBlockProp(name, 'multiple_index') %}
+{% set multipleMin = getBlockProp(name, 'multiple_min') %}
+{% if multipleIndex %}
+  {% set prefixedMultipleCounterRef = multipleCounterRef %}
+  {% if route._prefix %}
+    {% set prefixedMultipleCounterRef = route._prefix + prefixedMultipleCounterRef %}
+  {% endif %}
+  {% set currentMultipleIndex = getValue(prefixedMultipleCounterRef, multipleMin) %}
+  {% if multipleIndex > currentMultipleIndex %}
+    {% set skipMultiple = true %}
+  {% endif %}
+{% endif %}
 {% if flowchart or edit %}
-{% if multipleCounterRef %}
-  {% set isMultiple = true %}
-{% endif %}
-{% if multipleIndex > 1 %}
-  {% set skipMultiple = true %}
-{% endif %}
+  {% set skipMultiple = false %}
+  {% if multipleCounterRef %}
+    {% set isMultiple = true %}
+  {% endif %}
+  {% if multipleIndex > 1 %}
+    {% set skipMultiple = true %}
+  {% endif %}
 {% endif %}
 {% if not skipMultiple %}
 <div{% if name %} data-block-name="{{name}}"{% endif %}{% if isMultiple %} class="multiple-group"{% endif %}>
 {% if isMultiple %}
-<span class="mutiple-group-details">Multiple block: min={{ getBlockProp(name, 'multiple_min') }}; max={{ getBlockProp(name, 'multiple_max') }}</span>
+<span class="mutiple-group-details">Multiple block: min={{ multipleMin }}; max={{ getBlockProp(name, 'multiple_max') }}</span>
 {% endif %}
 {% set prefixedName = name %}
 {% if route._prefix %}{% set prefixedName = route._prefix + prefixedName %}{% endif %}
@@ -34,7 +46,7 @@
     {% if Block[blockType] %}
     {#{% call Block[blockType](blockData) %}{% endcall %}#}
     {# {{ Block[blockType](blockData) }} #}
-    {{ Control(blockData) }}
+    {{ Control(blockData, block=block) }}
     {% else %}
     <p>NO SUCH MACRO : {{ blockType }}:</p>
     {% endif %}
@@ -46,18 +58,18 @@
 {% if name %}
 {% set multiple_counter = getBlockProp(name, 'multiple_counter') %}
 {% if multiple_counter %}
-<div class="control-group-actions">
+<div class="control-group__actions">
 {% if route._prefix %}{% set multiple_counter = route._prefix + multiple_counter %}{% endif %}
 {% set multiple_min = getBlockProp(name, 'multiple_min') %}
 {% set multiple_max = getBlockProp(name, 'multiple_max') %}
 {% set multiple_counter_value = getValue(multiple_counter) %}
 {% if not multiple_counter_value %}{% set multiple_counter_value = multiple_min %}{% endif %}
 <input type="hidden" name="{{ multiple_counter }}" value="{{ multiple_counter_value }}">
-{% if multiple_counter_value > multiple_min %}
-<button class="button" type="submit" name="delete:{{ multiple_counter }}" value="{{ multiple_counter_value }}">{{ getBlockProp(name, 'multiple_delete', 'Delete') }}</button>
-{% endif %}
 {% if multiple_counter_value < multiple_max %}
 <button class="button" type="submit" name="add:{{ multiple_counter }}" value="true">{{ getBlockProp(name, 'multiple_add', 'Add another') }}</button>
+{% endif %}
+{% if multiple_counter_value > multiple_min %}
+<button class="button button--destructive" type="submit" name="delete:{{ multiple_counter }}" value="{{ multiple_counter_value }}">{{ getBlockProp(name, 'multiple_delete', 'Delete') }}</button>
 {% endif %}
 </div>
 {% endif %}
