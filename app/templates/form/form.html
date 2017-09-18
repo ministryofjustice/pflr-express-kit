@@ -19,6 +19,7 @@
 
 {% set formContinue = 'Save and continue' %}
 {% if startPage %}{% set formContinue = 'Start' %}{% endif %}
+{% if route.continue %}{% set formContinue = 'Continue' %}{% endif %}
 <button class="button {% if startPage %}button-start {% endif %}next validation-submit" type="submit">{{ formContinue }}</button>
 {% if route.multiple_counter %}
 {% set addValue = 1 %}

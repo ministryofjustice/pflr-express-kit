@@ -13,7 +13,7 @@
 {% if _blockType == 'Route' %}
 {% set routeUrl = getRouteUrl(block) %}
 {% if routeUrl %}
-<small>route url <a href="{{ routeUrl }}">{{ routeUrl }}</a></small>
+<small>route url <a href="{{ routeUrl }}">{{ routeUrl }}</a> <a href="{{ routeUrl }}/edit">(edit)</a></small>
 {% endif %}
 {% endif %}
 </h1>

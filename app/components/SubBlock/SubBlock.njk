@@ -2,15 +2,17 @@
 {% from '../DependsHidden/DependsHidden.njk' import DependsHidden with context %}
 {% from '../DependsAria/DependsAria.njk' import DependsAria with context %}
 {% macro SubBlock(name, closed=false) %}
+{% set prefixedName = name %}
+{% if route._prefix %}{% set prefixedName = route._prefix + prefixedName %}{% endif %}
 {% if name %}
   {% set subdepends = checkRevealRequired(name) %}
   {% if subdepends %}
-    {% set subopen = checkNoDependency(name) %}
+    {% set subopen = checkNoDependency(name, false, null, true) %}
     {% if closed %}
       {% set subopen = false %}
     {% endif %}
   {% endif %}
-  <div class="panel panel-border-narrow{{ DependsHidden(depends=subdepends, open=subopen) }}"{{ DependsAria(name, depends=subdepends, open=subopen) }}>
+  <div class="panel panel-border-narrow{{ DependsHidden(depends=subdepends, open=subopen) }}"{{ DependsAria(prefixedName, depends=subdepends, open=subopen) }}>
     {% call Control(name, skipDependencyCheck=true) %}{% endcall %}
   </div>
 {% endif %}

@@ -8,7 +8,13 @@
 {% if not options %}
   {% set options = getBlockProp(name, 'options') %}
 {% endif %}
+{% if not inline %}
+  {% set inline = getBlockProp(name, 'inline') %}
+{% endif %}
+{% set inlineType = typeof(inline) %}
+{% if inlineType != 'boolean' %}
 {% if options.length == 2 %}{% set inline=true %}{% endif %}
+{% endif %}
 <div class="form-group{% if error %} error{% endif %}"{% if name %} data-block-name="{{name}}"{% endif %}>
 {% call Fieldset(name, inline=inline) %}
     {% set or = getBlockProp(name, 'or') %}
@@ -66,6 +72,13 @@
       </div>
       {{ SubBlock(option.subblock) }}
     {% endfor %}
+    {# {% if getBlockProp(name, 'subblock') %}
+    {% set closed = !checkRevealRequired(getBlockProp(name, 'subblock') %}
+    checkNoDependency {{ getBlockProp(name, 'subblock') }}:{{ checkNoDependency(getBlockProp(name, 'subblock')) }}
+    checkRevealRequired {{ getBlockProp(name, 'subblock') }}:{{ checkRevealRequired(getBlockProp(name, 'subblock')) }}
+    {% endif %} #}
+    {# <p>Closed:{{ closed }}, optionReveals:{{optionReveals}}, checked:{{checked}}, </p> #}
+    {# {% set closed = true %} #}
     {{ SubBlock(getBlockProp(name, 'subblock'), closed=closed) }}
 {% endcall %}
 </div>

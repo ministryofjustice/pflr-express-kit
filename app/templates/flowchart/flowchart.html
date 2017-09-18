@@ -47,6 +47,7 @@ div#content {
   width: 500px;
   vertical-align: top;
   padding-bottom: 100px;
+  z-index: 10;
 }
 .innerbox:before {
   content: '▶';
@@ -274,6 +275,23 @@ span.depends__no {
 .control-group-actions {
   display: none;
 }
+
+{% set printable = req.query.printable %}
+{% if printable %}
+  .block-edit {
+    display: none !important;
+  }
+  a:after {
+    content: '' !important;
+    display: none !important;
+  }
+  .innerbox {
+    padding-left: 10px;
+  }
+  .control-group__actions {
+    display: none !important;
+  }
+{% endif %}
 </style>
 {% endblock %}
 
@@ -282,6 +300,7 @@ Wizard flow - Prototype
 {% endblock %}
 
 {% block content %}
+<form method="post">
 {% set stepRoute = routesFlattened[route.wizard] %}
 {% set stepUrl = getRouteUrl(stepRoute.id) %}
 <div id="container">
@@ -290,6 +309,7 @@ Wizard flow - Prototype
 <div class="innerbox" data-block-name="{{stepRoute.id}}">
 <p class="routeKey">{{stepRoute.id}} <small><a href="{{ stepUrl }}">{{ stepUrl }}</a> <a href="{{ stepUrl }}{% if stepUrl != '/' %}/{% endif %}edit">(edit)</a></small></p>
 {{ Block.PageHeader(stepRoute.id, start_page=stepRoute.start_page) }}
+{{ Block.Body(stepRoute.id) }}
 {{ Block.Group(blocks=stepRoute.blocks) }}
 </div>
 </div>
@@ -312,7 +332,7 @@ Wizard flow - Prototype
 
 {% if not skipMultiple %}
 {% set dependsStore = [] %}
-{% if not loop.blast and stepRoute.blocks %}
+{% if not loop.blast and not stepRoute.bblocks %}
 {% set previousDepends = depends %}
 {% set nextDepends = '' %}
 {% set continueDepends = '' %}
@@ -355,6 +375,8 @@ Wizard flow - Prototype
 {{ route.flowchartOutput[stepId] | safe }}
 {% else %}
 {{ Block.PageHeader(stepId, start_page=stepRoute.start_page) }}
+{{ Block.Body(stepId) }}
+{# {% if stepRoute.body %}{{ Block.Group(stepId) }}{% endif %} #}
 {{ Block.Group(blocks=stepRoute.blocks) }}
 {% endif %}
 </div>
@@ -374,11 +396,23 @@ Wizard flow - Prototype
 {% endif %}
 {% endfor %}
 </div>
+<p><button class="button">Update values</button></p>
+</form>
 {% endblock %}
 
-{% block Xbody_end_extra %}
-jQuery("#children_resident, #communication_methods").addClass("depends-skip");
-// jQuery("#gutter-your_plan, #your_plan").hide();
+{% block body_end %}
+{{ super() }}
+{# jQuery("#children_resident, #communication_methods").addClass("depends-skip");
+// jQuery("#gutter-your_plan, #your_plan").hide(); #}
+<script>
+jQuery(document).ready(function() {
+  setTimeout(function() {
+    console.log('boom')
+    jQuery('[media=print]').remove()
+    jQuery('[media=screen]').attr('media', 'all')
+  }, 2000)
+})
+</script>
 {% endblock %}
 
 {% macro matchProps(props, type='depend') %}
@@ -386,7 +420,7 @@ jQuery("#children_resident, #communication_methods").addClass("depends-skip");
 {% for prop in props %}
 <li>
 {% for key, constraint in prop %}
-  <p class="matchProp__key {{ type }}__key" style="font-weight:bold;">{{ splitWord(key) | safe }}</p>
+  <p class="matchProp__key {{ type }}__key" style="font-weight:bold;">{#{ getBlockProp(key, 'label') }#}{{ splitWord(key) | safe }}</p>
   <p class="{{ type }}__constraint">{{ constraint }}</p>
 {% endfor %}
 </li>

@@ -108,6 +108,23 @@ br + .labelLine {
 }
 
 .form-group {
+  & input[type=text],
+  & textarea {
+    &.form-control {
+      width: 100%;
+
+      &[name*=postcode] {
+        width: 12rem;
+      }
+
+      &[name*=phone] {
+        width: 50%;
+      }
+    }
+  }
+}
+
+.form-group {
   & .form-group:first-child,
   & .form-group:last-child {
     margin-top: 0;
@@ -125,4 +142,9 @@ br + .labelLine {
 
 .form-date .error-message {
   display: none;
+}
+
+.form-group[data-block-name$="unsure"],
+.form-group[data-block-name*="_unsure_"] {
+  margin-top: -20px;
 }
