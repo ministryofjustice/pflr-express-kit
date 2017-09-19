@@ -44,6 +44,14 @@ const validate = (values, schema, name) => {
   return validationError ? [validationError] : []
 }
 
+const getDisplayValue = (name, separator, componentValues, vals, fieldValues) => {
+  if (!componentValues.day || !componentValues.month || !componentValues.year) {
+    return
+  }
+  return `${componentValues.day}/${componentValues.month}/${componentValues.year}`
+}
+
 module.exports = {
-  validate
+  validate,
+  getDisplayValue
 }

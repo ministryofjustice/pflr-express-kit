@@ -1,0 +1,125 @@
+{% extends "templates/app/app.html" %}
+{% block stylesheet %}
+<link href="/public/stylesheets/govuk-form-styles.css" rel="stylesheet">
+{{ super() }}
+<style type="text/css">
+.check-your-answers caption {
+  text-align: left;
+  margin-top: 1em;
+}
+.dataRouteHeader {
+  padding-top: 3rem;
+}
+.previous-question-body {
+  white-space: nowrap;
+  width: 40%;
+}
+
+td:first-child.previous-question-title {
+  width: 40%;
+}
+td.previous-question-body {
+  width: 60%;
+}
+td:last-child.change-answer {
+  width: 10px;
+}
+
+table + form {
+  margin-top: 2em;
+}
+table + form p {
+  vertical-align: middle;
+}
+</style>
+{% endblock %}
+
+{% block grid_content %}
+{% set routeWizard = route.wizard %}
+{# sigh #}
+{% set routeWizard = 'route:index' %}
+{% set wizard = app.wizards[routeWizard] %}
+
+{{ super() }}
+
+<table class="check-your-answers">
+{# <caption class="heading-medium">Your answers</caption> #}
+<tbody>
+
+{# {{ wizard.stepsFlat }} #}
+{% for step in wizard.stepsFlat %}
+{% set stepRoute = routesFlattened[step] %}
+{% set abortRow = false %}
+{% if not checkNoDependency(step) %}
+{# <tr><td><h2>{{step}}:{{ checkNoDependency(step) }}</h2></td></tr> #}
+{% set abortRow = true %}
+{% endif %}
+{% if stepRoute.multiple_counter %}
+{% set routeCounter = getValue(stepRoute.multiple_counter) %}
+{% if not routeCounter and stepRoute._index > stepRoute.multiple_min %}
+{# <tr><td><h2>{{step}} not routeCounter:{{ routeCounter }}, {{ stepRoute.multiple_min }}</h2></td></tr> #}
+{% set abortRow = true %}
+{% endif %}
+{% if stepRoute._index >= routeCounter %}
+{% set abortRow = true %}
+{% endif %}
+{% endif %}
+{% if loop.last %}{% set abortRow = true %}{% endif %}
+{% set stepBlocks = [] %}
+{% if not abortRow %}
+{% set stepBlocks = getFlattenedBlocks(stepRoute) %}
+{% set excludedBlockTypes = ['Option', 'Group', 'Section', 'Body'] %}
+{% set stepBlocks = excludeBlockTypes(stepBlocks, excludedBlockTypes) %}
+{% set excludedRelatedBlocks = ['_unsure'] %}
+{% set stepBlocks = excludeRelated(stepBlocks, excludedRelatedBlocks) %}
+{% if not stepBlocks.length %}{% set abortRow = true %}{% endif %}
+{% endif %}
+{% if not abortRow %}
+{% set dump = [] %}
+{% for el in stepBlocks %}
+{% if checkNoDependency(el) %}{% set bump = dump.push(el) %}{% endif %}
+{% endfor %}
+{% if not dump.length %}{% set abortRow = true %}{% endif %}
+{% endif %}
+{% if not abortRow %}
+{% set args = { 'app:route:_index' : stepRoute._index } %}
+<tr data-route-header="{{ step }}"><th class="dataRouteHeader" colspan="3">{{ getFormattedProp(step, ['summary_heading', 'heading'], {args:args}) }}</th></tr>
+  {% for el in stepBlocks %}
+{% if checkNoDependency(el) %}
+{% set prefixedEl = el %}
+{% if stepRoute._prefix %}{% set prefixedEl = stepRoute._prefix + prefixedEl %}{% endif %}
+  {% set label = getFormattedProp(el, 'label') %}
+  {% set value = getDisplayValue(el, '<br>', {}, stepRoute._prefix) %}
+              <tr class="section" data-route-body="{{ step }}">
+  <td class="previous-question-title">{{ label | safe }}
+  {# <br><small style="font-size:0.75rem;">{{prefixedEl}}</small> #}
+  </td>
+    <td class="previous-question-body">
+    {{ value | safe }}</td>
+
+  <td class="change-answer">
+    <a href="{{ getRouteUrl(step, null, {edit:true}) }}#{{ prefixedEl }}">
+      Change<span class="visuallyhidden"> answer for “{{ label | safe }}”</span>
+</a>  </td>
+</tr>
+{% endif %}
+  {% endfor %}
+  {% endif %}
+{% endfor %}
+
+          </tbody>
+        </table>
+
+  <form method="post">
+  <p><button class="button">Confirm</button> <!-- or <a class="start-again" href="{{ getRouteUrl(routeWizard) }}">Start again</a>--></p>
+  </form>
+{% endblock %}
+{% block body_end %}
+{{ super() }}
+<script>
+jQuery('[data-route-header]').on('click', function() {
+  var dataRoute = jQuery(this).attr('data-route-header')
+  jQuery('[data-route-body="' + dataRoute + '"]').toggleClass('js-hidden')
+})
+</script>
+{% endblock %}

@@ -276,6 +276,16 @@ span.depends__no {
   display: none;
 }
 
+{#
+[data-block-name]:hover:before {
+  content: attr(data-block-name);
+  position: absolute;
+  xmargin-top: -0.75rem;
+  font-size: 0.75rem;
+  color: #999;
+}
+#}
+
 {% set printable = req.query.printable %}
 {% if printable %}
   .block-edit {
