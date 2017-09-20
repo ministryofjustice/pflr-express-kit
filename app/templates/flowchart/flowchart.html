@@ -23,7 +23,7 @@ body {
 div#content {
   margin: 0;
 }
-#container {
+.container {
   margin: 120px 50px 50px 50px;
   padding-right: 50px;
   display: table;
@@ -276,6 +276,16 @@ span.depends__no {
   display: none;
 }
 
+
+.flowchartLinesOff .gutter,
+.flowchartLinesOff .box:before,
+.flowchartLinesOff .innerbox:before {
+  visibility: hidden !important;
+}
+.flowchartLinesOff .gutter {
+  width: 100px !important;
+}
+
 {#
 [data-block-name]:hover:before {
   content: attr(data-block-name);
@@ -286,8 +296,25 @@ span.depends__no {
 }
 #}
 
+#flowchartControls {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  display: none;
+}
+#flowchartControls label {
+  display: inline-block;
+}
+#flowchartControls p {
+  display: inline-block;
+  margin-right: 3rem;
+}
 {% set printable = req.query.printable %}
 {% if printable %}
+  #flowchartControls {
+    display: block;
+  }
   .block-edit {
     display: none !important;
   }
@@ -302,6 +329,53 @@ span.depends__no {
     display: none !important;
   }
 {% endif %}
+
+
+.printing .flowchartContainer {
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+}
+.flowchartContainerInner {
+  position: relative;
+}
+.printingGuide .flowchartContainer {
+  background: pink;
+} 
+
+.printingGuide .flowchartContainerInner {
+  background: yellow;
+}
+
+.flowchartActions span {
+  cursor: pointer;
+}
+
+.gutter--hide,
+.box--hide,
+.flowchartActions {
+  display: none;
+}
+.printingGuide .gutter--hide,
+.printingGuide .box--hide {
+  display: block;
+  position: absolute;
+  top: -80px;
+}
+.printingGuide .flowchartActions {
+  display: block;
+}
+@media print {
+  #flowchartControls,
+  .flowchartActions
+  .gutter--hide,
+  .box--hide {
+    display: none !important;
+  }
+}
+
+
+
 </style>
 {% endblock %}
 
@@ -310,10 +384,19 @@ Wizard flow - Prototype
 {% endblock %}
 
 {% block content %}
+<div id="flowchartControls">
+<p class="form-group"><label class="form-label-bold">Scale <input name="scale" value="0.66"></label><button class="button splitFlowchart">Split flowchart</button></p>
+<p class="form-group"><button class="button removePrintingGuides">Remove printing helpers</button></p>
+<p class="form-group"><button class="button removeFlowchartLines">Remove flowchart lines</button></p>
+</div>
+
+<div class="flowchartContainer">
+<div class="flowchartActions"><span class="button" data-action="hide">Hide</span><span class="button" data-action="up">Up</span><span class="button" data-action="down">Down</span><span class="button" data-action="left">Left</span><span class="button" name="right">Right</span></div>
+<div class="flowchartContainerInner">
 <form method="post">
 {% set stepRoute = routesFlattened[route.wizard] %}
 {% set stepUrl = getRouteUrl(stepRoute.id) %}
-<div id="container">
+<div class="container">
 <div class="box-row">
 <div class="box">
 <div class="innerbox" data-block-name="{{stepRoute.id}}">
@@ -365,6 +448,7 @@ Wizard flow - Prototype
 {% endif %}
 {% set redirectConditions = stepRoute.redirectConditions %}
 <div class="gutter{% if nextDepends %}{% if depends == nextDepends %} gutter-nextdepends{% endif %}{% endif %}{% if depends %}{% if not nextDepends %} gutter-nonextdepends{% endif %}{% if depends == previousDepends %} gutter-previousdepends{% endif %} gutter-depends{% endif %}" id="gutter-{{ stepRoute._id }}">
+<span class="button gutter--hide" data-action="hide">Hide</span>
 {% if depends %}
 {% if depends != previousDepends %}
 <span class="depends__yes">Yes</span>
@@ -374,13 +458,15 @@ Wizard flow - Prototype
 {% endif %}
 </div>
 <div class="box{% if depends %} depends{% endif %}" id="{{ stepRoute.key }}">
+<span class="button box--hide" data-action="hide">Hide</span>
 <div class="innerbox{% if multiple %} innerbox-multiple{% endif %}" data-block-name="{{stepId}}">
 {# {{ stepId }}, {{ skipMultiple }}, {{multipleIndex}} #}
 <p class="routeKey">{{stepId}} <small><a href="{{ getRouteUrl(stepId) }}">{{ getRouteUrl(stepId) }}</a> <a href="{{ getRouteUrl(stepId) }}/edit">(edit)</a>
 {% if multiple %}
 <span class="mutiple-route">Multiple route: min={{ stepRoute.multiple_min }}; max={{ stepRoute.multiple_max }}</span>
 {% endif %}
-</small></p>
+</small>
+</p>
 {% if route.flowchartOutput %}
 {{ route.flowchartOutput[stepId] | safe }}
 {% else %}
@@ -406,8 +492,10 @@ Wizard flow - Prototype
 {% endif %}
 {% endfor %}
 </div>
-<p><button class="button">Update values</button></p>
+{# <p><button class="button">Update values</button></p> #}
 </form>
+</div>
+</div>
 {% endblock %}
 
 {% block body_end %}
@@ -420,17 +508,109 @@ jQuery(document).ready(function() {
     console.log('boom')
     jQuery('[media=print]').remove()
     jQuery('[media=screen]').attr('media', 'all')
-  }, 2000)
+  }, 100)
+
+  const $body = jQuery('body')
+
+  $body.on('click', '.splitFlowchart', () => {
+    const scale = jQuery('[name=scale]').val() * 1
+    splitFlowchart(scale)
+  })
+
+  $body.on('click', '.removePrintingGuides', () => {
+    removePrintingGuides()
+  })
+
+  $body.on('click', '.removeFlowchartLines', () => {
+    removeFlowchartLines()
+  })
+
+  $body.on('click', '.box--hide', function () {
+    jQuery(this).closest('.box').css('visibility', 'hidden')
+  })
+
+  $body.on('click', '.gutter--hide', function () {
+    jQuery(this).closest('.gutter').css('visibility', 'hidden')
+  })
 })
+
+
+const $body = jQuery('body')
+const a0 = 118.9
+const a0height = 84.1
+
+const removePrintingGuides = () => {
+  $body.removeClass('printingGuide')
+}
+const removeFlowchartLines = () => {
+  $body.addClass('flowchartLinesOff')
+}
+
+const splitFlowchart = (scale) => {
+  $body.addClass('printing')
+  $body.addClass('printingGuide')
+
+  const a0scaled = Math.round((a0 / scale) * 10) / 10
+  const a0scaledHeight = Math.round(((a0height/2) / scale) * 10) / 10
+  // const repeatBufferScaled = Math.round((10 / scale) * 10) / 10
+  const $flowchartContainer = jQuery('.flowchartContainer')
+  const $container = jQuery('.container')
+  $flowchartContainer.css({width: `${a0scaled}cm`, height: `${a0scaledHeight}cm`})
+  const flowchartWidth = $flowchartContainer.width()
+  const containerWidth = $container.width()
+
+
+  const clonesRequired = Math.ceil(containerWidth/flowchartWidth) + 1
+
+  const clones = ['this space left intentionally blank']
+  for (let cloneCount = 1; cloneCount < clonesRequired; cloneCount++) {
+    const $clonedFlowchart = $flowchartContainer.clone()
+    $clonedFlowchart.css('z-index', cloneCount)
+    const cloneShift = cloneCount * a0scaled
+    $clonedFlowchart.find('.flowchartContainerInner').css('margin-left', `-${cloneShift}cm`)
+    $body.append($clonedFlowchart)
+    clones.push($clonedFlowchart)
+  }
+
+  const shiftUnit = 40
+  jQuery('.flowchartActions span').on('click', function() {
+    $action = jQuery(this)
+    const action = jQuery(this).attr('data-action')
+    const $container = $action.closest('.flowchartContainer')
+    if (action === 'hide') {
+      $container.css('display', 'none')
+    } else {
+      let $inner = $container.find('.flowchartContainerInner')
+      let axis = 'left'
+      let direction = 1
+      if (action === 'up') {
+        axis = 'top'
+        direction = -1
+        $inner = $container
+      } else if (action === 'down') {
+        axis = 'top'
+        $inner = $container
+      } else if (action === 'left') {
+        direction = -1
+      }
+      const axisMargin = `margin-${axis}`
+      let innerPos = parseInt($inner.css(axisMargin), 10) || 0
+      let newPos = innerPos + (shiftUnit * direction)
+      console.log(innerPos, newPos)
+      $inner.css(axisMargin, `${newPos}px`)
+    }
+  })
+}
 </script>
 {% endblock %}
 
 {% macro matchProps(props, type='depend') %}
+{% set human = req.query.human %}
 <ul class="matchProp__list {{ type }}-list xlist xlist-bullet">
 {% for prop in props %}
 <li>
 {% for key, constraint in prop %}
-  <p class="matchProp__key {{ type }}__key" style="font-weight:bold;">{#{ getBlockProp(key, 'label') }#}{{ splitWord(key) | safe }}</p>
+  <p class="matchProp__key {{ type }}__key" style="font-weight:bold;">{% if human %}{{ getBlockProp(key, 'label') }}{% else %}{{ splitWord(key) | safe }}{% endif %}</p>
   <p class="{{ type }}__constraint">{{ constraint }}</p>
 {% endfor %}
 </li>
