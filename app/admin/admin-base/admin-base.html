@@ -40,6 +40,7 @@ summary + .panel label,
 }
 
 textarea.form-control[name=block],
+textarea.form-control[name=value],
 .stringProp input.form-control,
 .xarrayProp input.form-control {
   width: 100%;
@@ -78,8 +79,14 @@ textarea.form-control[name=block],
 
 {% block body_end %}
 {{ super() }}
-<link href="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.css" media="screen" rel="stylesheet">
-<script src='https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js'></script>
+{% set dragulacss = 'https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.css' %}
+{% set dragulajs = 'https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js' %}
+{% if not ENV %}
+{% set dragulajs = '/public/javascripts/vendor/dragula/dragula_v3.7.2.js' %}
+{% set dragulacss = '/public/javascripts/vendor/dragula/dragula_v3.7.2.css' %}
+{% endif %}
+<link href="{{ dragulacss }}" media="screen" rel="stylesheet">
+<script src="{{ dragulajs }}"></script>
 <script src="/public/javascripts/autosize/autosize.js"></script>
 <script type="text/javascript">
 var $textareas = jQuery('textarea')

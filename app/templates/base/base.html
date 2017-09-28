@@ -106,3 +106,16 @@
 </style>
 {% endif %}
 {% endblock %}
+
+{% block scripts %}
+{% set jqueryjs = 'https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js' %}
+{% if not ENV %}
+{% set jqueryjs = '/public/javascripts/vendor/jquery/jquery_v1.12.4.js' %}
+{% endif %}
+<!--[if gte IE 8]><!-->
+  <script src="{{jqueryjs}}"></script>
+  <script src="{{ asset_path }}javascripts/govuk-template.min.js?0.0.1"></script>
+  <script src="{{ asset_path }}javascripts/toolkit.min.js?0.0.1"></script>
+  <script src="{{ asset_path }}javascripts/components.min.js?0.0.1"></script>
+<!--<![endif]-->
+{% endblock %}
