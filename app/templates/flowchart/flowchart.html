@@ -416,7 +416,7 @@ Wizard flow - Prototype
 {% set skipMultiple = false %}
 {% if stepRoute.multiple %}
   {% set stepId = stepRoute.multiple_route %}
-  {% set stepRoute = routesFlattened[stepId] %}
+  {# {% set stepRoute = routesFlattened[stepId] %} #}
   {% set multiple = true %}
   {% if multipleIndex > 1 %}
     {% set skipMultiple = true %}
@@ -460,12 +460,22 @@ Wizard flow - Prototype
 <div class="box{% if depends %} depends{% endif %}" id="{{ stepRoute.key }}">
 <span class="button box--hide" data-action="hide">Hide</span>
 <div class="innerbox{% if multiple %} innerbox-multiple{% endif %}" data-block-name="{{stepId}}">
+{% set stepUrl = getRouteUrl(step) %}
+{% set stepUrlStub = stepUrl %}
+{% if multiple %}
+{% set stepUrlStub = stepUrlStub.replace('/1', '') %}
+{% set stepUrlStub = stepUrlStub + '/{n}' %}
+{% endif %}
 {# {{ stepId }}, {{ skipMultiple }}, {{multipleIndex}} #}
-<p class="routeKey">{{stepId}} <small><a href="{{ getRouteUrl(stepId) }}">{{ getRouteUrl(stepId) }}</a> <a href="{{ getRouteUrl(stepId) }}/edit">(edit)</a>
+<p class="routeKey">{{stepId}} <small><a href="{{ stepUrl }}">{{ stepUrlStub }}</a> <a href="{{ stepUrl }}/edit">(edit)</a>
 {% if multiple %}
 <span class="mutiple-route">Multiple route: min={{ stepRoute.multiple_min }}; max={{ stepRoute.multiple_max }}</span>
 {% endif %}
 </small>
+</p>
+<p>
+nextStep:{{ stepRoute.nextStep }}<br>
+hierarchy:<br>{{ stepRoute.hierarchy.join('<br>') | safe }}
 </p>
 {% if route.flowchartOutput %}
 {{ route.flowchartOutput[stepId] | safe }}
