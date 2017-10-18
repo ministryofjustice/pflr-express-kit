@@ -473,10 +473,12 @@ Wizard flow - Prototype
 {% endif %}
 </small>
 </p>
+{#
 <p>
 nextStep:{{ stepRoute.nextStep }}<br>
 hierarchy:<br>{{ stepRoute.hierarchy.join('<br>') | safe }}
 </p>
+#}
 {% if route.flowchartOutput %}
 {{ route.flowchartOutput[stepId] | safe }}
 {% else %}
