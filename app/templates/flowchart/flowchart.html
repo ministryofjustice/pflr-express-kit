@@ -375,6 +375,10 @@ span.depends__no {
 }
 
 
+.route-notes {
+  margin-top: 5rem;
+  color: #f00;
+}
 
 </style>
 {% endblock %}
@@ -488,7 +492,6 @@ hierarchy:<br>{{ stepRoute.hierarchy.join('<br>') | safe }}
 {{ Block.Group(blocks=stepRoute.blocks) }}
 {% endif %}
 </div>
-
 {% if redirectConditions %}
 <ul class="redirectConditions">
 {% for redirect, condition in redirectConditions %}
@@ -499,6 +502,15 @@ hierarchy:<br>{{ stepRoute.hierarchy.join('<br>') | safe }}
 {% endfor %}
 </ul>
 {% endif %}
+
+
+{% set notes = getFormattedBody(stepId, '*notes') %}
+{% if notes %}
+<div class="route-notes">
+{{ notes | safe }}
+</div>
+{% endif %}
+
 </div>
 {% endif %}
 {% endif %}

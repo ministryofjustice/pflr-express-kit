@@ -11,6 +11,7 @@
 <h1 class="{{ govukClassname('heading-large') }}">
 {{ block }}
 {% if _blockType == 'Route' %}
+{# {% set routeUrl = getBlockProp(block, 'url') %} #}
 {% set routeUrl = getRouteUrl(block) %}
 {% if routeUrl %}
 <small>route url <a href="{{ routeUrl }}">{{ routeUrl }}</a> <a href="{{ routeUrl }}/edit">(edit)</a></small>

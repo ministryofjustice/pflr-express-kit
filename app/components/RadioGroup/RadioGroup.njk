@@ -15,8 +15,10 @@
 {% if inlineType != 'boolean' %}
 {% if options.length == 2 %}{% set inline=true %}{% endif %}
 {% endif %}
+{% set visually_hidden = getBlockProp(name, 'visuallyhidden') %}
 <div class="form-group{% if error %} error{% endif %}"{% if name %} data-block-name="{{name}}"{% endif %}>
-{% call Fieldset(name, inline=inline) %}
+
+{% call Fieldset(name, inline=inline, visually_hidden=visually_hidden) %}
     {% set or = getBlockProp(name, 'or') %}
     {% set reveals = getBlockProp(name, 'reveals') %}{# ? #}
     {% set excludes = getBlockProp(name, 'reveals_exclude') %}{# ? #}
