@@ -1,0 +1,10 @@
+{% extends 'admin/admin-base/admin-base.html' %}
+
+{% block admin_content %}
+<h1 class="{{ govukClassname('heading-large') }}">Admin</h1>
+
+<main data-block-name="{{ route.id }}">
+{% block grid_content %}{{ Block.Group(blocks=route.blocks) }}{% endblock %}
+</main>
+
+{% endblock %}
