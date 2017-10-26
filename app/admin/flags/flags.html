@@ -6,6 +6,7 @@ Flags - Prototype
 
 {% block admin_content %}
 <h1 class="{{ govukClassname('heading-large') }}">Flags</h1>
+
 <table>
 {% for flag, value in flags %}
 <tr>
@@ -14,13 +15,30 @@ Flags - Prototype
 {% set antistate = 'on' %}
 {% if value %}{% set icon = 'tick' %}{% set state = 'on' %}{% set antistate = 'off' %}{% endif %}
 <td><a class="switch switch-{{ state }}" href="/api/flag/{{flag}}/{{ antistate }}" title="Turn {{ flag }} {{ antistate }}">{{ antistate }}</a></td>
-<td class="flag">{{ getString('string:flag--'+flag, flag) }}</td>
+<td class="flag">{{ getString('string:flag--'+flag, flag) }} <a class="edit-flag" href="/admin/block/string:flag--{{flag}}">Edit flag string</a> <a class="delete-flag" href="/api/flag/{{flag}}/delete">Delete</a></td>
 {#
 <td class="state state-{{ state }}"><img src="/public/images/{{ icon }}_icon.svg" alt="{{ state }}"></td>
 #}
 </tr>
 {% endfor %}
 </table>
+
+<div class="flag-actions">
+  <details>
+  <summary><span class="summary">Add flag</span></summary>
+  <div class="{{ govukClassname('summary-details') }}">
+  {{ Block.Text('flag', label='Flag name')}}
+  <a href="/dev/null" class="add-flag {{ govukClassname('button') }}">Add</a>
+  </div>
+</details>
+  <details>
+  <summary><span class="summary">Save flags</span></summary>
+  <div class="{{ govukClassname('summary-details') }}">
+  <a href="/api/flags/save" class="save-flag {{ govukClassname('button') }}">Save</a>
+  </div>
+</details>
+</div>
+
 <style type="text/css">
 table {
   width: 100%;
@@ -31,6 +49,7 @@ td.state {
 }
 td.flag {
   width: 100%;
+  position: relative;
 }
 td+td+td {
   text-align: right;
@@ -95,6 +114,40 @@ tr:hover td {
 .switch-on {
   box-shadow: -1px -1px 1px rgba(0,51,0,1);
 }
+.edit-flag,
+.delete-flag {
+  font-size: 1rem;
+  position: absolute;
+  right: 1rem;
+  top: 2.5rem;
+  display: none;
+}
+.edit-flag {
+  right: 8rem;
+}
+td.flag:hover a {
+  display: block;
+}
+.flag-actions {
+  margin: 3rem 0;
+}
+.save-flag.button {
+  margin-top: 3rem;
+}
 {% endif %}
 </style>
+{% endblock %}
+
+{% block body_end %}
+{{ super() }}
+<script>
+jQuery('.add-flag').on('click', function(e) {
+  var flagProp = jQuery('[name=flag]').val()
+  if (flagProp) {
+    this.href = `/api/flag/${flagProp}/on`
+  } else {
+    e.preventDefault()
+  }
+})
+</script>
 {% endblock %}

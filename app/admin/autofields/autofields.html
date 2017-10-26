@@ -1,12 +1,12 @@
 {% extends 'admin/admin-base/admin-base.html' %}
 
 {% block page_title %}
-Autofields - Prototype
+Autofields
 {% endblock %}
 
 {% block admin_content %}
-<h1 class="heading-large">Autofields</h1>
-{{ autofields | dump }}
+<h1 class="{{ govukClassname('heading-large') }}">Autofields</h1>
+{# {{ autofields | dump }} #}
 <table>
 <tr><th>prop</th><th>value</th></tr>
 {% for prop, value in autofields %}
@@ -17,6 +17,7 @@ Autofields - Prototype
 <textarea id="autofields" cols="80" rows="20">{{json | safe}}</textarea>
 <p><button class="button" id="update">Update autofield values</button></p>
 
+<p><a class="button" href="/admin/autofields/reset">Reset autofield values</a></p>
 <script>
 var headers = new Headers({
   "Content-Type": "application/json"
