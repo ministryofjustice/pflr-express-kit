@@ -388,6 +388,8 @@ Wizard flow - Prototype
 {% endblock %}
 
 {% block content %}
+{# <pre>{{ routesFlattened | json }}</pre> #}
+{{ route.wizard }}
 <div id="flowchartControls">
 <p class="form-group"><label class="form-label-bold">Scale <input name="scale" value="0.66"></label><button class="button splitFlowchart">Split flowchart</button></p>
 <p class="form-group"><button class="button removePrintingGuides">Remove printing helpers</button></p>
@@ -461,7 +463,18 @@ Wizard flow - Prototype
 {% endif %}
 {% endif %}
 </div>
-<div class="box{% if depends %} depends{% endif %}" id="{{ stepRoute.key }}">
+{% set firstStep = false %}
+{% set lastStep = false %}
+{% set flattened = routesFlattened[stepId] %}
+{% if flattened.firstStep %}{% set firstStep = true %}{% endif %}
+{% if flattened.lastStep %}{% set lastStep = true %}{% endif %}
+{% if firstStep %}
+{# <div class="box-steps-cell">
+<div class="box-steps-table">
+<div class="box-steps-row"> #}
+{# <div class="fwap"> #}
+{% endif %}
+<div class="box{% if depends %} depends{% endif %}" id="{{ stepRoute._id }}">
 <span class="button box--hide" data-action="hide">Hide</span>
 <div class="innerbox{% if multiple %} innerbox-multiple{% endif %}" data-block-name="{{stepId}}">
 {% set stepUrl = getRouteUrl(step) %}
@@ -510,8 +523,14 @@ hierarchy:<br>{{ stepRoute.hierarchy.join('<br>') | safe }}
 {{ notes | safe }}
 </div>
 {% endif %}
-
 </div>
+{% if lastStep %}
+{# </div><!-- FWAP --> #}
+{# </div>
+</div>
+</div><!-- box-steps --> #}
+{% endif %}
+
 {% endif %}
 {% endif %}
 {% endfor %}

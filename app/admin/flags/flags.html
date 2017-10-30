@@ -15,7 +15,7 @@ Flags - Prototype
 {% set antistate = 'on' %}
 {% if value %}{% set icon = 'tick' %}{% set state = 'on' %}{% set antistate = 'off' %}{% endif %}
 <td><a class="switch switch-{{ state }}" href="/api/flag/{{flag}}/{{ antistate }}" title="Turn {{ flag }} {{ antistate }}">{{ antistate }}</a></td>
-<td class="flag">{{ getString('string:flag--'+flag, flag) }} <a class="edit-flag" href="/admin/block/string:flag--{{flag}}">Edit flag string</a> <a class="delete-flag" href="/api/flag/{{flag}}/delete">Delete</a></td>
+<td class="flag"><span class="flag-name">{{ flag }}</span><span class="flag-description">{{ getString('string:flag--'+flag) }}</span> <a class="edit-flag" href="/admin/block/string:flag--{{flag}}">Edit flag description</a> <a class="delete-flag" href="/api/flag/{{flag}}/delete">Delete</a></td>
 {#
 <td class="state state-{{ state }}"><img src="/public/images/{{ icon }}_icon.svg" alt="{{ state }}"></td>
 #}
@@ -113,6 +113,14 @@ tr:hover td {
 }
 .switch-on {
   box-shadow: -1px -1px 1px rgba(0,51,0,1);
+}
+.flag-name {
+  font-weight: bold;
+}
+.flag-description {
+  display: block;
+  font-size: 1.25rem;
+  margin-right: 15rem;
 }
 .edit-flag,
 .delete-flag {

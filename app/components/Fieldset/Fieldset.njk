@@ -13,8 +13,8 @@
   <p>{{ sublabel | safe }}</p>
   {% endif %}#}
   <fieldset{% if inline %} class="inline"{% endif %}>
-    <legend{% if visually_hidden %} class="visuallyhidden"{% endif %}>
-    <span class="form-label-bold">{{ label | safe }}</span>
+    <legend>
+    <span class="form-label-bold{% if visually_hidden %} visuallyhidden{% endif %}">{{ label | safe }}</span>
       {% if sublabel %}
       <span class="form-sublabel">{{ sublabel | safe }}</span>
       {% endif %}

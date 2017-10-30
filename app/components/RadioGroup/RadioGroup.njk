@@ -16,7 +16,7 @@
 {% if options.length == 2 %}{% set inline=true %}{% endif %}
 {% endif %}
 {% set visually_hidden = getBlockProp(name, 'visuallyhidden') %}
-<div class="form-group{% if error %} error{% endif %}"{% if name %} data-block-name="{{name}}"{% endif %}>
+<div class="form-group{% if error %} error{% endif %}"{% if name %} id="{{name}}" data-block-name="{{name}}"{% endif %}>
 
 {% call Fieldset(name, inline=inline, visually_hidden=visually_hidden) %}
     {% set or = getBlockProp(name, 'or') %}
