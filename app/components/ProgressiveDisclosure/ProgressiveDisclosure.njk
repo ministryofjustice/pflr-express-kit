@@ -1,0 +1,16 @@
+{% macro ProgressiveDisclosure(name, heading='', body='') %}
+{% if not heading %}
+{% set heading = getBlockProp(name, 'heading') %}
+{% endif %}
+{% if not body %}
+{% set body = getBlockProp(name, 'body') %}
+{% endif %}
+<details role="group">
+  <summary role="button">
+    <span class="summary">{{ heading | safe }}</span>
+  </summary>
+  <div class="{{ govukClassname('summary-details') }}">
+    {{ body | safe }}
+  </div>
+</details>
+{% endmacro %}

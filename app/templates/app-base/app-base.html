@@ -82,7 +82,13 @@
   </div>
   {% endif %}
   {% endblock %}
-  {% block grid_content_extra %}{% endblock %}
+  {% block grid_content_extra %}
+  {% if route.extraBlocks %}
+  <div class="extraBlocks {{ govukClassname('govuk-govspeak') }}">
+  {{ Block.Group(blocks=route.extraBlocks) }}
+  </div>
+  {% endif %}
+  {% endblock %}
   {% block grid_content_footer %}{% endblock %}
   </div>
   <div class="{{ govukClassname('column-one-third') }}">

@@ -380,6 +380,16 @@ span.depends__no {
   color: #f00;
 }
 
+a.block-edit {
+  white-space: nowrap;
+}
+.edit-notes {
+  font-size: 1rem;
+  position: relative;
+  top: -0.5rem;
+  left: 0.5rem;
+}
+
 </style>
 {% endblock %}
 
@@ -389,7 +399,6 @@ Wizard flow - Prototype
 
 {% block content %}
 {# <pre>{{ routesFlattened | json }}</pre> #}
-{{ route.wizard }}
 <div id="flowchartControls">
 <p class="form-group"><label class="form-label-bold">Scale <input name="scale" value="0.66"></label><button class="button splitFlowchart">Split flowchart</button></p>
 <p class="form-group"><button class="button removePrintingGuides">Remove printing helpers</button></p>
@@ -517,12 +526,18 @@ hierarchy:<br>{{ stepRoute.hierarchy.join('<br>') | safe }}
 {% endif %}
 
 
+<div class="route-notes {{ govukClassname('govuk-govspeak') }}">
 {% set notes = getFormattedBody(stepId, '*notes') %}
+{% set notesLink = 'Add notes' %}
 {% if notes %}
-<div class="route-notes">
-{{ notes | safe }}
-</div>
+{% set notesLink = '' %}
 {% endif %}
+<a class="block-edit" href="/admin/block/{{ stepId }}/*notes" target="_blank" title="Edit notes for {{ stepId }}">✎ <span class="edit-notes">{{ notesLink }}</span></a>
+{% if notes %}
+{{ notes | safe }}
+{% endif %}
+</div>
+
 </div>
 {% if lastStep %}
 {# </div><!-- FWAP --> #}
