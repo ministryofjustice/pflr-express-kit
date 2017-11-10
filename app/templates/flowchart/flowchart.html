@@ -508,6 +508,12 @@ hierarchy:<br>{{ stepRoute.hierarchy.join('<br>') | safe }}
 {% if route.flowchartOutput %}
 {{ route.flowchartOutput[stepId] | safe }}
 {% else %}
+{# update per-route id and vars #}
+{% set newStep = {'app:routeId': step} %}
+{% set updatedFormatSink = updateFormat(newStep) %}
+{% set stepBlockVars = getBlockVars(step) %}
+{% set updatedFormatSink = updateFormat(stepBlockVars) %}
+
 {{ Block.PageHeader(stepId, start_page=stepRoute.start_page) }}
 {{ Block.Body(stepId) }}
 {# {% if stepRoute.body %}{{ Block.Group(stepId) }}{% endif %} #}
