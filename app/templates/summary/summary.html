@@ -48,6 +48,8 @@ table + form p {
 
 {# {{ wizard.stepsFlat }} #}
 {% for step in wizard.stepsFlat %}
+{# update per-route id and vars #}
+{% set updateRouteFormatSink = updateRouteFormat(step) %}
 {% set stepRoute = routesFlattened[step] %}
 {% set abortRow = false %}
 {% if not checkNoDependency(step) %}
@@ -83,7 +85,7 @@ table + form p {
 {% endif %}
 {% if not abortRow %}
 {% set args = { 'app:route:_index' : stepRoute._index } %}
-<tr data-route-header="{{ step }}"><th class="dataRouteHeader" colspan="3">{{ getFormattedProp(step, ['summary_heading', 'heading'], {args:args}) }}</th></tr>
+<tr data-route-header="{{ step }}"><th class="dataRouteHeader" colspan="3">{{ getFormattedProp(step, ['summary_heading', 'heading'], {xargs:args}) }}</th></tr>
   {% for el in stepBlocks %}
 {% if checkNoDependency(el) %}
 {% set prefixedEl = el %}

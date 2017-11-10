@@ -7,11 +7,21 @@
   {% set error = getError(prefixedName) %}
   <div id="{{ prefixedName }}" class="form-group{% if error %} error{% endif %}"{% if name %} data-block-name="{{name}}"{% endif %}>
   {% call Fieldset(name) %}
+    {% set dateType = getBlockProp(name, 'date_type', 'day-month-year') %}
     <div class="form-date">
-      {{ Input(name, suffix='day', type='number', label='Day', pattern='[0-9]*', min=0, max=31, placeholder='dd') }}
-      {{ Input(name, suffix='month', type='number', label='Month', pattern='[0-9]*', min=0, max=12, placeholder='mm') }}
-      {{ Input(name, suffix='year', type='number', label='Year', pattern='[0-9]*', placeholder='yyyy') }}
+      {% if 'day' in dateType %}{{ Input(name, suffix='day', type='number', label='Day', pattern='[0-9]*', min=0, max=31, placeholder='dd') }}{% endif %}
+      {% if 'month' in dateType %}{{ Input(name, suffix='month', type='number', label='Month', pattern='[0-9]*', min=0, max=12, placeholder='mm') }}{% endif %}
+      {% if 'year' in dateType %}{{ Input(name, suffix='year', type='number', label='Year', pattern='[0-9]*', placeholder='yyyy') }}{% endif %}
     </div>
+    {# alt #}
+    {# {% set day = getBlockProp(name, 'day', true) %}
+    {% set month = getBlockProp(name, 'month', true) %}
+    {% set year = getBlockProp(name, 'year', true) %}
+    <div class="form-date">
+      {% if day %}{{ Input(name, suffix='day', type='number', label='Day', pattern='[0-9]*', min=0, max=31, placeholder='dd') }}{% endif %}
+      {% if month %}{{ Input(name, suffix='month', type='number', label='Month', pattern='[0-9]*', min=0, max=12, placeholder='mm') }}{% endif %}
+      {% if year %}{{ Input(name, suffix='year', type='number', label='Year', pattern='[0-9]*', placeholder='yyyy') }}{% endif %}
+    </div> #}
   {% endcall %}
   </div>
 {%- endmacro %}
