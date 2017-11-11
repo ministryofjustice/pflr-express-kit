@@ -1,4 +1,14 @@
-#!/bin/sh
+#!/usr/bin/env bash
+# Derived from https://gist.github.com/sindresorhus/7996717
+# MIT © Sindre Sorhus - sindresorhus.com
 
-# check package.json to see if node_modules need updating
-# check if yarn run build needs calling again
+# git hook to run a command after `git pull` or `git checkout` if a specified file was changed
+
+changed_files="$(git diff-tree -r --name-only --no-commit-id HEAD@{1} HEAD)"
+#changed_files="$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)"
+
+check_run() {
+  echo "$changed_files" | grep --quiet "$1" && echo " * changes detected in $1" && echo " * running $2" && eval "$2"
+}
+ 
+check_run package.json "yarn install"
