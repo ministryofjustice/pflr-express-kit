@@ -1,6 +1,6 @@
 {% macro BlockLede(name, lede='', lede_additional='') %}
-{% set lede = getFormattedProp(name, 'lede', { value: lede }) %}
-{% set lede_additional = getFormattedProp(name, 'lede_additional', { value: lede_additional }) %}
+{% set lede = getFormattedBodyContent(name, 'lede', { value: lede }) %}
+{% set lede_additional = getFormattedBodyContent(name, 'lede_additional', { value: lede_additional }) %}
 {% if lede %}
   <p class="{{ govukClassname('lede') }}">{{ lede | safe }}</p>
 {% endif %}

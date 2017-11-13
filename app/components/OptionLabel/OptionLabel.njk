@@ -1,10 +1,22 @@
 {% macro OptionLabel(option) %}
   {% set label = format(option.label) %}
-  {% if option.sublabel %}
-    <span class="heading-small">{{ label | safe }}</span><br>
-    {{ format(option.sublabel) }}
+  {% if option.sublabel or option.hint %}
+    {% if option._id %}
+      {% set sublabel = getFormattedBodyContent(option._id, 'sublabel') %}
+      {% set hint = getFormattedBodyContent(option._id, 'hint') %}
+    {% else %}
+      {% if option.sublabel %}
+        {% set sublabel = format(option.sublabel) %}
+      {% endif %}
+      {% if option.hint %}
+        {% set hint = format(option.hint) %}
+      {% endif %}
+    {% endif %}
+    <span class="{{ govukClassname('heading-small') }}">{{ label | safe }}</span>{% if sublabel %}<br>
+    <span class="sublabel">{{ sublabel | safe }}</span>{% endif %}{% if hint %}<br>
+    <span class="{{ govukClassname('form-hint') }}">{{ hint | safe }}</span>{% endif %}
   {% else %}
     {% set label = '<span class="labelLine">' + label + '</span>' %}
-    {{ label | replace('\r\n\r\n', '</span><br><span class="labelLine">') | replace('<span class="labelLine">(i', '<span class="labelLine labelLineBullet"><span class="labelBullet">(i') | replace('i)', 'i)</span>') | safe }}
+    {{ label | replace('\r\n\r\n', '</span><span class="labelLine">') | replace('<span class="labelLine">(i', '<span class="labelLine labelLineBullet"><span class="labelBullet">(i') | replace('i)', 'i)</span>') | safe }}
   {% endif %}
 {% endmacro %}

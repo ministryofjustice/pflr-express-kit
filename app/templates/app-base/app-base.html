@@ -59,9 +59,9 @@
   {% endif %}
   <h1 class="app__heading {{ govukClassname('heading-xlarge') }}">{{ getFormattedProp(route.id, 'heading', route.id) }}</h1>
   {% block grid_content_header_post %}{% endblock %}
-  {% set lede = getFormattedProp(route.id, 'lede') %}
+  {% set lede = getFormattedBodyContent(route.id, 'lede') %}
   {% if lede %}
-  <p class="app__lede {{ govukClassname('lede') }}">{{lede }}</p>
+  <p class="app__lede {{ govukClassname('lede') }}">{{lede | safe }}</p>
   {% endif %}
   {% set lede_additional = getFormattedBody(route.id, 'lede_additional') %}
   {% if lede_additional %}
