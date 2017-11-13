@@ -6,6 +6,7 @@
 } %}
 {% set heading = getFormattedProp(name, 'heading') %}
 {% set lede = getFormattedProp(name, 'lede') %}
+{% if not className %}{% set className = getFormattedProp(name, 'className') %}{% endif %}
 <section id="{{ name }}" class="moj-Section moj-Section--{{ depth }}{% if className %} {{ className }}{% endif %}" data-block-name="{{name}}">
 {% if heading %}
 <h{{depth}} class="moj-Section__heading moj-Section__heading--{{ depth }} {{ gv_depth[depth] }}{% if className %} {{ className }}__heading{% endif %}">{{ heading | safe }}</h{{depth}}>
