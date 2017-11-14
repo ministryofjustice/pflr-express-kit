@@ -3,7 +3,7 @@
 {% set heading = getBlockProp(name, 'heading') %}
 {% endif %}
 {% if not body %}
-{% set body = getBlockProp(name, 'body') %}
+{% set body = getFormattedBody(name, 'body') %}
 {% endif %}
 <details role="group">
   <summary role="button">
