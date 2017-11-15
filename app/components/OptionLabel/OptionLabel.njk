@@ -1,5 +1,9 @@
 {% macro OptionLabel(option) %}
-  {% set label = format(option.label) %}
+  {% if option._id %}
+    {% set label = getFormattedBodyContent(option._id, 'label') %}
+  {% else %}
+    {% set label = format(option.label) %}
+  {% endif %}
   {% if option.sublabel or option.hint %}
     {% if option._id %}
       {% set sublabel = getFormattedBodyContent(option._id, 'sublabel') %}

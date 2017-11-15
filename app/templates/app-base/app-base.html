@@ -57,7 +57,7 @@
   {% if section_heading %}
   <p class="app__section_heading">{{ section_heading | safe }}</p>
   {% endif %}
-  <h1 class="app__heading {{ govukClassname('heading-xlarge') }}">{{ getFormattedProp(route.id, 'heading', route.id) }}</h1>
+  <h1 class="app__heading {{ govukClassname('heading-xlarge') }}">{{ getFormattedBodyContent(route.id, 'heading', route.id) | safe }}</h1>
   {% block grid_content_header_post %}{% endblock %}
   {% set lede = getFormattedBodyContent(route.id, 'lede') %}
   {% if lede %}

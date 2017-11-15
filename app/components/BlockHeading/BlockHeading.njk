@@ -5,7 +5,7 @@
   'medium': 'h3',
   'small': 'h4'
 } %}
-{% set heading = getFormattedProp(name, 'heading', { value: heading }) %}
+{% set heading = getFormattedBodyContent(name, 'heading', { value: heading }) %}
 {% if heading %}
 {% set size = getBlockProp(name, 'size', { value: size, defaultValue: 'medium' } ) %}
   <{{ sizes[size] }} class="{{ govukClassname('heading-' + size) }}">{{ heading | safe }}</{{ sizes[size] }}>
