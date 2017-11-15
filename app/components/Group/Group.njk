@@ -37,7 +37,7 @@
 {% endif %}
 {% for block in blocks %}
   {% if multipleCounterRef %}
-    {% set updateFormatSink = updateFormat(multipleCounterRef, multipleIndex, multipleCounterRef + '-current', currentMultipleIndex) %}
+    {% set updateFormatSink = updateFormat(multipleCounterRef + '_index', multipleIndex, multipleCounterRef + '_current', currentMultipleIndex) %}
   {% endif %}
   {% set blockType = block._blockType %}
   {% set blockData = block.data %}
