@@ -31,7 +31,7 @@
     {% if type === 'text' and multiline %}
       <textarea class="form-control{% if controlError %} form-control-error{% endif %}" name="{{ prefixedName }}" id="{{ prefixedName }}" cols="{{ cols }}" rows="{{ rows }}">{{ value | safe }}</textarea>
     {% else %}
-      <input type="{{ type }}" class="form-control{% if controlError %} form-control-error{% endif %}" name="{{ prefixedName }}" id="{{ prefixedName }}" value="{{ value | escape }}"{% if placeholder %} placeholder="{{ placeholder }}"{% endif %}{% if pattern %} pattern="{{ pattern }}"{% endif %}{% if min %} min="{{ min }}"{% endif %}{% if max %} max="{{ max }}"{% endif %}>
+      <input type="{{ type }}" class="form-control{% if controlError %} form-control-error{% endif %}" name="{{ prefixedName }}" id="{{ prefixedName }}" value="{{ value | escape }}"{% if placeholder %} placeholder="{{ placeholder }}"{% endif %}{% if pattern %} data-pattern="{{ pattern }}"{% endif %}{% if min %} min="{{ min }}"{% endif %}{% if max %} max="{{ max }}"{% endif %}>
     {% endif %}
   {%- endcall %}
   {% if flowchart %}<span></span>{% endif %}
