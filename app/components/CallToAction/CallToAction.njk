@@ -1,6 +1,7 @@
 {% macro CallToAction(name, modifier='') %}
 {% set call_to_action = getFormattedProp(name, 'call_to_action') %}
+{% set button = getFormattedProp(name, 'button', true) %}
 {% if call_to_action %}
-<p class="CallToAction{% if modifier %} CallToAction--{{ modifier }}{% endif %}"><a class="CallToAction__link{% if modifier %} CallToAction__link--{{ modifier }}{% endif %} {{ govukClassname('button') }}" href="{{ getFormattedProp(name, 'call_to_action_url') }}">{{ call_to_action }}</a></p>
+<p class="CallToAction{% if modifier %} CallToAction--{{ modifier }}{% endif %}"><a class="CallToAction__link{% if modifier %} CallToAction__link--{{ modifier }}{% endif %}{% if button %} {{ govukClassname('button') }}{% endif %}" href="{{ getFormattedProp(name, 'call_to_action_url') }}">{{ call_to_action }}</a></p>
 {% endif %}
 {% endmacro %}
