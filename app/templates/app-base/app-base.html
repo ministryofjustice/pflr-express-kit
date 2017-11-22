@@ -1,6 +1,7 @@
 {% extends "templates/base/base.html" %}
 {% import "components/Utils/Utils.njk" as Utils with context %}
 {% from 'components/Autotrack/Autotrack.njk' import Autotrack with context %}
+{% from 'components/Back/Back.njk' import Back with context %}
 {% from 'components/Breadcrumbs/Breadcrumbs.njk' import Breadcrumbs with context %}
 {% from 'components/CookieMessage/CookieMessage.njk' import CookieMessage with context %}
 {% from 'components/FeedbackBanner/FeedbackBanner.njk' import FeedbackBanner with context %}
@@ -45,6 +46,10 @@
 {% if route.breadcrumbs %}
 {{ Breadcrumbs(route) }}
 {% endif %}
+{% endblock %}
+
+{% block back_content %}
+{{ Back(app) }}
 {% endblock %}
 
 {% block grid_content %}

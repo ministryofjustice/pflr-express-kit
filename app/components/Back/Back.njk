@@ -1,0 +1,5 @@
+{% macro Back(app) %}
+{% if app.back.url %}
+  <div class="link-back__section"><a class="link-back" href="{{ app.back.url }}">{{ Block.String('string:back') }}</a></div>
+{% endif %}
+{% endmacro %}
