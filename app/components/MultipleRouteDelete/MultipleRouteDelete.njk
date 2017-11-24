@@ -1,0 +1,11 @@
+{% macro MultipleRouteDelete(name) %}
+{% if route.multiple_counter %}
+{% if autofields[route.multiple_counter] > route.multiple_min %}
+  {% if autofields[route.multiple_counter] ==  route._index %}
+{% if name %}{% set deleteLabel = getFormattedProp(name, 'value') %}{% endif %}
+{% if not deleteLabel %}{% set deleteLabel = getFormattedProp(route.id, 'multiple_delete', 'Delete') %}{% endif %}
+<buttton class="button button--delete button--destructive">{{ deleteLabel | safe }}</button>
+  {% endif %}
+{% endif %}
+{% endif %}
+{% endmacro %}

@@ -6,6 +6,10 @@
 {{ super() }}
 {% endblock %}
 
+{% block back_content %}
+{{ Back(app) }}
+{% endblock %}
+
 {% block grid_content_body %}
 {# app.wizard.steps.count - {{ app.wizard.steps.count }}
 {% if app.wizard.steps.count > 1 and route.template != 'step-by-step' %}
@@ -17,23 +21,16 @@
 {% set startPage = route.start %}
 <div class="xform-group form-submit">
 
-{% set formContinue = 'Save and continue' %}
-{% if startPage %}{% set formContinue = 'Start' %}{% endif %}
-{% if route.continue %}{% set formContinue = 'Continue' %}{% endif %}
-<button class="button {% if startPage %}button-start {% endif %}next validation-submit" type="submit">{{ formContinue }}</button>
-{% if route.multiple_counter %}
-{% set addValue = 1 %}
-{% if autofields[route.multiple_counter] %}{% set addValue = autofields[route.multiple_counter] %}{% endif %}
-{% set addValue = addValue + 1 %}
-{% if route.multiple_max >= addValue %}{% if route._index == addValue - 1 %}
-<button class="button button--add" type="submit" name="{{ route.multiple_counter }}" value="{{ addValue }}">{{ getFormattedProp(route.id, 'multiple_add', 'Add another') }}</button>
+{% set formContinue = 'string:save-continue' %}
+{% if startPage %}{% set formContinue = 'string:start' %}{% endif %}
+{% if route.continue %}{% set formContinue = 'string:continue' %}{% endif %}
+<button class="button {% if startPage %}button-start {% endif %}next validation-submit" type="submit">{{ Block.String(formContinue) }}</button>
+
+{% if route.multiple_add_auto %}
+{{ Block.MultipleRouteAdd() }}
 {% endif %}
-{% endif %}
-{% if autofields[route.multiple_counter] > route.multiple_min %}
-  {% if autofields[route.multiple_counter] ==  route._index %}
-<buttton class="button button--delete button--destructive">{{ getFormattedProp(route.id, 'multiple_delete', 'Delete') }}</button>
-  {% endif %}
-{% endif %}
+{% if route.multiple_delete_auto %}
+{{ Block.MultipleRouteDelete() }}
 {% endif %}
 
 </div>

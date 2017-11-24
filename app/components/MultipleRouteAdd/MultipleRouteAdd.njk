@@ -1,0 +1,13 @@
+{% macro MultipleRouteAdd(name) %}
+{% if route.multiple_counter %}
+{% set addValue = 1 %}
+{% if autofields[route.multiple_counter] %}{% set addValue = autofields[route.multiple_counter] %}{% endif %}
+{% set addValue = addValue + 1 %}
+{% if route.multiple_max >= addValue %}{% if route._index == addValue - 1 %}
+{% if name %}{% set addLabel = getFormattedProp(name, 'value') %}{% endif %}
+{% if not addLabel %}{% set addLabel = getFormattedProp(route.id, 'multiple_add', 'Add another') %}{% endif %}
+<button class="button button--add" type="submit" name="{{ route.multiple_counter }}" value="{{ addValue }}">{{ addLabel | safe }}</button>
+{% endif %}
+{% endif %}
+{% endif %}
+{% endmacro %}
