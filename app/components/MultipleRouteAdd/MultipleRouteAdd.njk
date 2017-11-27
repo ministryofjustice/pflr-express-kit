@@ -1,7 +1,7 @@
 {% macro MultipleRouteAdd(name) %}
 {% if route.multiple_counter %}
 {% set addValue = 1 %}
-{% if autofields[route.multiple_counter] %}{% set addValue = autofields[route.multiple_counter] %}{% endif %}
+{% if autofields[route.multiple_counter] %}{% set addValue = autofields[route.multiple_counter]| int %}{% endif %}
 {% set addValue = addValue + 1 %}
 {% if route.multiple_max >= addValue %}
 {% if name %}{% set addLabel = getFormattedProp(name, 'value') %}{% endif %}
