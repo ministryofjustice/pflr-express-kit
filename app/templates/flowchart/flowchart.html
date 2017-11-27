@@ -437,6 +437,9 @@ Wizard flow - Prototype
     {% set skipMultiple = true %}
   {% endif %}
 {% endif %}
+{% if stepRoute.dynamic_multiple and stepRoute.dynamicIndex > 3 %}
+{% set skipMultiple = true %}
+{% endif %}
 
 {% if not skipMultiple %}
 {% set dependsStore = [] %}
