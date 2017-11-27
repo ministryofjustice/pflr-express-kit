@@ -15,7 +15,7 @@
 {% call Fieldset(name, label=label, inline=inline, visually_hidden=visually_hidden) %}
   {#% set or = getBlockProp(name, 'or') %#}
   {% for option_name in options %}
-    {% if option_name.value %}
+    {% if option_name.value or option_name.label %}
       {% set option = option_name %}
       {% set option_name = option.name %}
     {% else %}
