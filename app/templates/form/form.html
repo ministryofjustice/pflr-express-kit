@@ -23,7 +23,7 @@
 
 {% set formContinue = 'string:save-continue' %}
 {% if startPage %}{% set formContinue = 'string:start' %}{% endif %}
-{% if route.continue %}{% set formContinue = 'string:continue' %}{% endif %}
+{% if route.continue %}{% set formContinue = 'string:' + route.continue %}{% endif %}
 <button class="button {% if startPage %}button-start {% endif %}next validation-submit" type="submit">{{ Block.String(formContinue) }}</button>
 
 {% if route.multiple_add_auto %}
