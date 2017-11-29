@@ -53,7 +53,7 @@
 <div class="{{ govukClassname('grid-row') }}">
   <div class="{{ govukClassname('column-two-thirds') }}"{% if edit %} id="contentTarget"{% endif %}>
   {% block grid_content_header %}
-  {% set section_heading = getFormattedProp(route.id, 'section_heading', route.section_heading) %}
+  {% set section_heading = getFormattedBodyContent(route.id, 'section_heading', route.section_heading) %}
   <div class="grid_content_header">
   {% if section_heading %}
   <p class="app__section_heading">{{ section_heading | safe }}</p>

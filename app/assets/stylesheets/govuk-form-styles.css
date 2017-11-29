@@ -660,7 +660,7 @@ select:focus::-ms-value {
   @media (min-width: 641px) {
     .multiple-choice {
       float: left; } }
-  .multiple-choice input {
+  .multiple-choice > input {
     position: absolute;
     cursor: pointer;
     left: 0;
@@ -672,14 +672,14 @@ select:focus::-ms-value {
     zoom: 1;
     filter: alpha(opacity=0);
     opacity: 0; }
-  .multiple-choice label {
+  .multiple-choice > label {
     cursor: pointer;
     padding: 8px 10px 9px 12px;
     display: block;
     -ms-touch-action: manipulation;
     touch-action: manipulation; }
     @media (min-width: 641px) {
-      .multiple-choice label {
+      .multiple-choice > label {
         float: left;
         padding-top: 7px;
         padding-bottom: 7px; } }
@@ -745,13 +745,13 @@ select:focus::-ms-value {
     -webkit-box-shadow: 0 0 0 3px #ffbf47;
     -moz-box-shadow: 0 0 0 3px #ffbf47;
     box-shadow: 0 0 0 3px #ffbf47; }
-  .multiple-choice input:checked + label::after {
+  .multiple-choice > input:checked + label::after {
     zoom: 1;
     filter: alpha(opacity=100);
     opacity: 1; }
-  .multiple-choice input:disabled {
+  .multiple-choice > input:disabled {
     cursor: default; }
-  .multiple-choice input:disabled + label {
+  .multiple-choice > input:disabled + label {
     zoom: 1;
     filter: alpha(opacity=50);
     opacity: 0.5;
