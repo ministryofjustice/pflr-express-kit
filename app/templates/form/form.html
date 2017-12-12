@@ -18,6 +18,18 @@
 {{ ErrorSummary(errors) }}
 <form method="post">
 {{ super() }}
+
+{% if route.multiple_add_auto or route.multiple_delete_auto %}
+<div class="control-group__actions">
+{% if route.multiple_add_auto %}
+{{ Block.MultipleRouteAdd() }}
+{% endif %}
+{% if route.multiple_delete_auto %}
+{{ Block.MultipleRouteDelete() }}
+{% endif %}
+</div>
+{% endif %}
+
 {% set startPage = route.start %}
 <div class="xform-group form-submit">
 
@@ -25,13 +37,6 @@
 {% if startPage %}{% set formContinue = 'string:start' %}{% endif %}
 {% if route.continue %}{% set formContinue = 'string:' + route.continue %}{% endif %}
 <button class="button {% if startPage %}button-start {% endif %}next validation-submit" type="submit">{{ Block.String(formContinue) }}</button>
-
-{% if route.multiple_add_auto %}
-{{ Block.MultipleRouteAdd() }}
-{% endif %}
-{% if route.multiple_delete_auto %}
-{{ Block.MultipleRouteDelete() }}
-{% endif %}
 
 </div>
 
