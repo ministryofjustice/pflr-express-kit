@@ -73,7 +73,7 @@ const validate = (values, schema, name) => {
   return validationError ? [validationError] : []
 }
 
-const getDateParts = (name, componentValues) => {
+const getDateValues = (name, componentValues) => {
   // handle multiple route elements
   name = name.replace(/.*_\d+_/, '')
   const dateType = getBlockProp(name, 'date_type', 'day-month-year')
@@ -84,30 +84,31 @@ const getDateParts = (name, componentValues) => {
   // const day = getBlockProp(name, 'day', true)
   // const month = getBlockProp(name, 'month', true)
   // const year = getBlockProp(name, 'year', true)
+
+  const dateValues = []
   if ((day && !componentValues.day) || (month && !componentValues.month) || (year && !componentValues.year)) {
-    return
+    return dateValues
   }
-  let displayValues = []
   if (day) {
-    displayValues.push(componentValues.day)
+    dateValues.push(componentValues.day)
   }
   if (month) {
-    displayValues.push(componentValues.month)
+    dateValues.push(componentValues.month)
   }
   if (year) {
-    displayValues.push(componentValues.year)
+    dateValues.push(componentValues.year)
   }
-  return displayValues
+  return dateValues
 }
 
 const setValue = (name, componentValues) => {
-  const compositeValues = getDateParts(name, componentValues)
-  return compositeValues.reverse().join('-')
+  const dateValues = getDateValues(name, componentValues)
+  return dateValues.reverse().join('-')
 }
 
 const getDisplayValue = (name, separator, componentValues, vals, fieldValues) => {
-  const displayValues = getDateParts(name, componentValues)
-  return displayValues.join('/')
+  const dateValues = getDateValues(name, componentValues)
+  return dateValues.join('/')
 }
 
 module.exports = {
