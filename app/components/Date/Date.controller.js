@@ -73,7 +73,7 @@ const validate = (values, schema, name) => {
   return validationError ? [validationError] : []
 }
 
-const getDisplayValue = (name, separator, componentValues, vals, fieldValues) => {
+const getDateParts = (name, componentValues) => {
   // handle multiple route elements
   name = name.replace(/.*_\d+_/, '')
   const dateType = getBlockProp(name, 'date_type', 'day-month-year')
@@ -97,10 +97,21 @@ const getDisplayValue = (name, separator, componentValues, vals, fieldValues) =>
   if (year) {
     displayValues.push(componentValues.year)
   }
+  return displayValues
+}
+
+const setValue = (name, componentValues) => {
+  const compositeValues = getDateParts(name, componentValues)
+  return compositeValues.reverse().join('-')
+}
+
+const getDisplayValue = (name, separator, componentValues, vals, fieldValues) => {
+  const displayValues = getDateParts(name, componentValues)
   return displayValues.join('/')
 }
 
 module.exports = {
   validate,
+  setValue,
   getDisplayValue
 }
