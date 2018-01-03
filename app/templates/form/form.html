@@ -16,7 +16,7 @@
 <a class="link-back" href="{{ getRouteUrl(wizard.stepsFlat[app.wizard.steps.count - 1]) }}">Back</a>
 {% endif %} #}
 {{ ErrorSummary(errors) }}
-<form method="post">
+<form method="post" class="content-form">
 {{ super() }}
 
 {% if route.multiple_add_auto or route.multiple_delete_auto %}
@@ -62,7 +62,6 @@ jQuery('[data-excludes] input').on('change', function(){
   }
 })
 jQuery('input[aria-controls]').each(function(){
-//on('change', function() {
   var $this = jQuery(this)
   var name = $this.attr('name')
   var controls = $this.attr('aria-controls')
@@ -74,6 +73,19 @@ jQuery('input[aria-controls]').each(function(){
     var ariaHidden = state ? 'false' : 'true'
     $controls[classMethod]('js-hidden')
     $controls.attr('aria-hidden', ariaHidden)
+  })
+})
+jQuery('.content-form').on('submit', function(e) {
+  jQuery('[aria-hidden="true"]').each(function() {
+    jQuery('[name]', this).each(function() {
+      var $nestedField = jQuery(this)
+      var checked = $nestedField.attr('checked')
+      if (checked) {
+        $nestedField.attr('checked', false)
+      } else {
+        $nestedField.val('')
+      }
+    })
   })
 })
 </script>
