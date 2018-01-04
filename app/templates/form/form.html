@@ -10,12 +10,12 @@
 {{ Back(app) }}
 {% endblock %}
 
+{% block grid_content_header_pre %}{{ ErrorSummary(errors) }}{% endblock %}
 {% block grid_content_body %}
 {# app.wizard.steps.count - {{ app.wizard.steps.count }}
 {% if app.wizard.steps.count > 1 and route.template != 'step-by-step' %}
 <a class="link-back" href="{{ getRouteUrl(wizard.stepsFlat[app.wizard.steps.count - 1]) }}">Back</a>
 {% endif %} #}
-{{ ErrorSummary(errors) }}
 <form method="post" class="content-form">
 {{ super() }}
 
@@ -32,12 +32,17 @@
 
 {% set startPage = route.start %}
 <div class="xform-group form-submit">
-
+{% set saveContinue = app.saveContinue %}
 {% set formContinue = 'string:save-continue' %}
-{% if startPage %}{% set formContinue = 'string:start' %}{% endif %}
+{% if saveContinue %}
+{% set formContinue = 'string:continue' %}
+{% endif %}
+{% if startPage %}{% set formContinue = 'string:start' %}{% set saveContinue = false %}{% endif %}
 {% if route.continue %}{% set formContinue = 'string:' + route.continue %}{% endif %}
 <button class="button {% if startPage %}button-start {% endif %}next validation-submit" type="submit">{{ Block.String(formContinue) }}</button>
-
+{% if saveContinue %}
+<button class="button button-secondary button-save-return" type="submit" name="save-return" value="save-return">{{ Block.String('string:save-return') }}</button>
+{% endif %}
 </div>
 
 </form>
@@ -87,6 +92,21 @@ jQuery('.content-form').on('submit', function(e) {
       }
     })
   })
+})
+
+var $passwordControl = jQuery('#user_password').closest('.form-group')
+var toggleValue = {
+  text: 'Hide password',
+  password: 'Show password'
+}
+$passwordControl.html($passwordControl.html() + '<p class="togglePassword"><span class="button button-secondary">' + toggleValue.password + '</span></p>')
+jQuery('.togglePassword span').on('click', function(){
+  var $password = jQuery('#user_password')
+  var type = $password.attr('type')
+  var updateType = type === 'password' ? 'text' : 'password'
+  var toggleText = toggleValue[updateType]
+  $password.attr('type', updateType)
+  jQuery(this).html(toggleText)
 })
 </script>
 {% endblock %}

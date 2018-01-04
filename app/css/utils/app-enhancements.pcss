@@ -94,6 +94,26 @@ sup {
   margin-top: 1rem;
 }
 
+.error-message p {
+  margin: 0;
+}
+
+.button.button-secondary {
+  /* font-size: 1.5rem; */
+  background: transparent;
+  color: var(--govuk-blue);
+  border-bottom-color: var(--govuk-white);
+  box-shadow: none;
+  text-decoration: underline;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: 6rem;
+
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
 .button--destructive {
   background-color: var(--mellow-red);
 
@@ -118,6 +138,7 @@ sup {
 
 .form-group {
   & input[type=text],
+  & input[type=password],
   & textarea {
     &.form-control {
       width: 100%;

@@ -52,6 +52,7 @@
 {% block grid_content_prepend %}{% endblock %}
 <div class="{{ govukClassname('grid-row') }}">
   <div class="{{ govukClassname('column-two-thirds') }}"{% if edit %} id="contentTarget"{% endif %}>
+  {% block grid_content_header_pre %}{% endblock %}
   {% block grid_content_header %}
   {% set section_heading = getFormattedBodyContent(route.id, 'section_heading', route.section_heading) %}
   <div class="grid_content_header">
