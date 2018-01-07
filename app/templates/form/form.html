@@ -51,6 +51,7 @@
 {% block body_end %}
 {{ super() }}
 <script>
+/*
 function unsetCheckbox(inputs) {
   inputs.prop('checked', false)
   inputs.closest('label').removeClass('selected')
@@ -66,6 +67,7 @@ jQuery('[data-excludes] input').on('change', function(){
     unsetCheckbox(inputs)
   }
 })
+*/
 jQuery('input[aria-controls]').each(function(){
   var $this = jQuery(this)
   var name = $this.attr('name')

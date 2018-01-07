@@ -10,6 +10,10 @@ function unsetCheckbox(inputs) {
       var $target = jQuery('#' + $input.parent().attr('data-target'));
       $target.addClass('js-hidden').attr('aria-hidden', true);
     }
+    if ($input.attr('aria-controls')) {
+      var $ariaControlled = jQuery('#' + $input.attr('aria-controls'));
+      $ariaControlled.addClass('js-hidden').attr('aria-hidden', true);
+    }
   });
 }
 jQuery(document).ready(function () {
