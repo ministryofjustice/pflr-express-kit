@@ -46,16 +46,23 @@ table + form p {
 {# <caption class="heading-medium">Your answers</caption> #}
 <tbody>
 
+{% set excludedRoutes = [] %}
+
 {# {{ wizard.stepsFlat }} #}
+{% set breakLoop = false %}
 {% for step in wizard.stepsFlat %}
 {# update per-route id and vars #}
 {% set updateRouteFormatSink = updateRouteFormat(step) %}
+{% set args = { 'app:route:_index' : stepRoute._index } %}
 {% set stepRoute = routesFlattened[step] %}
 {% set abortRow = false %}
+{% if visited[step] %}
 {% if not checkNoDependency(step) %}
 {# <tr><td><h2>{{step}}:{{ checkNoDependency(step) }}</h2></td></tr> #}
 {% set abortRow = true %}
 {% endif %}
+{% set excludedRow = excludedRoutes.indexOf(stepRoute._id) !== -1 %}
+{% if excludedRow %}{% set abortRow = true %}{% endif %}
 {% if stepRoute.multiple_counter %}
 {% set routeCounter = getValue(stepRoute.multiple_counter) %}
 {% if not routeCounter and stepRoute._index > stepRoute.multiple_min %}
@@ -68,7 +75,17 @@ table + form p {
 {% endif %}
 {% if loop.last %}{% set abortRow = true %}{% endif %}
 {% set stepBlocks = [] %}
+{% else %}
+{% set abortRow = true %}
+{% endif %}
+{% if abortRow %}
+{% if stepRoute.steps %}{% set excludedRoutes = excludedRoutes.concat(stepRoute.steps) %}{% endif %}
+{% endif %}
 {% if not abortRow %}
+{% set sectionHeading = getFormattedBodyContent(step, ['summary_steps_heading', 'steps_heading']) %}
+{% if sectionHeading %}
+<tr data-route-header="{{ step }}"><th class="dataRouteHeader dataSectionHeader" colspan="3">{{ sectionHeading | safe }}</th></tr>
+{% endif %}
 {% set stepBlocks = getFlattenedBlocks(stepRoute) %}
 {% set excludedBlockTypes = ['Option', 'Group', 'Section', 'Body'] %}
 {% set stepBlocks = excludeBlockTypes(stepBlocks, excludedBlockTypes) %}
@@ -76,6 +93,8 @@ table + form p {
 {% set stepBlocks = excludeRelated(stepBlocks, excludedRelatedBlocks) %}
 {% if not stepBlocks.length %}{% set abortRow = true %}{% endif %}
 {% endif %}
+{# {% if breakLoop %}{% set abortRow = true %}{% endif %}
+{% if stepRoute._id == app.last.id %}{% set breakLoop = true %}{% endif %} #}
 {% if not abortRow %}
 {% set dump = [] %}
 {% for el in stepBlocks %}
@@ -84,8 +103,11 @@ table + form p {
 {% if not dump.length %}{% set abortRow = true %}{% endif %}
 {% endif %}
 {% if not abortRow %}
-{% set args = { 'app:route:_index' : stepRoute._index } %}
-<tr data-route-header="{{ step }}"><th class="dataRouteHeader" colspan="3">{{ getFormattedBodyContent(step, ['summary_heading', 'heading'], {xargs:args}) | safe }}</th></tr>
+{% set routeHeader = getFormattedBodyContent(step, ['summary_heading', 'heading'], {xargs:args}) %}
+{% if stepRoute.summary_heading == '' %}{% set routeHeader = '' %}{% endif %}
+{% if routeHeader and not stepRoute._single %}
+<tr data-route-header="{{ step }}"><th class="dataRouteHeader" colspan="3">{{ routeHeader | safe }}</th></tr>
+{% endif %}
   {% for el in stepBlocks %}
 {% if checkNoDependency(el) %}
 {% set prefixedEl = el %}
