@@ -1,3 +1,4 @@
+{% from '../Control/Control.njk' import Control with context %}
 {% macro ProgressiveDisclosure(name, heading='', body='') %}
 {% if not heading %}
 {% set heading = getBlockProp(name, 'heading') %}
@@ -11,6 +12,10 @@
   </summary>
   <div class="{{ govukClassname('summary-details') }}">
     {{ body | safe }}
+    {% set blocks = getBlockProp(name, 'blocks') %}
+    {% for block in blocks %}
+    {{ Control(name) }}
+    {% endfor %}
   </div>
 </details>
 {% endmacro %}
