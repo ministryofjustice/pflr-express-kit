@@ -17,6 +17,8 @@
 <a class="link-back" href="{{ getRouteUrl(wizard.stepsFlat[app.wizard.steps.count - 1]) }}">Back</a>
 {% endif %} #}
 <form method="post" class="content-form">
+{# this control will perform the submit if a user hits return #}
+<p class="hidden"><input type="submit" class="default-submit"></p>
 {{ super() }}
 
 {% if route.multiple_add_auto or route.multiple_delete_auto %}
