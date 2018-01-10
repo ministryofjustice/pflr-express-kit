@@ -6,7 +6,7 @@
 
 {% block admin_content %}
 {% set _blockType = getBlockProp(block, '_blockType') %}
-<p><a class="link-back" href="/admin/blocks/{{ _blockType }}">Back to {{ _blockType }}</a></p>
+<p><a class="link-back" href="/admin/blocks/{{ _blockType }}">Back to {{ _blockType }} blocks</a></p>
 
 <h1 class="{{ govukClassname('heading-large') }}">
 {{ block }}
@@ -19,6 +19,9 @@
 {% endif %}
 </h1>
 
+{% if new %}
+{{ Block.Text('_id', label='Id for new '+_blockType+' block') }}
+{% endif %}
 {% if stringProps.length %}
 <ul class="blockProperties {{ govukClassname('list-bullet') }}">
 {% for prop in stringProps %}
@@ -43,6 +46,12 @@
 {% endif %}
 
 <form method="post">
+{% if new %}
+  <div class="js-hidden">{{ Block.Text('block', value=blockJSON, multiline=true) }}</div>
+  <div class="admin-actions">
+  <button name="action" value="update" class="{{ govukClassname('button') }}">Create new {{_blockType}} block</button>
+  </div>
+{% else %}
 <details>
   <summary><span class="summary">Edit raw block</span></summary>
   <div class="{{ govukClassname('summary-details') }}">
@@ -78,7 +87,25 @@
   </details>
   <button name="action" value="delete" class="{{ govukClassname('button') }} button--delete">Delete {{ block }}</button>
   </div>
+  {% endif %}
 
 </form>
 
+{% endblock %}
+
+{% block body_end %}
+{{ super() }}
+{% if new %}
+<script>
+var $form = jQuery('form')
+var $rawBlock = jQuery('[name="block"]')
+var rawBlock = JSON.parse($rawBlock.val())
+jQuery('[name="_id"]').on('keyup', function() {
+  var id = jQuery(this).val()
+  rawBlock._id = id
+  $rawBlock.val(JSON.stringify(rawBlock, null, 2))
+  $form.attr('action', '/admin/block/' + id)
+})
+</script>
+{% endif %}
 {% endblock %}
