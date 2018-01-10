@@ -100,7 +100,10 @@ setInterval(function () {
 var itemContainer = document.querySelector('.arrayProp')
 dragula([itemContainer], {
   revertOnSpill: true,
-  ignoreInputTextSelection: false
+  ignoreInputTextSelection: false,
+  moves: function (el, container, handle) {
+    return handle.classList.contains('propContainer')
+  }
 })
 
 jQuery('.blockRemove span').on('click', function() {
