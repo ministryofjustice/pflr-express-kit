@@ -54,6 +54,10 @@
         "type": "object"
       }
     },
+    "template": {
+      "title": "Template",
+      "type": "string"
+    },
     "_isa": {
       "title": "Isa",
       "type": "string"
