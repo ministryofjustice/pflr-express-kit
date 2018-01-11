@@ -1,0 +1,26 @@
+{
+  "title": "String",
+  "type": "object",
+  "properties": {
+    "_id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "_blockType": {
+      "title": "Type",
+      "type": "string",
+      "default": "String",
+      "enum": ["String"]
+    },
+    "value": {
+      "title": "Value",
+      "type": "string",
+      "multiline": false
+    }
+  },
+  "required": [
+    "_id",
+    "_blockType",
+    "value"
+  ]
+}

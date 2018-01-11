@@ -8,7 +8,7 @@
 {% if not _blockType %}
 {% set _blockType = getBlockProp(block, '_blockType') %}
 {% endif %}
-<p><a class="link-back" href="/admin/blocks/{{ _blockType }}">Back to {{ _blockType }}</a></p>
+<p><a class="link-back" href="/admin/blocks/{{ _blockType }}">Back to {{ _blockType }} blocks</a></p>
 
 <h1 class="{{ govukClassname('heading-large') }}"><a class="header-link-back" href="/admin/block/{{ block }}">{{ block }}</a>{% if prop %}.{{ prop }}{% endif %}</h1>
 
@@ -20,7 +20,7 @@
 
 <div class="propType {{ propType }}Prop">
 {% if propType == 'string' %}
-{{ Block.Text('value', value=value, multiline=true, rows=1) }}
+{{ Block.Text('value', value=value, multiline=multiline, rows=1) }}
 {% endif %}
 {% if propType == 'number' %}
 {{ Block.Number('value', value=value) }}
@@ -48,14 +48,14 @@
 {% endif %}
 </div>
 
-{% if noValue %}{% if propType != 'array' %}
+{% if noValue %}{% if propType != 'array' %}{% if not propSchema %}
 {% set stringOption = { value: 'string', label: 'String', checked: true } %}
 {% set arrayOption = { value: 'array', label: 'Array' } %}
 {% set numberOption = { value: 'number', label: 'Number' } %}
 {% set booleanOption = { value: 'boolean', label: 'Boolean' } %}
 {% set propTypeOptions = [stringOption, arrayOption, numberOption, booleanOption] %}
 {{ Block.RadioGroup('propType', options=propTypeOptions) }}
-  {% else %}
+  {% endif %}{% else %}
   <input type="hidden" name="propType" value="{{ propType }}">
   {% endif %}
 {% else %}

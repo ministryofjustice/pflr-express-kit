@@ -1,0 +1,57 @@
+{
+  "title": "Route",
+  "type": "object",
+  "properties": {
+    "_id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "_blockType": {
+      "title": "Type",
+      "type": "string",
+      "default": "Route",
+      "enum": ["Route"]
+    },
+    "url": {
+      "title": "URL",
+      "type": "string"
+    },
+    "heading": {
+      "title": "Heading",
+      "type": "string"
+    },
+    "title": {
+      "title": "Title",
+      "type": "string",
+      "multiline": true
+    },
+    "body": {
+      "title": "Body",
+      "type": "string",
+      "multiline": true
+    },
+    "block": {
+      "title": "Block",
+      "type": "string"
+    },
+    "blocks": {
+      "title": "Minimum length",
+      "type": "array"
+    },
+    "_isa": {
+      "title": "Isa",
+      "type": "string"
+    },
+    "*notes": {
+      "title": "Notes",
+      "type": "string",
+      "multiline": true
+    }
+  },
+  "required": [
+    "_id",
+    "_blockType",
+    "url",
+    "heading"
+  ]
+}

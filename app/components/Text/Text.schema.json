@@ -1,0 +1,47 @@
+{
+  "title": "Text",
+  "type": "object",
+  "properties": {
+    "_id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "_blockType": {
+      "title": "Type",
+      "type": "string",
+      "default": "Text",
+      "enum": ["Text"]
+    },
+    "label": {
+      "title": "Label",
+      "type": "string"
+    },
+    "hint": {
+      "title": "Hint",
+      "type": "string",
+      "multiline": true
+    },
+    "multiline": {
+      "title": "Multiline",
+      "type": "boolean"
+    },
+    "minLength": {
+      "title": "Minimum length",
+      "type": "number",
+      "minimum": 0
+    },
+    "maxLength": {
+      "title": "Maximum length",
+      "type": "number"
+    },
+    "required": {
+      "title": "Required",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "_id",
+    "_blockType",
+    "label"
+  ]
+}

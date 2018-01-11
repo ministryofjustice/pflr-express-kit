@@ -49,6 +49,10 @@ textarea.form-control[name=value],
   width: 4rem;
 }
 
+.blockProp .optional {
+  font-size: 1rem;
+}
+
 .blockProp__value {
   display: block;
   font-size: 1.5rem;
@@ -100,10 +104,7 @@ setInterval(function () {
 var itemContainer = document.querySelector('.arrayProp')
 dragula([itemContainer], {
   revertOnSpill: true,
-  ignoreInputTextSelection: false,
-  moves: function (el, container, handle) {
-    return handle.classList.contains('propContainer')
-  }
+  ignoreInputTextSelection: false
 })
 
 jQuery('.blockRemove span').on('click', function() {

@@ -9,6 +9,9 @@
 <p><a class="link-back" href="/admin/blocks/{{ _blockType }}">Back to {{ _blockType }} blocks</a></p>
 
 <h1 class="{{ govukClassname('heading-large') }}">
+{% if new %}
+Create new {{ block }} block
+{% else %}
 {{ block }}
 {% if _blockType == 'Route' %}
 {# {% set routeUrl = getBlockProp(block, 'url') %} #}
@@ -17,11 +20,18 @@
 <small>route url <a href="{{ routeUrl }}">{{ routeUrl }}</a> <a href="{{ routeUrl }}/edit">(edit)</a></small>
 {% endif %}
 {% endif %}
+{% endif %}
 </h1>
 
 {% if new %}
-{{ Block.Text('_id', label='Id for new '+_blockType+' block') }}
-{% endif %}
+<form method="post">
+ {{ Block.Text('_id', label='Id for new block') }}
+ <div class="hidden">{{ Block.Text('block', value=blockJSON, multiline=true, rows=1) }}</div>
+ <div class="admin-actions">
+ <button name="action" value="update" class="{{ govukClassname('button') }}">Create new {{ block }} block</button>
+ </div>
+</form>
+{% else %}
 {% if stringProps.length %}
 <ul class="blockProperties {{ govukClassname('list-bullet') }}">
 {% for prop in stringProps %}
@@ -32,12 +42,14 @@
 {% if blockPropType == 'string' %}
 {% set propBlockRef = getBlockProp(blockProp, '_id') %}
 {% endif %}
-<li class="blockProp">{% if prop != 'depends' %}<a href="/admin/block/{{ block }}/{{ prop }}">{% endif %}{{ prop }}{% if prop != 'depends' %}</a>{% endif %}
+<li class="blockProp">{% if prop != 'depends' %}<a href="/admin/block/{{ block }}/{{ prop }}">{% endif %}{{ prop }}{% if not requiredProps[prop] %} <small class="optional">(optional)</small>{% endif %}{% if prop != 'depends' %}</a>{% endif %}
 <small class="blockProp__value">
 {% if prop == 'depends' %}
 {{ blockProp | json | replace('[{"', '')  | replace('}]', '') | replace('":', ':') }}
 {% else %}
-{% if propBlockRef %}<a href="/admin/block/{{ blockProp }}">{% endif %}{{ blockProp | json | replace(r/^"(.*)"$/, '$1') | truncate(120) }}{% if propBlockRef %}</a>{% endif %}
+{% if propBlockRef %}<a href="/admin/block/{{ blockProp }}">{% endif %}
+{% if blockProp %}{{ blockProp | json | replace(r/^"(.*)"$/, '$1') | truncate(120) }}{% else %}<em>Not set</em>{% endif %}
+{% if propBlockRef %}</a>{% endif %}
 {% endif %}
 </small>
 </li>
@@ -46,12 +58,6 @@
 {% endif %}
 
 <form method="post">
-{% if new %}
-  <div class="js-hidden">{{ Block.Text('block', value=blockJSON, multiline=true) }}</div>
-  <div class="admin-actions">
-  <button name="action" value="update" class="{{ govukClassname('button') }}">Create new {{_blockType}} block</button>
-  </div>
-{% else %}
 <details>
   <summary><span class="summary">Edit raw block</span></summary>
   <div class="{{ govukClassname('summary-details') }}">
@@ -87,24 +93,53 @@
   </details>
   <button name="action" value="delete" class="{{ govukClassname('button') }} button--delete">Delete {{ block }}</button>
   </div>
-  {% endif %}
 
 </form>
+
+{% endif %}
 
 {% endblock %}
 
 {% block body_end %}
 {{ super() }}
-{% if new %}
 <script>
 var $form = jQuery('form')
-var $rawBlock = jQuery('[name="block"]')
-var rawBlock = JSON.parse($rawBlock.val())
-jQuery('[name="_id"]').on('keyup', function() {
-  var id = jQuery(this).val()
-  rawBlock._id = id
-  $rawBlock.val(JSON.stringify(rawBlock, null, 2))
-  $form.attr('action', '/admin/block/' + id)
+$form.on('submit', function(e) {
+  if ($form.attr('action') === '/id-exists') {
+    e.preventDefault()
+    e.stopPropagation()
+    alert('A block with this id already exists')
+  }
+})
+</script>
+{% if new %}
+<script>
+var $id = jQuery('[name="_id"]')
+var $block = jQuery('[name="block"]')
+var blockJSON = JSON.parse($block.val())
+$id.on('keyup', function() {
+  var newId = $id.val()
+  blockJSON._id = newId
+  $form.attr('action', '/id-exists')
+  jQuery.getJSON('/api/block/' + newId, function(json) {
+    if (!json._id) {
+      $block.val(JSON.stringify(blockJSON, null, 2))
+      $form.attr('action', '/admin/block/' + newId)
+    }
+  })
+})
+</script>
+{% else %}
+<script>
+var $cloneId = jQuery('[name="cloneId"]')
+$cloneId.on('keyup', function() {
+  var newId = $cloneId.val()
+  $form.attr('action', '/id-exists')
+  jQuery.getJSON('/api/block/' + newId, function(json) {
+    if (!json._id) {
+      $form.attr('action', '/admin/block/' + newId)
+    }
+  })
 })
 </script>
 {% endif %}
