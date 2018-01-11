@@ -35,8 +35,19 @@
       "type": "string"
     },
     "blocks": {
-      "title": "Minimum length",
+      "title": "Blocks",
       "type": "array"
+    },
+    "steps": {
+      "title": "Steps",
+      "type": "array"
+    },
+    "depends": {
+      "title": "Depends",
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
     },
     "_isa": {
       "title": "Isa",

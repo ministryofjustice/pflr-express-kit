@@ -33,22 +33,32 @@
 {{ Block.RadioGroup('value', options=valueOptions) }}
 {% endif %}
 {% if propType == 'array' %}
+{% set arrayObject = false %}
+{% set arrayType = propSchema.items.type %}
+{% if arrayType == 'object' %}
+{% set arrayObject = true %}
+{% endif %}
 {% for valueItem in value %}
 <div class="container propContainer">
-{{ Block.Text('value', value=valueItem) }}
+{% if arrayType == 'object' %}
+{% set valueItem = jsonify(valueItem) %}
+{% endif %}
+{{ Block.Text('value', value=valueItem, multiline=arrayObject) }}
 <div class="blockActions">
+{% if arrayType != 'object' %}
 <p class="blockLink"><a href="/admin/block/{{ valueItem }}" title="{{valueItem}} block">{}</a></p>
+{% endif %}
 <p class="blockRemove"><span title="Remove {{valueItem}}">Remove</span></p>{# ⌫ #}
 </div>
 </div>
 {% endfor %}
 <div class="container propContainer">
-{{ Block.Text('value', value='', placeholder='Add new item') }}
+{{ Block.Text('value', value='', multiline=arrayObject, placeholder='Add new item') }}
 </div>
 {% endif %}
 </div>
 
-{% if noValue %}{% if propType != 'array' %}{% if not propSchema %}
+{% if noValue %}{% if propType != 'array' %}{% if not propSchema.type %}
 {% set stringOption = { value: 'string', label: 'String', checked: true } %}
 {% set arrayOption = { value: 'array', label: 'Array' } %}
 {% set numberOption = { value: 'number', label: 'Number' } %}
