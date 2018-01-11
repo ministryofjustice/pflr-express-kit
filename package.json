@@ -23,7 +23,7 @@
     "eslint-plugin-standard": "^3.0.1",
     "express": "^4.15.2",
     "express-session": "^1.15.2",
-    "glob": "^7.1.1",
+    "glob": "^7.1.2",
     "glob-promise": "^3.1.0",
     "govuk_frontend_alpha": "https://github.com/alphagov/govuk_frontend_alpha/releases/download/0.0.1-alpha/govuk_frontend_alpha-0.0.1-npm.tgz",
     "jsonlint": "^1.6.2",
