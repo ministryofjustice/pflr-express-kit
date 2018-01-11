@@ -22,6 +22,10 @@
 {% if propType == 'string' %}
 {{ Block.Text('value', value=value, multiline=multiline, rows=1) }}
 {% endif %}
+{% if propType == 'object' %}
+{% if value %}{% set value = jsonify(value) %}{% endif %}
+{{ Block.Text('value', value=value, multiline=true, rows=1) }}
+{% endif %}
 {% if propType == 'number' %}
 {{ Block.Number('value', value=value) }}
 {% endif %}
@@ -61,9 +65,10 @@
 {% if noValue %}{% if propType != 'array' %}{% if not propSchema.type %}
 {% set stringOption = { value: 'string', label: 'String', checked: true } %}
 {% set arrayOption = { value: 'array', label: 'Array' } %}
+{% set objectOption = { value: 'object', label: 'Object' } %}
 {% set numberOption = { value: 'number', label: 'Number' } %}
 {% set booleanOption = { value: 'boolean', label: 'Boolean' } %}
-{% set propTypeOptions = [stringOption, arrayOption, numberOption, booleanOption] %}
+{% set propTypeOptions = [stringOption, numberOption, booleanOption, arrayOption, objectOption] %}
 {{ Block.RadioGroup('propType', options=propTypeOptions) }}
   {% endif %}{% else %}
   <input type="hidden" name="propType" value="{{ propType }}">

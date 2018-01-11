@@ -38,6 +38,11 @@
       "title": "Blocks",
       "type": "array"
     },
+    "extraBlocks": {
+      "title": "Extra blocks",
+      "description": "Blocks which appear after the primary button",
+      "type": "array"
+    },
     "steps": {
       "title": "Steps",
       "type": "array"

@@ -46,7 +46,7 @@ Create new {{ block }} block
 {% set propBlockRef = getBlockProp(blockProp, '_id') %}
 {% endif %}
 <li class="blockProp">{% if prop != 'xdepends' %}<a href="/admin/block/{{ block }}/{{ prop }}">{% endif %}{{ prop }}{% if not requiredProps[prop] %} <small class="optional">(optional)</small>{% endif %}{% if prop != 'xdepends' %}</a>{% endif %}
-{{blockPropType}}
+
 <small class="blockProp__value">
 {% if prop == 'depends' %}
 {{ blockProp | json | replace('[{"', '')  | replace('}]', '') | replace('":', ':') }}
