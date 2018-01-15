@@ -10,7 +10,7 @@
 
 {% block page_title %}{{ getFormattedBodyContent(route.id, ['title', 'heading']) | striptags }}{% if route.id != route.homepage %} - {{ getFormattedBodyContent(route.homepage, ['title', 'heading']) | striptags }}{% endif %}{% endblock %}
 
-{% block body_classes %}{{ route.template }}{% if req.disqualified %} disqualified{% endif %}{% endblock %}
+{% block body_classes %}{{ route.template }}{% if route._isa %} {{ route._isa | replace('view:', 'view__') }}{% endif %}{% if req.disqualified %} disqualified{% endif %}{% endblock %}
 
 {% block proposition_name %}{{ Block.String('ServiceName') }}{% endblock %}
 
