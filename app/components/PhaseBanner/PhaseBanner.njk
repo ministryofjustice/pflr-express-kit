@@ -2,8 +2,8 @@
 {% if getString('ServicePhase') %}
 <div class="PhaseBanner {{ govukClassname('phase-banner') }}">
   <p class="PhaseBanner__content {{ govukClassname('gv-c-phase-banner__content') }}">
-    <strong class="PhaseBanner__tag {{ govukClassname('phase-tag') }}">{{ Block.String('ServicePhase') }}</strong>
-    <span class="PhaseBanner__message {{ govukClassname('gv-c-phase-banner__text') }}">{{ Block.String('ServicePhase__text') | safe }}</span>
+    <strong class="PhaseBanner__tag {{ govukClassname('phase-tag') }}">{{ Block.String('service#phase') }}</strong>
+    <span class="PhaseBanner__message {{ govukClassname('gv-c-phase-banner__text') }}">{{ Block.String('service#phase_text') | safe }}</span>
   </p>
 </div>
 {% endif %}

@@ -1,4 +1,6 @@
 {% macro String(name, args) %}
 {% set options = { args: args } %}
-<span data-block-name="{{name}}">{{ getString(name, options) | safe }}</span>
+{% set el = 'span' %}
+{% if args.el %}{% set el = args.el %}{% endif %}
+<{{el}} data-block-name="{{name | replace('#', '/')}}">{{ getString(name, options) | safe }}</{{el}}>
 {% endmacro %}

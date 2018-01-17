@@ -465,6 +465,12 @@ Wizard flow - Prototype
   {% set dependsSoak = dependsStore.push(depends) %}
   {% endif %}
 {% endfor %}
+{% for block in stepRoute.extraBlocks %}
+  {% if not depends %}
+  {% set depends = getBlockProp(block, 'depends') %}
+  {% set dependsSoak = dependsStore.push(depends) %}
+  {% endif %}
+{% endfor %}
 {% set depends = dependsStore[0] %}
 {% endif %}
 {% set redirectConditions = stepRoute.redirectConditions %}
@@ -521,6 +527,7 @@ hierarchy:<br>{{ stepRoute.hierarchy.join('<br>') | safe }}
 {{ Block.Body(stepId) }}
 {# {% if stepRoute.body %}{{ Block.Group(stepId) }}{% endif %} #}
 {{ Block.Group(blocks=stepRoute.blocks) }}
+{{ Block.Group(blocks=stepRoute.extraBlocks) }}
 {% endif %}
 </div>
 {% if redirectConditions %}

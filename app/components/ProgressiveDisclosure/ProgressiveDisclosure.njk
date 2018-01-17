@@ -6,7 +6,7 @@
 {% if not body %}
 {% set body = getFormattedBody(name, 'body') %}
 {% endif %}
-<details role="group">
+<details role="group" data-block-name="{{ name }}">
   <summary role="button">
     <span class="summary">{{ heading | safe }}</span>
   </summary>
