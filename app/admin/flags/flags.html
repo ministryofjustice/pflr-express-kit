@@ -9,6 +9,7 @@ Flags - Prototype
 
 <table>
 {% for flag, value in flags %}
+{% if flag != 'disabled' %}
 <tr>
 {% set icon = 'cross' %}
 {% set state = 'off' %}
@@ -20,6 +21,7 @@ Flags - Prototype
 <td class="state state-{{ state }}"><img src="/public/images/{{ icon }}_icon.svg" alt="{{ state }}"></td>
 #}
 </tr>
+{% endif %}
 {% endfor %}
 </table>
 

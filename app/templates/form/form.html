@@ -38,7 +38,7 @@
 {% set formContinue = 'string:continue' %}
 {% endif %}
 {% if startPage %}{% set formContinue = 'string:start' %}{% set saveContinue = false %}{% endif %}
-{% if route.continue %}{% set formContinue = 'string:' + route.continue %}{% endif %}
+{% if route.continue %}{% set formContinue = 'string:' + route.continue %}{% set saveContinue = false %}{% endif %}
 <button class="button {% if startPage %}button-start {% endif %}next validation-submit" type="submit">{{ Block.String(formContinue) }}</button>
 {% if saveContinue %}
 <button class="button button-secondary button-save-return" type="submit" name="save-return" value="save-return">{{ Block.String('string:save-return') }}</button>
