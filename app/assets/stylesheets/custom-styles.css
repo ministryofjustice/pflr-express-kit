@@ -1,0 +1,39 @@
+/* Top navigation for any admin views */
+
+.TopNavigation {
+  background: #2b8cc4;
+  color: white;
+  padding: 0.5rem 0 1rem;
+
+  @media print {
+    display: none;
+  }
+}
+
+.TopNavigation .gv-o-wrapper {
+  margin: 0 auto;
+}
+
+.flowchart .TopNavigation .gv-o-wrapper {
+  max-width: 100%;
+  margin: 0 1em;
+}
+
+.TopNavigation a {
+  color: white;
+}
+
+.TopNavigation__heading {
+  font-size: 1.9rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.TopNavigation__link {
+  display: inline;
+  margin: 0 1em 0 0;
+}
+
+.gv-o-wrapper .link-admin {
+  top: 1.5em;
+}

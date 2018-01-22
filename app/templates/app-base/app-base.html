@@ -32,7 +32,7 @@
 {% endblock %}
 
 {% block after_header %}
-{{ TopNavigation(route.url) }}
+{{ super() }}
 {% if not req.disqualified %}
 {{ FeedbackBanner() }}
 {% endif %}
