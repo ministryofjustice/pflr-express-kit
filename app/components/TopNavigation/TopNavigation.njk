@@ -1,0 +1,13 @@
+{% macro TopNavigation(route_url) %}
+<div class="TopNavigation">
+<div class="{{ govukClassname('gv-o-wrapper') }}">
+<ul class="TopNavigation__links">
+  <li class="TopNavigation__link"><a href="/flowchart">Flowchart</a></li>
+  <li class="TopNavigation__link"><a href="/pages">Pages</a></li>
+  <li class="TopNavigation__link"><a href="/admin/blocks">Blocks</a></li>
+  <li class="TopNavigation__link"><a href="{{ route_url }}">Preview</a></li>
+</ul>
+</div>
+</div>
+{% endmacro %}
+{# data-link-type="feedback-banner" #}

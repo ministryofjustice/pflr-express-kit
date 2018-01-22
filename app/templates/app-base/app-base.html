@@ -5,6 +5,7 @@
 {% from 'components/Breadcrumbs/Breadcrumbs.njk' import Breadcrumbs with context %}
 {% from 'components/CookieMessage/CookieMessage.njk' import CookieMessage with context %}
 {% from 'components/FeedbackBanner/FeedbackBanner.njk' import FeedbackBanner with context %}
+{% from 'components/TopNavigation/TopNavigation.njk' import TopNavigation with context %}
 {% from 'components/PhaseBanner/PhaseBanner.njk' import PhaseBanner with context %}
 {% from 'components/SupportLinks/SupportLinks.njk' import SupportLinks with context %}
 
@@ -31,6 +32,7 @@
 {% endblock %}
 
 {% block after_header %}
+{{ TopNavigation(route.url) }}
 {% if not req.disqualified %}
 {{ FeedbackBanner() }}
 {% endif %}
