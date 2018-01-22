@@ -235,6 +235,7 @@ p.depend__key {
   position: absolute;
   top: -45px;
   width: 100%;
+  left: 0;
 }
 .routeKey small {
   display: block;
@@ -390,6 +391,88 @@ a.block-edit {
   left: 0.5rem;
 }
 
+/* ----- */
+.flow-container {
+  transform-origin: top left;
+  transform: scale(0.5);
+}
+.flow-container {
+  white-space: nowrap;
+  padding-top: 5rem;
+  vertical-align: top;
+}
+.flow-container * {
+  vertical-align: top;
+}
+.steps {
+  display: inline-block;
+  Xborder: solid 0.1rem black;
+  Xpadding: 0.25em;
+  white-space: nowrap;
+  Xmargin-right: 1rem;
+  Xmargin-top: -0.5rem;
+}
+.collapsed {
+  transform-origin: top left;
+  transform: scale(0.25);
+}
+.route-block {
+  display: inline-block;
+  position: relative;
+  white-space: nowrap;
+}
+.gutter {
+  display: inline-block;
+}
+.route-block:hover {
+  Xbackground: #eeeeee;
+}
+.steps-block {
+  display: inline-block;
+}
+.route {
+  display: inline-block;
+  xbackground: black;
+  xcolor: white;
+  xmargin-right: 5rem;
+  width: 40rem;
+  position: relative;
+}
+
+.route:last-child {
+  Xmargin-right: 0;
+}
+.route-box {
+  white-space: normal;
+  border: solid 1px black;
+  padding: 1rem 1rem 1rem 4rem;
+  position: relative;
+}
+.steps-toggle {
+  position: absolute;
+  right: 0;
+  top: -2rem;
+  z-index: 100;
+  cursor: pointer;
+  color: blue;
+  text-decoration: underline;
+}
+
+.show-steps .route-box {
+  background: #ffcc00;
+}
+.show-steps > .steps > .route-block > .route {
+  Xbackground: #eeeeee;
+}
+
+body {
+  padding: 4rem 2rem;
+}
+.scale {
+  position: fixed;
+  left: 2rem;
+  top: 2rem;
+}
 </style>
 {% endblock %}
 
@@ -398,34 +481,17 @@ Wizard flow - Prototype
 {% endblock %}
 
 {% block content %}
-{# <pre>{{ routesFlattened | json }}</pre> #}
-<div id="flowchartControls">
-<p class="form-group"><label class="form-label-bold">Scale <input name="scale" value="0.66"></label><button class="button splitFlowchart">Split flowchart</button></p>
-<p class="form-group"><button class="button removePrintingGuides">Remove printing helpers</button></p>
-<p class="form-group"><button class="button removeFlowchartLines">Remove flowchart lines</button></p>
+<div class="scale">
+<input name="scale" type="range" min="0" max="1" value="0.5" step="0.01">
 </div>
-
-<div class="flowchartContainer">
-<div class="flowchartActions"><span class="button" data-action="hide">Hide</span><span class="button" data-action="up">Up</span><span class="button" data-action="down">Down</span><span class="button" data-action="left">Left</span><span class="button" name="right">Right</span></div>
-<div class="flowchartContainerInner">
-<form method="post">
-{% set stepRoute = routesFlattened[route.wizard] %}
-{% set stepUrl = getRouteUrl(stepRoute.id) %}
-<div class="container">
-<div class="box-row">
-<div class="box">
-<div class="innerbox" data-block-name="{{stepRoute.id}}">
-<p class="routeKey">{{stepRoute.id}} <small><a href="{{ stepUrl }}">{{ stepUrl }}</a> <a href="{{ stepUrl }}{% if stepUrl != '/' %}/{% endif %}edit">(edit)</a></small></p>
-{{ Block.PageHeader(stepRoute.id, start_page=stepRoute.start_page) }}
-{{ Block.Body(stepRoute.id) }}
-{{ Block.Group(blocks=stepRoute.blocks) }}
+<div class="flow-container">
+{{ renderRoute(route.wizard) }}
 </div>
-</div>
+{% endblock %}
 
-
-{% for step in wizard.stepsFlat %}
-{% set stepRoute = routesFlattened[step] %}
-{% set stepId = step %}
+{% macro renderRoute(route) %}
+{% set stepRoute = routesFlattened[route] %}
+{% set stepId = route %}
 {% set multiple = false %}
 {% set multipleIndex = stepRoute._index %}
 {% set skipMultiple = false %}
@@ -443,7 +509,8 @@ Wizard flow - Prototype
 {% if stepRoute.parentDynamicIndex > 1 %}
 {% set skipMultiple = true %}
 {% endif %}
-
+{% if not skipMultiple %}
+<div class="route-block" data-name-route="{{route}}">
 {% if not skipMultiple %}
 {% set dependsStore = [] %}
 {% if not loop.blast and not stepRoute.bblocks %}
@@ -484,6 +551,11 @@ Wizard flow - Prototype
 {% endif %}
 {% endif %}
 </div>
+<div class="route">
+{% set stepsToggle = getBlockProp(route, 'steps') %}
+{% if stepsToggle and stepsToggle.length %}
+<span class="steps-toggle">Collapse steps</span>
+{% endif %}
 {% set firstStep = false %}
 {% set lastStep = false %}
 {% set flattened = routesFlattened[stepId] %}
@@ -495,10 +567,10 @@ Wizard flow - Prototype
 <div class="box-steps-row"> #}
 {# <div class="fwap"> #}
 {% endif %}
-<div class="box{% if depends %} depends{% endif %}" id="{{ stepRoute._id }}">
+<div class="Xbox{% if depends %} Xdepends{% endif %}" id="{{ stepRoute._id }}">
 <span class="button box--hide" data-action="hide">Hide</span>
-<div class="innerbox{% if multiple %} innerbox-multiple{% endif %}" data-block-name="{{stepId}}">
-{% set stepUrl = getRouteUrl(step) %}
+<div class="route-box{% if multiple %} Xinnerbox-multiple{% endif %}" data-block-name="{{stepId}}">
+{% set stepUrl = getRouteUrl(route) %}
 {% set stepUrlStub = stepUrl %}
 {% if multiple %}
 {% set stepUrlStub = stepUrlStub.replace('/1', '') %}
@@ -555,18 +627,41 @@ hierarchy:<br>{{ stepRoute.hierarchy.join('<br>') | safe }}
 </div>
 
 </div>
-{% if lastStep %}
-{# </div><!-- FWAP --> #}
-{# </div>
-</div>
-</div><!-- box-steps --> #}
-{% endif %}
 
 {% endif %}
 {% endif %}
+</div>
+{{ renderSteps(route) }}
+</div>
+{% endif %}
+{% endmacro %}
+
+{% macro renderSteps(route) %}
+{% set steps = getBlockProp(route, 'steps') %}
+{% if steps and steps.length %}
+<div class="steps-block">
+<div class="steps">
+{% for step in steps %}
+{{ renderRoute(step) }}
 {% endfor %}
 </div>
-{# <p><button class="button">Update values</button></p> #}
+</div>
+{% endif %}
+{% endmacro %}
+
+
+{% block Xcontent %}
+{# <pre>{{ routesFlattened | json }}</pre> #}
+<div id="flowchartControls">
+<p class="form-group"><label class="form-label-bold">Scale <input name="scale" value="0.66"></label><button class="button splitFlowchart">Split flowchart</button></p>
+<p class="form-group"><button class="button removePrintingGuides">Remove printing helpers</button></p>
+<p class="form-group"><button class="button removeFlowchartLines">Remove flowchart lines</button></p>
+</div>
+
+<div class="flowchartContainer">
+<div class="flowchartActions"><span class="button" data-action="hide">Hide</span><span class="button" data-action="up">Up</span><span class="button" data-action="down">Down</span><span class="button" data-action="left">Left</span><span class="button" name="right">Right</span></div>
+<div class="flowchartContainerInner">
+<form method="post">
 </form>
 </div>
 </div>
@@ -577,9 +672,35 @@ hierarchy:<br>{{ stepRoute.hierarchy.join('<br>') | safe }}
 {# jQuery("#children_resident, #communication_methods").addClass("depends-skip");
 // jQuery("#gutter-your_plan, #your_plan").hide(); #}
 <script>
+function getToggleSteps(el) {
+  return jQuery(el).closest('.route-block').children('.steps-block')
+}
+jQuery('.steps-toggle').on('click', function() {
+  var $toggle = jQuery(this)
+  var $steps = getToggleSteps($toggle)
+  $steps.toggleClass('collapsed')
+  var collapsed = $steps.hasClass('collapsed')
+  if (collapsed) {
+    var bounds = $steps.get(0).getBoundingClientRect()
+    $steps.css('width', (bounds.width * 2) + 'px')
+  } else {
+    $steps.css('width', 'auto')
+  }
+  var toggleText = collapsed ? 'Expand steps' : 'Collapse steps'
+  $toggle.html(toggleText)
+}).hover(function() {
+  getToggleSteps(this).addClass('show-steps')
+},function() {
+  getToggleSteps(this).removeClass('show-steps')
+})
+
+jQuery('[name="scale"]').on('change', function() {
+  var scale = jQuery(this).val()
+  jQuery('.flow-container').css('transform', 'scale(' + scale + ')')
+})
+
 jQuery(document).ready(function() {
   setTimeout(function() {
-    console.log('boom')
     jQuery('[media=print]').remove()
     jQuery('[media=screen]').attr('media', 'all')
   }, 100)

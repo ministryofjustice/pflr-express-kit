@@ -55,7 +55,7 @@
   {% block grid_content_header_pre %}{% endblock %}
   {% block grid_content_header %}
   {% set section_heading = getFormattedBodyContent(route.id, 'section_heading', route.section_heading) %}
-  <div class="grid_content_header">
+  <div class="grid_content_header {% block grid_content_header_classs %}{% endblock %}">
   {% if section_heading %}
   <p class="app__section_heading">{{ section_heading | safe }}</p>
   {% endif %}

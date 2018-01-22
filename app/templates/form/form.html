@@ -96,6 +96,13 @@ jQuery('.content-form').on('submit', function(e) {
   })
 })
 
+{% if not flowchart and not edit %}
+jQuery('[data-download] a').each(function() {
+  var downloadUrl = jQuery(this).attr('href')
+  jQuery('body').append('<iframe src="' + downloadUrl + '" style="display:none;"></iframe>')
+})
+{% endif %}
+
 var $passwordControl = jQuery('#user_password').closest('.form-group')
 var toggleValue = {
   text: 'Hide password',

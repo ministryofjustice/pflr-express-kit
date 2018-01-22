@@ -1,9 +1,22 @@
-{% extends "templates/base/base.html" %}
-{% block Xcontent_class %}multi-page{% endblock %}
-{% block main_content %}
+{% extends "templates/generic/generic.html" %}
+{% block stylesheet %}
+{{ super() }}
+<style>
+ .govuk-box-highlight {
+  background: #28a197;
+  color: #ffffff;
+  margin: 1em 0;
+  padding: 2em 1em;
+  text-align: center;
+}
+</style>
+{% endblock %}
+{% block grid_content_header_classs %}govuk-box-highlight{% endblock %}
+{% block Xmain_content %}
 <style type="text/css">
 .govuk-box-highlight {
-  background: #999999;
+  background: #28a197;
+  color: #ffffff;
 }
 .govuk-box-highlight .bold-large {
   font-size: 24px;
