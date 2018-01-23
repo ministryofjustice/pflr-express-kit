@@ -37,3 +37,34 @@
 .gv-o-wrapper .link-admin {
   top: 1.5em;
 }
+
+/* Pages page, showing the hierarchy of all pages */
+
+.list {
+  padding: 0;
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+
+.pages .list {
+  margin-bottom: 0;
+}
+
+/* Bulleted lists */
+.list-bullet {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+.list li {
+  margin-bottom: 5px;
+}
+
+.page-heading,
+.page-url {
+  display: block;
+}
+
+.page-url {
+  font-size: 0.8em;
+}

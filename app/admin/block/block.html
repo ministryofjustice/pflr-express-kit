@@ -6,7 +6,9 @@
 
 {% block admin_content %}
 {% set _blockType = getBlockProp(block, '_blockType') %}
-<p><a class="link-back" href="/admin/blocks/{{ _blockType }}">Back to {{ _blockType }} blocks</a></p>
+{% if parentBlock %}
+<p><a class="link-back" href="/admin/block/{{ parentBlock }}">Back to {{ parentBlock }} blocks</a></p>
+{% endif %}
 
 <h1 class="{{ govukClassname('heading-large') }}">
 {% if new %}
