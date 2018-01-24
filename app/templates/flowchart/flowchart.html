@@ -424,6 +424,9 @@ a.block-edit {
   white-space: nowrap;
   padding-left: 10rem;
 }
+.view__start.route-block {
+  padding-left: 0;
+}
 .route-block:before {
   content: '';
   position: absolute;
@@ -435,6 +438,10 @@ a.block-edit {
   border-right: none;
   border-bottom: none;
 }
+.view__start.route-block:before {
+  display: none;
+}
+
 .route-depends {
   padding-left: 40rem;
 }
@@ -504,6 +511,9 @@ a.block-edit {
   border-bottom: 1rem solid transparent;
   border-left: 1rem solid #000000;
 }
+.view__start > .route::before {
+  display: none;
+}
 
 .route-depends:not(.route-has-steps) > .route > .Xbox > .route-box::after {
   content: '';
@@ -539,14 +549,26 @@ a.block-edit {
   padding: 1rem 1rem 1rem 4rem;
   position: relative;
 }
-.steps-toggle {
+.steps-configure {
   position: absolute;
   right: 0;
-  top: -2rem;
+  top: -3rem;
   z-index: 100;
   cursor: pointer;
   text-decoration: underline;
   color: #005ea5;
+  background: #ffffff;
+}
+.steps-configure h4 {
+  text-align: right;
+  background: transparent;
+}
+.steps-configure ul {
+  display: none;
+  padding: 1rem;
+}
+.steps-configure:hover ul {
+  display: block;
 }
 
 .show-steps .route-box {
@@ -554,6 +576,10 @@ a.block-edit {
 }
 .show-steps > .steps > .route-block > .route {
   Xbackground: #eeeeee;
+}
+
+.route-header h2.heading-large {
+  margin-top: 0;
 }
 
 body {
@@ -565,6 +591,7 @@ body {
   top: 2rem;
   z-index: 99999999999;
 }
+
 </style>
 {% endblock %}
 
@@ -650,9 +677,16 @@ Wizard flow - Prototype
 {% endif %}
 </div>
 <div class="route">
+<div class="steps-configure">
+<h4>Steps</h4>
+<ul>
+<li class="step-add">Add step</li>
 {% if hasSteps %}
-<span class="steps-toggle">Collapse steps</span>
+<li class="steps-hide">Hide steps</li>
+<li class="steps-toggle">Collapse steps</li>
 {% endif %}
+</ul>
+</div>
 {% set firstStep = false %}
 {% set lastStep = false %}
 {% set flattened = routesFlattened[stepId] %}
@@ -692,7 +726,7 @@ hierarchy:<br>{{ stepRoute.hierarchy.join('<br>') | safe }}
 {# update per-route id and vars #}
 {% set updateRouteFormatSink = updateRouteFormat(step) %}
 
-{{ Block.PageHeader(stepId, start_page=stepRoute.start_page) }}
+<div class="route-header">{{ Block.PageHeader(stepId, start_page=stepRoute.start_page) }}</div>
 {{ Block.Body(stepId) }}
 {# {% if stepRoute.body %}{{ Block.Group(stepId) }}{% endif %} #}
 {{ Block.Group(blocks=stepRoute.blocks) }}
@@ -772,6 +806,12 @@ hierarchy:<br>{{ stepRoute.hierarchy.join('<br>') | safe }}
 function getToggleSteps(el) {
   return jQuery(el).closest('.route-block').children('.steps-block')
 }
+jQuery('.steps-configure').hover(function() {
+  getToggleSteps(this).addClass('show-steps')
+},function() {
+  getToggleSteps(this).removeClass('show-steps')
+})
+
 jQuery('.steps-toggle').on('click', function() {
   var $toggle = jQuery(this)
   var $steps = getToggleSteps($toggle)
@@ -785,10 +825,15 @@ jQuery('.steps-toggle').on('click', function() {
   }
   var toggleText = collapsed ? 'Expand steps' : 'Collapse steps'
   $toggle.html(toggleText)
-}).hover(function() {
-  getToggleSteps(this).addClass('show-steps')
-},function() {
-  getToggleSteps(this).removeClass('show-steps')
+})
+
+jQuery('.steps-hide').on('click', function() {
+  var $toggle = jQuery(this)
+  var $steps = getToggleSteps($toggle)
+  $steps.toggleClass('hidden')
+  var hidden = $steps.hasClass('hidden')
+  var toggleText = hidden ? 'Show steps' : 'Hide steps'
+  $toggle.html(toggleText)
 })
 
 jQuery('[name="scale"]').on('change', function() {

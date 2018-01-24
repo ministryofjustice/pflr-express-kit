@@ -54,10 +54,10 @@ Create new {{ block }} block
 <small class="blockProp__value">
 {% if prop == 'depends' %}
 {{ blockProp | json | replace('[{"', '')  | replace('}]', '') | replace('":', ':') }}
-{% else %}{% if blockProp.trim %}{% set formatted = getFormattedBodyContent(block, prop) %}{% if formatted != blockProp %}{{ formatted }}{% endif %}{% endif %}
+{% else %}{% if false and blockProp.trim %}{% set formatted = getFormattedBodyContent(block, prop) %}{% if formatted != blockProp %}{{ formatted  | truncate(120) }}{% endif %}{% endif %}
 {% if propBlockRef %}<a href="/admin/block/{{ blockProp }}">{% endif %}
 {% if blockProp %}{{ blockProp | json | replace(r/^"(.*)"$/, '$1') | truncate(120) }}{% else %}<em>Not set</em>
-{% set inheritedValue = getBlockProp(block, prop) %}{% if inheritedValue %}<br>Inherited value:<br>{{ inheritedValue | safe }}{% endif %}{% endif %}
+{% set inheritedValue = getBlockProp(block, prop) %}{% if inheritedValue %}<br>Inherited value:<br>{{ inheritedValue | truncate(120) | safe }}{% endif %}{% endif %}
 {% if propBlockRef %}</a>{% endif %}
 {% endif %}
 </small>
