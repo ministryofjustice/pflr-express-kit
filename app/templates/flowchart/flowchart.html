@@ -1,5 +1,10 @@
 {% extends "templates/form/form.html" %}
 
+{%block MYNOTES %}
+body classes
+main + data-block-name .... hmmm
+{%endblock%}
+
 {% block stylesheet %}
 {{ super() }}
 <style>
@@ -70,7 +75,7 @@ div#content {
 .innerbox-multiple {
   box-shadow: 1px 1px 0px 0px #fff, 2px 2px 0px 0px #000, 3px 3px 0px 0px #fff, 4px 4px 0px 0px #000, 5px 5px 0px 0px #fff, 6px 6px 0px 0px #000, 7px 7px 0px 0px #fff, 8px 8px 0px 0px #000;
 }
-.gutter {
+{# .gutter {
   display: table-cell;
   width: 100px;
   position: relative;
@@ -100,7 +105,7 @@ div#content {
   position: absolute;
   width: 50%;
   height: 100px;
-}
+} #}
 
 .matchProp__list,
 .gutter ul {
@@ -131,7 +136,7 @@ div#content {
 }
 
 
-.gutter ul:before {
+{# .gutter ul:before {
   color: #000000;
   content: '▶';
   position: absolute;
@@ -176,7 +181,7 @@ div#content {
 .depends-skip:before {
   border-right: solid 5px #ff0000;
   padding-right: 50%;
-}
+} #}
 .box .form-group + .form-group + .form-group {
   display: none;
 }
@@ -236,6 +241,7 @@ p.depend__key {
   top: -45px;
   width: 100%;
   left: 0;
+  color: #000000;
 }
 .routeKey small {
   display: block;
@@ -379,6 +385,7 @@ span.depends__no {
 .route-notes {
   margin-top: 5rem;
   color: #f00;
+  white-space: normal;
 }
 
 a.block-edit {
@@ -394,11 +401,10 @@ a.block-edit {
 /* ----- */
 .flow-container {
   transform-origin: top left;
-  transform: scale(0.5);
+  transform: scale(0.75);
 }
 .flow-container {
   white-space: nowrap;
-  padding-top: 5rem;
   vertical-align: top;
 }
 .flow-container * {
@@ -406,11 +412,7 @@ a.block-edit {
 }
 .steps {
   display: inline-block;
-  Xborder: solid 0.1rem black;
-  Xpadding: 0.25em;
   white-space: nowrap;
-  Xmargin-right: 1rem;
-  Xmargin-top: -0.5rem;
 }
 .collapsed {
   transform-origin: top left;
@@ -420,13 +422,64 @@ a.block-edit {
   display: inline-block;
   position: relative;
   white-space: nowrap;
+  padding-left: 10rem;
 }
+.route-block:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 5rem;
+  width: 10rem;
+  border: solid 0.25rem #000000;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+}
+.route-depends {
+  padding-left: 40rem;
+}
+.route-depends:before {
+  width: 40rem;
+}
+.route-depends::after {
+  content: '';
+  position: absolute;
+  top: -15rem;
+  left: 20rem;
+  right: -5rem;
+  height: 17rem;
+  border: solid 0.25rem #000000;
+  border-radius: 4rem 4rem 0 0;
+  border-bottom: none;
+}
+
+.route-depends .route-depends::after {
+  top: -13rem;
+  height: 15rem;
+}
+
+.route-depends .route-depends .route-depends::after {
+  top: -11rem;
+  height: 13rem;
+}
+
+.route-depends .route-depends .route-depends .route-depends::after {
+  top: -9rem;
+  height: 11rem;
+}
+
+.route-depends .route-depends .route-depends .route-depends .route-depends::after {
+  top: -7rem;
+  height: 9rem;
+}
+
+
 .gutter {
-  display: inline-block;
+  position: absolute;
+  left: 0;
+  width: 40rem;
 }
-.route-block:hover {
-  Xbackground: #eeeeee;
-}
+
 .steps-block {
   display: inline-block;
 }
@@ -434,9 +487,47 @@ a.block-edit {
   display: inline-block;
   xbackground: black;
   xcolor: white;
-  xmargin-right: 5rem;
   width: 40rem;
   position: relative;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+
+.route::before {
+  content: '';
+  position: absolute;
+  left: -1rem;
+  top: 4.125rem;
+  width: 0; 
+  height: 0; 
+  border-top: 1rem solid transparent;
+  border-bottom: 1rem solid transparent;
+  border-left: 1rem solid #000000;
+}
+
+.route-depends:not(.route-has-steps) > .route > .Xbox > .route-box::after {
+  content: '';
+  position: absolute;
+  border-radius: 0 0 0 3rem;
+  border: solid 0.25rem #000000;
+  border-top: none;
+  border-right: none;
+  height: 5rem;
+  right: -10rem;
+  top: 0;
+  width: 5rem;
+}
+
+.depend-list::before {
+  content: '';
+  position: absolute;
+  left: -1rem;
+  top: 2.875rem;
+  width: 0; 
+  height: 0; 
+  border-top: 1rem solid transparent;
+  border-bottom: 1rem solid transparent;
+  border-left: 1rem solid #000000;
 }
 
 .route:last-child {
@@ -454,8 +545,8 @@ a.block-edit {
   top: -2rem;
   z-index: 100;
   cursor: pointer;
-  color: blue;
   text-decoration: underline;
+  color: #005ea5;
 }
 
 .show-steps .route-box {
@@ -466,12 +557,13 @@ a.block-edit {
 }
 
 body {
-  padding: 4rem 2rem;
+  padding: 25rem 5rem 5rem;
 }
 .scale {
   position: fixed;
   left: 2rem;
   top: 2rem;
+  z-index: 99999999999;
 }
 </style>
 {% endblock %}
@@ -482,7 +574,7 @@ Wizard flow - Prototype
 
 {% block content %}
 <div class="scale">
-<input name="scale" type="range" min="0" max="1" value="0.5" step="0.01">
+<input name="scale" type="range" min="0" max="1" value="0.75" step="0.01">
 </div>
 <div class="flow-container">
 {{ renderRoute(route.wizard) }}
@@ -510,7 +602,6 @@ Wizard flow - Prototype
 {% set skipMultiple = true %}
 {% endif %}
 {% if not skipMultiple %}
-<div class="route-block" data-name-route="{{route}}">
 {% if not skipMultiple %}
 {% set dependsStore = [] %}
 {% if not loop.blast and not stepRoute.bblocks %}
@@ -541,6 +632,13 @@ Wizard flow - Prototype
 {% set depends = dependsStore[0] %}
 {% endif %}
 {% set redirectConditions = stepRoute.redirectConditions %}
+{% set hasSteps = getBlockProp(route, 'steps') %}
+{% if hasSteps and hasSteps.length %}
+{% set hasSteps = true %}
+{% else %}
+{% set hasSteps = false %}
+{% endif %}
+<div class="route-block{% if depends %} route-depends{% endif %}{% if hasSteps %} route-has-steps{% endif %}{% if stepRoute._isa %} {{ stepRoute._isa | replace('view:', 'view__') }}{% endif %}" data-name-route="{{route}}">
 <div class="gutter{% if nextDepends %}{% if depends == nextDepends %} gutter-nextdepends{% endif %}{% endif %}{% if depends %}{% if not nextDepends %} gutter-nonextdepends{% endif %}{% if depends == previousDepends %} gutter-previousdepends{% endif %} gutter-depends{% endif %}" id="gutter-{{ stepRoute._id }}">
 <span class="button gutter--hide" data-action="hide">Hide</span>
 {% if depends %}
@@ -552,8 +650,7 @@ Wizard flow - Prototype
 {% endif %}
 </div>
 <div class="route">
-{% set stepsToggle = getBlockProp(route, 'steps') %}
-{% if stepsToggle and stepsToggle.length %}
+{% if hasSteps %}
 <span class="steps-toggle">Collapse steps</span>
 {% endif %}
 {% set firstStep = false %}
@@ -569,7 +666,7 @@ Wizard flow - Prototype
 {% endif %}
 <div class="Xbox{% if depends %} Xdepends{% endif %}" id="{{ stepRoute._id }}">
 <span class="button box--hide" data-action="hide">Hide</span>
-<div class="route-box{% if multiple %} Xinnerbox-multiple{% endif %}" data-block-name="{{stepId}}">
+<div class="route-box{% if multiple %} innerbox-multiple{% endif %}" data-block-name="{{stepId}}">
 {% set stepUrl = getRouteUrl(route) %}
 {% set stepUrlStub = stepUrl %}
 {% if multiple %}

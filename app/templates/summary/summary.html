@@ -11,7 +11,7 @@
   padding-top: 3rem;
 }
 .previous-question-body {
-  white-space: nowrap;
+  Xwhite-space: nowrap;
   width: 40%;
 }
 
@@ -119,7 +119,7 @@ table + form p {
   {# <br><small style="font-size:0.75rem;">{{prefixedEl}}</small> #}
   </td>
     <td class="previous-question-body">
-    {{ value | safe }}</td>
+    {{ value | replace('\r\n\r\n', '<br><br>') | replace('\n\n', '<br><br>') | safe }}</td>
 
   <td class="change-answer">
     <a href="{{ getRouteUrl(step, null, {edit:true}) }}#{{ prefixedEl }}">

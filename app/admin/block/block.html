@@ -38,21 +38,26 @@ Create new {{ block }} block
 {% set rawBlock = getBlockRaw(block) %}
 {% set blockProp = rawBlock[prop] %}
 {% set blockPropType = typeof(blockProp ) %}
+{% set propTitle = prop %}
 {% if schemaProperties[prop] %}
 {% set blockPropType = schemaProperties[prop].type %}
+{% set propTitle = schemaProperties[prop].title %}
 {% endif %}
 {% set propBlockRef = '' %}
 {% if blockPropType == 'string' %}
 {% set propBlockRef = getBlockProp(blockProp, '_id') %}
 {% endif %}
-<li class="blockProp">{% if prop != 'xdepends' %}<a href="/admin/block/{{ block }}/{{ prop }}">{% endif %}{{ prop }}{% if not requiredProps[prop] %} <small class="optional">(optional)</small>{% endif %}{% if prop != 'xdepends' %}</a>{% endif %}
-
+<li class="blockProp">{% if prop != 'xdepends' %}<a href="/admin/block/{{ block }}/{{ prop }}">{% endif %}{{ propTitle }}{% if not requiredProps[prop] %} <small class="optional">(optional)</small>{% endif %}{% if prop != 'xdepends' %}</a>{% endif %}
+{% if blockPropType == 'string' %}
+{# {{ Block.Text(prop, value=blockProp)}} #}
+{% endif %}
 <small class="blockProp__value">
 {% if prop == 'depends' %}
 {{ blockProp | json | replace('[{"', '')  | replace('}]', '') | replace('":', ':') }}
-{% else %}
+{% else %}{% if blockProp.trim %}{% set formatted = getFormattedBodyContent(block, prop) %}{% if formatted != blockProp %}{{ formatted }}{% endif %}{% endif %}
 {% if propBlockRef %}<a href="/admin/block/{{ blockProp }}">{% endif %}
-{% if blockProp %}{{ blockProp | json | replace(r/^"(.*)"$/, '$1') | truncate(120) }}{% else %}<em>Not set</em>{% endif %}
+{% if blockProp %}{{ blockProp | json | replace(r/^"(.*)"$/, '$1') | truncate(120) }}{% else %}<em>Not set</em>
+{% set inheritedValue = getBlockProp(block, prop) %}{% if inheritedValue %}<br>Inherited value:<br>{{ inheritedValue | safe }}{% endif %}{% endif %}
 {% if propBlockRef %}</a>{% endif %}
 {% endif %}
 </small>
