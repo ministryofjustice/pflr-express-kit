@@ -5,7 +5,24 @@
   <li class="TopNavigation__link"><a href="/flowchart">Flowchart</a></li>
   <li class="TopNavigation__link"><a href="/admin/pages">Pages</a></li>
   <li class="TopNavigation__link"><a href="/admin/blocks">Blocks</a></li>
-  <li class="TopNavigation__link"><a href="{{ route_url }}">Preview</a></li>
+  <li class="TopNavigation__link">|</li>
+  
+  {% if block %}
+    {% set routeUrl = getRouteUrl(block) %}
+    {% if routeUrl %}
+      <li class="TopNavigation__link"><a href="{{ routeUrl }}/">Preview page</a></li>
+    {% endif %}
+  {% endif %}
+  {% if preview %}
+    
+    <li class="TopNavigation__link"><a href="/admin/block/{{ route.id }}">Edit page</a></li>
+    {% if not edit %}
+      <li class="TopNavigation__link"><a href="{{ route.url }}/edit">Show edit links</a></li>
+      {% else %}
+      <li class="TopNavigation__link"><a href="{{ route.url }}">Hide edit links</a></li>
+    {% endif %}
+
+  {% endif %}
 </ul>
 </div>
 </div>
