@@ -8,7 +8,8 @@
 {% if not _blockType %}
 {% set _blockType = getBlockProp(block, '_blockType') %}
 {% endif %}
-<p><a class="link-back" href="/admin/blocks/{{ _blockType }}">Back to {{ _blockType }} blocks</a></p>
+{# <p><a class="link-back" href="/admin/blocks/{{ _blockType }}">Back to {{ _blockType }} blocks</a></p> #}
+<p><a class="link-back" href="/admin/block/{{ block }}">Back to <strong>{{ block }}</strong></a></p>
 
 <h1 class="{{ govukClassname('heading-large') }}"><a class="header-link-back" href="/admin/block/{{ block }}">{{ block }}</a>{% if prop %}.{{ prop }}{% endif %}</h1>
 
