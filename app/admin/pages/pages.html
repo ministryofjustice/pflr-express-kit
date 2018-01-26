@@ -1,0 +1,34 @@
+{% extends 'admin/admin-base/admin-base.html' %}
+
+{% block page_title %}
+Pages - Prototype
+{% endblock %}
+
+{% block admin_content %}
+<h1 class="{{ govukClassname('heading-large') }}">Pages</h1>
+
+{% macro steps(page) %}
+<a class="page-heading" href="/admin/block/{{ page.route }}" id="{{page.route}}"><strong>{{page.route}}</strong> </a>
+<p>{{ page.heading }}
+<span class="page-url">Preview: <a class="" href="{{ page.url }}">{{ page.url }}</a></span></p>
+
+{% if page.steps %}
+  <ul class="list list-bullet">
+  {% for step in page.steps %}
+    <li>
+      {{ steps(step) }}
+    </li>
+  {% endfor %}
+  </ul>
+{% endif %}
+{% endmacro %}
+
+<ul class="pages list list-bullet">
+{% for page in allPages %}
+  <li>
+    {{ steps(page) }}
+  </li>
+{% endfor %}
+</ul>
+
+{% endblock %}

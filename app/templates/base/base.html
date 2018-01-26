@@ -2,6 +2,7 @@
 
 {% import "components/Utils/Utils.njk" as Utils with context %}
 
+{% from 'components/TopNavigation/TopNavigation.njk' import TopNavigation with context %}
 
 {{ Utils.registerBlocks([
   "components/BlockHeading/BlockHeading.njk",
@@ -43,6 +44,7 @@
 <script>if(window.addEventListener){addEventListener('error', window.__e=function f(e){f.q=f.q||[];f.q.push(e)})}</script>
 {{ super() }}
 <link href="/public/stylesheets/core-layout-print.css" media="print" rel="stylesheet">
+<link href="/public/stylesheets/custom-styles.css" rel="stylesheet">
 {% endblock %}
 
 {#{% block top_of_page %}$$top_of_page{% endblock %}#}
@@ -51,7 +53,7 @@
 {#{% block stylesheet %}$$stylesheet{% endblock %}#}
 {#{% block head %}<script>console.log('$$head')</script>{% endblock %}#}
 {#{% block body_classes %}$$body_classes{% endblock %}#}
-{#{% block body_start %}$$body_start{% endblock %}#}
+{% block body_start %}{{ TopNavigation(route.url) }}{% endblock %}
 {#{% block skip_link_message %}$$skip_link_message{% endblock %}#}
 {#{% block cookie_message %}$$cookie_message{% endblock %}#}
 {% block header_class %}with-proposition{% endblock %}
