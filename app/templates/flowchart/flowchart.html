@@ -868,12 +868,13 @@ jQuery(document).ready(function() {
   if (window.location.hash) {
     setTimeout(function() {
       var fragment = window.location.hash
-      var fragmentPosition = $(fragment).offset()
+      fragment = fragment.replace('#','')
+      var fragmentPosition = $('[data-block-name="' + fragment + '"]').offset()
       var fragmentPositionLeft = fragmentPosition.left
 
-      $body.scrollLeft(fragmentPositionLeft - 50)
+      $(window).scrollLeft(fragmentPositionLeft - 50)
       $(window).scrollTop(0)
-    }, 1000)
+    }, 2000)
     
   }
 
