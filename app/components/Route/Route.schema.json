@@ -59,7 +59,7 @@
       "type": "string"
     },
     "_isa": {
-      "title": "Isa",
+      "title": "Based on",
       "type": "string"
     },
     "*notes": {
@@ -73,5 +73,9 @@
     "_blockType",
     "url",
     "heading"
+  ],
+  "init": [
+    "url",
+    "block"
   ]
 }

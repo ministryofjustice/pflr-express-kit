@@ -15,7 +15,7 @@
     "value": {
       "title": "Value",
       "type": "string",
-      "multiline": false
+      "multiline": true
     }
   },
   "required": [

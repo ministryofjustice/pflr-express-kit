@@ -1,4 +1,4 @@
 {% from '../Input/Input.njk' import Input with context %}
 {% macro Hidden(name, value='', error='', type='hidden') -%}
-  {{ Input(name) }}
+  {{ Input(name, type='hidden', value=value) }}
 {%- endmacro %}
