@@ -28,6 +28,11 @@ Create new {{ _blockType }}
 {% endif %}
 </h1>
 
+{% if nextRoute or previousRoute %}
+{% if previousRoute %}<p>Previous page: <a href="/admin/block/{{ previousRoute }}">{{ previousRoute }} <small>{{ getBlockProp(previousRoute, 'heading') }}</small></a></p>{% endif %}
+{% if nextRoute %}<p>Next page: <a href="/admin/block/{{ nextRoute }}">{{ nextRoute }} <small>{{ getBlockProp(nextRoute, 'heading') }}</small></a></p>{% endif %}
+{% endif %}
+
 {% set blockRefs = getBlockRef(block) %}
 {% if blockRefs[0] %}
 <h3>Used by</h3>
