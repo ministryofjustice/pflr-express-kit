@@ -1,5 +1,5 @@
 {
-  "title": "Text",
+  "title": "RadioGroup",
   "type": "object",
   "properties": {
     "_id": {
@@ -9,8 +9,8 @@
     "_blockType": {
       "title": "Type",
       "type": "string",
-      "default": "Text",
-      "enum": ["Text"]
+      "default": "RadioGroup",
+      "enum": ["RadioGroup"]
     },
     "label": {
       "title": "Label",
@@ -21,22 +21,16 @@
       "type": "string",
       "multiline": true
     },
-    "multiline": {
-      "title": "Multiline",
-      "type": "boolean"
+    "options": {
+      "title": "Options",
+      "type": "array"
     },
-    "minLength": {
-      "title": "Minimum length",
-      "type": "number",
-      "minimum": 0
-    },
-    "maxLength": {
-      "title": "Maximum length",
-      "type": "number"
-    },
-    "required": {
-      "title": "Required",
-      "type": "boolean"
+    "depends": {
+      "title": "Depends",
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
     },
     "_isa": {
       "title": "Based on",
@@ -45,7 +39,11 @@
   },
   "required": [
     "_id",
-    "_blockType",
-    "label"
+    "_blockType"
+  ],
+  "init": [
+    "label",
+    "hint",
+    "options"
   ]
 }

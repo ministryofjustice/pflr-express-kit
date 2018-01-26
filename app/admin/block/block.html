@@ -15,31 +15,70 @@
 
 <h1 class="{{ govukClassname('heading-large') }}">
 {% if new %}
-Create new {{ block }} block
+Create new {{ _blockType }}
 {% else %}
 {{ block }}
 {% if _blockType == 'Route' %}
 {# {% set routeUrl = getBlockProp(block, 'url') %} #}
 {% set routeUrl = getRouteUrl(block) %}
 {% if routeUrl %}
-<small>route url <a href="{{ routeUrl }}">{{ routeUrl }}</a> <a href="{{ routeUrl }}/edit">(edit)</a></small>
+<small>route url <a href="{{ routeUrl }}">{{ routeUrl }}</a> <a href="{% if routeUrl != '/' %}{{ routeUrl }}{% endif %}/edit">(edit)</a></small>
 {% endif %}
 {% endif %}
 {% endif %}
 </h1>
 
+{% set blockRefs = getBlockRef(block) %}
+{% if blockRefs[0] %}
+<h3>Used by</h3>
+<ul>
+{% for ref in blockRefs %}
+<li><a href="/admin/block/{{ ref.block }}">{{ ref.block }} ({{ getBlockProp(ref.block, ['heading', 'label']) }})</a> in <a href="/admin/block/{{ ref.block }}/{{ ref.prop }}">{{ ref.prop }}</a></li>
+{% endfor %}
+</ul>
+{% endif %}
+
 {% if new %}
 <form method="post">
- {{ Block.Text('_id', label='Id for new block') }}
- <div class="hidden">{{ Block.Text('block', value=blockJSON, multiline=true, rows=1) }}</div>
+ {{ Block.Text('_id', label='Id for new '+_blockType) }}
+ {% if isaOptions %}
+{{ Block.RadioGroup('_isa', label='Using', options=isaOptions )}}
+ {% endif %}
+ <div class="hidden">
+{{ Block.Hidden('init', value=true) }}
+ {{ Block.Hidden('singleblock', value=req.query.singleblock) }}
+{{ Block.Hidden('steps', value=req.query.steps) }}
+{{ Block.Text('block', value=blockJSON, multiline=true, rows=1) }}
+ </div>
  <div class="admin-actions">
- <button name="action" value="update" class="{{ govukClassname('button') }}">Create new {{ block }} block</button>
+ <button name="action" value="update" class="{{ govukClassname('button') }}">Create new {{ _blockType }}</button>
  </div>
 </form>
 {% else %}
-{% if stringProps.length %}
+{% set propsLabel = {other: 'Other properties', additional: 'Additional properties', advanced: 'Advanced properties', meta: 'Meta properties'} %}
+{% if init %}
+{% set propRefs = { init: initProps, other: otherProps, advanced: advancedProps} %}
+{% else %}
+{% set propRefs = { schema: schemaProps, advanced: advancedProps, additional: additionalProps, meta: metaProps} %}
+{% endif %}
+{% for propRef, propRefValue in propRefs %}
+{% if propRefValue %}
+{% set outputProps = propRefValue %}
+{% set summaryRequired = true %}
+{% if propRef == 'init' or propRef == 'schema' %}
+{% set summaryRequired = false %}
+{% endif %}
+
+{% if outputProps.length %}
+
+{% if summaryRequired %}
+<details>
+    <summary><span class="summary">{{ propsLabel[propRef] }}</span></summary>
+    <div class="{{ govukClassname('summary-details') }}">
+{% endif %}
+
 <ul class="blockProperties {{ govukClassname('list-bullet') }}">
-{% for prop in stringProps %}
+{% for prop in outputProps %}
 {% set rawBlock = getBlockRaw(block) %}
 {% set blockProp = rawBlock[prop] %}
 {% set blockPropType = typeof(blockProp ) %}
@@ -66,10 +105,20 @@ Create new {{ block }} block
 {% if propBlockRef %}</a>{% endif %}
 {% endif %}
 </small>
+{% if prop == 'block' %}<a href="/admin/select/block/{{ block }}?singleblock={{block}}" target="new-block">Add new block</a>{% endif %}
 </li>
 {% endfor %}
 </ul>
+
+{% if summaryRequired %}
+</div>
+</details>
 {% endif %}
+
+{% endif %}
+
+{% endif %}
+{% endfor %}
 
 <form method="post">
 <details>

@@ -1,0 +1,18 @@
+{% extends 'admin/admin-base/admin-base.html' %}
+
+{% block page_title %}
+Choose block type - Prototype
+{% endblock %}
+
+{% block admin_content %}
+<h1 class="{{ govukClassname('heading-large') }}">Choose block type</h1>
+
+<ul class="{{ govukClassname('list-bullet') }}">
+{% for _blockType in blockTypes %}
+{% if _blockType %}
+<li><a href="/admin/blocks/{{ _blockType }}/new{{ searchQuery }}">{{ _blockType }}</a></li>
+{% endif %}
+{% endfor %}
+</ul>
+
+{% endblock %}

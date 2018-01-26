@@ -18,7 +18,6 @@
 <p><a href="/admin/block/{{ block }}">Create {{ block }}</a></p>
 {% else %}
 <form method="post">
-
 <div class="propType {{ propType }}Prop">
 {% if propType == 'string' %}
 {{ Block.Text('value', value=value, multiline=multiline, rows=1) }}

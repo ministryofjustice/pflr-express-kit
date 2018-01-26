@@ -674,7 +674,7 @@ Wizard flow - Prototype
 <div class="steps-configure">
 <h4>Steps</h4>
 <ul>
-<li class="step-add">Add step</li>
+<li class="step-add"><a href="/admin/blocks/Route/new?steps={{stepId}}" target="add-step">Add step</a></li>
 {% if hasSteps %}
 <li class="steps-hide">Hide steps</li>
 <li class="steps-toggle">Collapse steps</li>
@@ -702,7 +702,7 @@ Wizard flow - Prototype
 {% set stepUrlStub = stepUrlStub + '/{n}' %}
 {% endif %}
 {# {{ stepId }}, {{ skipMultiple }}, {{multipleIndex}} #}
-<p class="routeKey">{{stepId}} <small><a href="{{ stepUrl }}">{{ stepUrlStub }}</a> <a href="{{ stepUrl }}/edit">(edit)</a>
+<p class="routeKey">{{stepId}} <small><a href="{{ stepUrl }}">{{ stepUrlStub }}</a> <a href="{% if stepUrl != '/' %}{{ stepUrl }}{% endif %}/edit">(edit)</a>
 {% if multiple %}
 <span class="mutiple-route">Multiple route: min={{ stepRoute.multiple_min }}; max={{ stepRoute.multiple_max }}</span>
 {% endif %}
