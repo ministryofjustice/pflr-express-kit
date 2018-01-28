@@ -63,6 +63,10 @@ textarea.form-control[name=value],
   margin-left: 2rem;
   float: right;
 }
+.button--delete[disabled="disabled"],
+.button--delete[disabled="disabled"]:hover {
+  background-color: #df3034;
+}
 .button--delete:hover {
   background-color: #b10e1e;
 }
@@ -77,7 +81,7 @@ textarea.form-control[name=value],
   white-space: pre-line;
 }
 </style>
-<p><a class="link-admin" href="/admin/quicklinks">Admin page</a></p>
+<p><a class="link-admin{% if flags['top-navigation'] %} top-navigation {% endif %}" href="/admin/quicklinks">Admin page</a></p>
 {% block admin_content %}{% endblock %}
 {% endblock %}
 

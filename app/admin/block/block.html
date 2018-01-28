@@ -8,9 +8,9 @@
 {% set _blockType = getBlockProp(block, '_blockType') %}
 {% if parentBlock or block == "route:index" %}
 <!-- <p><a class="link-back" href="/admin/block/{{ parentBlock }}">Back to {{ parentBlock }} blocks</a></p> -->
-<p><a class="link-back" href="/admin/pages/#{{ block }}">All pages</a></p>
+<p class="edit-link-back"><a class="link-back" href="/admin/pages/#{{ block }}">All pages</a></p>
 {% else %}
-<p><a class="link-back" href="/admin/blocks/{{ _blockType }}">Back to {{ _blockType }} blocks</a></p>
+<p class="edit-link-back"><a class="link-back" href="/admin/blocks/{{ _blockType }}">Back to {{ _blockType }} blocks</a></p>
 {% endif %}
 
 <h1 class="{{ govukClassname('heading-large') }}">
@@ -18,29 +18,49 @@
 Create new {{ _blockType }}
 {% else %}
 {{ block }}
+{% endif %}
+</h1>
+{% if not new %}
+<p class="blockType"><small>Block type <a href="/admin/blocks/{{ _blockType }}" title="All {{ _blockType }} blocks">{{ _blockType }}</a></small></p>
+{% set isa = getBlockProp(block, '_isa') %}
+{% if isa %}
+<p class="basedOn"><small>Based on <a href="/admin/block/{{ isa }}" title="{{ getBlockProp(previousRoute, ['heading', 'label']) }}">{{ isa }}</a></small></p>
+{% endif %}
 {% if _blockType == 'Route' %}
 {# {% set routeUrl = getBlockProp(block, 'url') %} #}
 {% set routeUrl = getRouteUrl(block) %}
 {% if routeUrl %}
-<small>route url <a href="{{ routeUrl }}">{{ routeUrl }}</a> <a href="{% if routeUrl != '/' %}{{ routeUrl }}{% endif %}/edit">(edit)</a></small>
+<p class="route__links"><small>Route URL <a href="{{ routeUrl }}">{{ routeUrl }}</a> &nbsp;&nbsp;<a href="{% if routeUrl != '/' %}{{ routeUrl }}{% endif %}/edit">(edit view)</a></small></p>
 {% endif %}
 {% endif %}
 {% endif %}
-</h1>
 
 {% if nextRoute or previousRoute %}
-{% if previousRoute %}<p>Previous page: <a href="/admin/block/{{ previousRoute }}">{{ previousRoute }} <small>{{ getBlockProp(previousRoute, 'heading') }}</small></a></p>{% endif %}
-{% if nextRoute %}<p>Next page: <a href="/admin/block/{{ nextRoute }}">{{ nextRoute }} <small>{{ getBlockProp(nextRoute, 'heading') }}</small></a></p>{% endif %}
+<div class="route__navigation">
+{% if previousRoute %}<p class="route__previous"><a href="/admin/block/{{ previousRoute }}" title="Previous route - {{ getBlockProp(previousRoute, 'heading') }}"><span class="route__direction">Previous page</span> {{ previousRoute }}</a></p>{% endif %}
+{% if nextRoute %}<p class="route__next"><a href="/admin/block/{{ nextRoute }}" title="Next route - {{ getBlockProp(previousRoute, 'heading') }}"><span class="route__direction">Next page</span> {{ nextRoute }}</a></p>{% endif %}
+</div>
 {% endif %}
 
 {% set blockRefs = getBlockRef(block) %}
+{% if blockRefs.length %}{% set blockUsed = true %}{% endif %}
 {% if blockRefs[0] %}
-<h3>Used by</h3>
+{% if blockRefs[1] %}
+<details class="usedBy">
+    <summary><span class="summary">Used by {{ blockRefs.length }} blocks</span></summary>
+    <div class="{{ govukClassname('summary-details') }}">
 <ul>
 {% for ref in blockRefs %}
-<li><a href="/admin/block/{{ ref.block }}">{{ ref.block }} ({{ getBlockProp(ref.block, ['heading', 'label']) }})</a> in <a href="/admin/block/{{ ref.block }}/{{ ref.prop }}">{{ ref.prop }}</a></li>
+<li><a href="/admin/block/{{ ref.block }}" title="{{ getBlockProp(ref.block, ['heading', 'label']) }}">{{ ref.block }}</a> in <a href="/admin/block/{{ ref.block }}/{{ ref.prop }}">{{ ref.prop }}</a></li>
 {% endfor %}
 </ul>
+</div>
+</details>
+{% else %}
+{% for ref in blockRefs %}
+<p class="usedBy">Used by <a href="/admin/block/{{ ref.block }}" title="{{ getBlockProp(ref.block, ['heading', 'label']) }}">{{ ref.block }}</a> in <a href="/admin/block/{{ ref.block }}/{{ ref.prop }}">{{ ref.prop }}</a></p>
+{% endfor %}
+{% endif %}
 {% endif %}
 
 {% if new %}
@@ -60,7 +80,8 @@ Create new {{ _blockType }}
  </div>
 </form>
 {% else %}
-{% set propsLabel = {other: 'Other properties', additional: 'Additional properties', advanced: 'Advanced properties', meta: 'Meta properties'} %}
+<div class="properties--section">
+{% set propsLabel = {other: 'Other properties', additional: 'Additional properties', advanced: 'Advanced properties', meta: 'Notes etc'} %}
 {% if init %}
 {% set propRefs = { init: initProps, other: otherProps, advanced: advancedProps} %}
 {% else %}
@@ -96,7 +117,7 @@ Create new {{ _blockType }}
 {% if blockPropType == 'string' %}
 {% set propBlockRef = getBlockProp(blockProp, '_id') %}
 {% endif %}
-<li class="blockProp">{% if prop != 'xdepends' %}<a href="/admin/block/{{ block }}/{{ prop }}">{% endif %}{{ propTitle }}{% if not requiredProps[prop] %} <small class="optional">(optional)</small>{% endif %}{% if prop != 'xdepends' %}</a>{% endif %}
+<li class="blockProp">{% if prop != 'xdepends' %}<a href="/admin/block/{{ block }}/{{ prop }}" class="edit-in-place">{% endif %}{{ propTitle }}{% if not requiredProps[prop] %} <small class="optional">(optional)</small>{% endif %}{% if prop != 'xdepends' %}</a>{% endif %}
 {% if blockPropType == 'string' %}
 {# {{ Block.Text(prop, value=blockProp)}} #}
 {% endif %}
@@ -104,13 +125,13 @@ Create new {{ _blockType }}
 {% if prop == 'depends' %}
 {{ blockProp | json | replace('[{"', '')  | replace('}]', '') | replace('":', ':') }}
 {% else %}{% if false and blockProp.trim %}{% set formatted = getFormattedBodyContent(block, prop) %}{% if formatted != blockProp %}{{ formatted  | truncate(120) }}{% endif %}{% endif %}
-{% if propBlockRef %}<a href="/admin/block/{{ blockProp }}">{% endif %}
-{% if blockProp %}{{ blockProp | json | replace(r/^"(.*)"$/, '$1') | truncate(120) }}{% else %}<em>Not set</em>
-{% set inheritedValue = getBlockProp(block, prop) %}{% if inheritedValue %}<br>Inherited value:<br>{{ inheritedValue | truncate(120) | safe }}{% endif %}{% endif %}
+{% if propBlockRef %}<a href="/admin/block/{{ blockProp }}" class="edit-in-place">{% endif %}
+{% if blockProp %}{{ blockProp | json | replace(r/^"(.*)"$/, '$1') | truncate(120) }}{% else %}<em>
+{% set inheritedValue = getBlockProp(block, prop) %}{% if inheritedValue %}{{ inheritedValue | truncate(120) | safe }}{% else %}Not set{% endif %}</em>{% endif %}
 {% if propBlockRef %}</a>{% endif %}
 {% endif %}
 </small>
-{% if prop == 'block' %}<a href="/admin/select/block/{{ block }}?singleblock={{block}}" target="new-block">Add new block</a>{% endif %}
+{% if prop == 'block' %}<a href="/admin/select/block/{{ block }}?singleblock={{block}}" target="new-block" class="edit-in-place">Add new block</a>{% endif %}
 </li>
 {% endfor %}
 </ul>
@@ -124,10 +145,11 @@ Create new {{ _blockType }}
 
 {% endif %}
 {% endfor %}
+</div>
 
 <form method="post">
 <details>
-  <summary><span class="summary">Edit raw block</span></summary>
+  <summary><span class="summary">Edit raw block data</span></summary>
   <div class="{{ govukClassname('summary-details') }}">
     {{ Block.Text('block', value=blockJSON, multiline=true, rows=1) }}
   </div>
@@ -159,13 +181,80 @@ Create new {{ _blockType }}
     <button name="action" value="clone" class="{{ govukClassname('button') }}">Clone block</button>
     </div>
   </details>
-  <button name="action" value="delete" class="{{ govukClassname('button') }} button--delete">Delete {{ block }}</button>
+  <button name="action" value="delete" class="{{ govukClassname('button') }} button--delete button--destructive"{% if blockUsed %} disabled="disabled"{% endif %}>Delete {{ block }}</button>
   </div>
 
 </form>
 
 {% endif %}
 
+{% endblock %}
+
+{% block stylesheet %}
+{{ super() }}
+<style>
+#content .blockType {
+  margin: -2rem 0 0 0;
+}
+#content .basedOn {
+  margin: 0;
+}
+#content .usedBy {
+  margin: 0;
+}
+#content .route__links {
+  margin: 0;
+}
+.route__navigation {
+  width: 100%;
+  display: table;
+}
+.route__navigation p {
+  float: left;
+  width: 50%;
+  position: relative;
+}
+.route__navigation a {
+  padding-left: 2rem;
+  position: relative;
+  z-index: 1;
+}
+p.route__next {
+  float: right;
+  text-align: right;
+}
+.route__next a {
+  padding: 0 2rem 0 0;
+}
+.route__navigation span {
+  position: absolute;
+  left: -9999px;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+.route__navigation p::before {
+  color: #2b8cc4;
+  font-size: 4rem;
+  position: absolute;
+  top: -1.875rem;
+}
+.route__previous::before {
+  left: 0;
+  content: '‹';
+}
+.route__next {
+  float: right;
+}
+.route__next::before {
+  right: 0;
+  content: '›';
+}
+
+.properties--section {
+  margin-top: 3rem;
+}
+</style>
 {% endblock %}
 
 {% block body_end %}

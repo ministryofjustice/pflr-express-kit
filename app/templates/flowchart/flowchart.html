@@ -587,16 +587,22 @@ a.block-edit {
   top: 0;
   left: 0;
   right: 0;
+  z-index: 100;
 }
 
 .scale {
   position: fixed;
   top: 1rem;
   right: 1rem;
+  z-index: 101;
 }
 
 #content {
   padding: 20rem 2rem 5rem;
+}
+
+h1 {
+  display: none;
 }
 
 </style>
@@ -607,9 +613,7 @@ Wizard flow - Prototype
 {% endblock %}
 
 {% block content %}
-<div class="scale">
-<input name="scale" type="range" min="0" max="1" value="0.75" step="0.01">
-</div>
+<h1>Flowchart</h1>
 <div class="flow-container">
 {{ renderRoute(route.wizard) }}
 </div>
@@ -679,7 +683,7 @@ Wizard flow - Prototype
 {% if depends != previousDepends %}
 <span class="depends__yes">Yes</span>
 <span class="depends__no">No</span>
-{{ matchProps(depends, type='depend') }}
+{{ matchProps(depends, type='depend', dataName=route+'/depends') }}
 {% endif %}
 {% endif %}
 </div>
@@ -687,7 +691,7 @@ Wizard flow - Prototype
 <div class="steps-configure">
 <h4>Steps</h4>
 <ul>
-<li class="step-add"><a href="/admin/blocks/Route/new?steps={{stepId}}" target="add-step">Add step</a></li>
+<li class="step-add"><a href="/admin/blocks/Route/new?steps={{stepId}}" target="add-step" class="edit-in-place">Add step</a></li>
 {% if hasSteps %}
 <li class="steps-hide">Hide steps</li>
 <li class="steps-toggle">Collapse steps</li>
@@ -715,7 +719,7 @@ Wizard flow - Prototype
 {% set stepUrlStub = stepUrlStub + '/{n}' %}
 {% endif %}
 {# {{ stepId }}, {{ skipMultiple }}, {{multipleIndex}} #}
-<p class="routeKey">{{stepId}} <small><a href="{{ stepUrl }}">{{ stepUrlStub }}</a> <a href="{% if stepUrl != '/' %}{{ stepUrl }}{% endif %}/edit">(edit)</a>
+<p class="routeKey">{{stepId}} <small><a href="{{ stepUrl }}">{{ stepUrlStub }}</a> &nbsp;&nbsp;<a href="{% if stepUrl != '/' %}{{ stepUrl }}{% endif %}/edit">(edit view)</a>
 {% if multiple %}
 <span class="mutiple-route">Multiple route: min={{ stepRoute.multiple_min }}; max={{ stepRoute.multiple_max }}</span>
 {% endif %}
@@ -837,15 +841,17 @@ jQuery('.steps-toggle').on('click', function() {
 jQuery('.steps-hide').on('click', function() {
   var $toggle = jQuery(this)
   var $steps = getToggleSteps($toggle)
-  $steps.toggleClass('hidden')
-  var hidden = $steps.hasClass('hidden')
+  $steps.toggleClass('js-hidden')
+  var hidden = $steps.hasClass('js-hidden')
   var toggleText = hidden ? 'Show steps' : 'Hide steps'
   $toggle.html(toggleText)
 })
 
-jQuery('[name="scale"]').on('change', function() {
+jQuery('[name="scale"]').on('input', function() {
   var scale = jQuery(this).val()
   jQuery('.flow-container').css('transform', 'scale(' + scale + ')')
+  var offset = ((1/scale) * 1 * -1) + 1.3
+  jQuery('#content').css('margin-top', offset + 'em')
 })
 
 jQuery(document).ready(function() {
@@ -882,7 +888,7 @@ jQuery(document).ready(function() {
 
       $(window).scrollLeft(fragmentPositionLeft - 50)
       $(window).scrollTop(0)
-    }, 2000)
+    }, 20)
     
   }
 
@@ -958,9 +964,9 @@ const splitFlowchart = (scale) => {
 </script>
 {% endblock %}
 
-{% macro matchProps(props, type='depend') %}
+{% macro matchProps(props, type='depend', dataName='') %}
 {% set human = req.query.human %}
-<ul class="matchProp__list {{ type }}-list xlist xlist-bullet">
+<ul class="matchProp__list {{ type }}-list xlist xlist-bullet"{% if dataName %} data-block-name="{{dataName}}"{% endif %}>
 {% for prop in props %}
 <li>
 {% for key, constraint in prop %}

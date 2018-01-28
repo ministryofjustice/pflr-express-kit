@@ -111,6 +111,110 @@
 }
 </style>
 {% endif %}
+<style>
+.frameElement {
+  background: #ffffff;
+}
+.frameElement .TopNavigation,
+.frameElement #global-header,
+.frameElement .link-admin,
+.frameElement footer {
+  display: none;
+}
+
+.frameElement .edit-link-back {
+  visibility: hidden;
+  display: none;
+}
+.frameElement h1 {
+  margin-top: 8rem;
+}
+
+.no-overflow {
+  overflow: hidden;
+}
+.no-overflow body > * {
+  // visibility: hidden;
+}
+.no-overflow .TopNavigation {
+  display: none;
+}
+
+#edit-frame {
+  // visibility: visible;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  background: white;
+}
+#edit-frame iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+#edit-frame-pad {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+#frame-close {
+  cursor: pointer;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+.frame-close-wrapper {
+  max-width: 960px;
+  margin: 0 auto;
+  border-top: solid 10px #005ea5;
+  left: -0.75rem;
+  position: relative;
+  background: #ffffff;
+}
+.frame-close-wrapper .link-back {
+  margin-bottom: 0;
+}
+</style>
+<script>
+(function() {
+  if (window.frameElement) {
+    jQuery('html').addClass('frameElement')
+  }
+  jQuery('.edit-in-place').on('click', function(e) {
+    e.stopPropagation()
+    e.preventDefault()
+    var $editLink = jQuery(this)
+    var editLink = $editLink.attr('href')
+    var backTitle = jQuery('h1').text().trim().replace(/\s+[\s\S]*/, '')
+    jQuery('body').append('<div id="edit-frame"><div id="frame-close"><div class="frame-close-wrapper"><p class="link-back">Back to ' + backTitle + '</p></div></div><div id="edit-frame-pad"><iframe src="' + editLink + '"></iframe></div></div>')
+    jQuery('html').addClass('no-overflow')
+    if (window !== window.parent) {
+      window.parent.jQuery('#frame-close').hide()
+    }
+
+    jQuery('#frame-close').on('click', function(){
+      if (window !== window.parent) {
+        window.parent.jQuery('#frame-close').show()
+      }
+      jQuery('#edit-frame').remove()
+      jQuery('html').removeClass('no-overflow')
+      //if (window !== window.parent) {
+        document.location.reload()
+      //}
+    })
+  })
+})()
+</script>
 {% endblock %}
 
 {% block scripts %}

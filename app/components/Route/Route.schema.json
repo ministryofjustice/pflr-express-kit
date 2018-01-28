@@ -22,8 +22,11 @@
     },
     "title": {
       "title": "Title",
-      "type": "string",
-      "multiline": true
+      "type": "string"
+    },
+    "lede": {
+      "title": "Lede",
+      "type": "string"
     },
     "body": {
       "title": "Body",
@@ -47,6 +50,10 @@
       "title": "Steps",
       "type": "array"
     },
+    "_isa": {
+      "title": "Based on",
+      "type": "string"
+    },
     "depends": {
       "title": "Depends",
       "type": "array",
@@ -58,8 +65,8 @@
       "title": "Template",
       "type": "string"
     },
-    "_isa": {
-      "title": "Based on",
+    "controller": {
+      "title": "Custom controller",
       "type": "string"
     },
     "*notes": {
