@@ -102,7 +102,7 @@ if (window !== window.parent) {
     var action = $form.attr('action') || document.location.href
     var serialized = $form.serialize()
     if (name) {
-      serialized += `&name=${name}&value=${value}`
+      serialized += `&${name}=${value}`
     }
     jQuery.ajax({
       type: "POST",
