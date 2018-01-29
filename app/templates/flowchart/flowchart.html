@@ -252,7 +252,8 @@ p.depend__key {
 }
 .mutiple-route {
   float: right;
-  margin-right: 40px;
+  margin-right: 1rem;
+  margin-top: 2.5rem;
 }
 
 .action {
@@ -427,7 +428,7 @@ a.block-edit {
 .view__start.route-block {
   padding-left: 0;
 }
-.route-block:before {
+.route-block::before {
   content: '';
   position: absolute;
   left: 0;
@@ -438,7 +439,11 @@ a.block-edit {
   border-right: none;
   border-bottom: none;
 }
-.view__start.route-block:before {
+.route-exit + .route-block::before {
+  left: 9rem;
+  width: 0.5rem;
+}
+.view__start.route-block::before {
   display: none;
 }
 
@@ -447,6 +452,10 @@ a.block-edit {
 }
 .route-depends:before {
   width: 40rem;
+}
+.route-exit + .route-depends::before {
+  left: 9rem;
+  width: 30.5rem;
 }
 .route-depends::after {
   content: '';
@@ -546,26 +555,45 @@ a.block-edit {
 .route-box {
   white-space: normal;
   border: solid 1px black;
-  padding: 1rem 1rem 1rem 4rem;
+  padding: 2.5rem 2rem 1rem 4rem;
   position: relative;
+}
+.step-exit {
+  position: absolute;
+  right: 0;
+  top: -2.925rem;
+  z-index: 100;
+  padding: 0.25rem 1rem;
+  background: #000000;
+  color: #ffffff;
 }
 .steps-configure {
   position: absolute;
   right: 0;
   top: -3rem;
+  margin-right: -1rem;
   z-index: 100;
   cursor: pointer;
   text-decoration: underline;
   color: #005ea5;
-  background: #ffffff;
+  text-align: right;
 }
 .steps-configure h4 {
-  text-align: right;
-  background: transparent;
+  display: inline-block;
+  background: #ffffff;
+  border: solid 1px #ffffff;
+  border-bottom: none;
+  padding: 0.25rem 1rem;
+}
+.steps-configure:hover h4 {
+  border-color: #000000;
 }
 .steps-configure ul {
   display: none;
   padding: 1rem;
+  background: #ffffff;
+  border: solid 1px #000000;
+  margin-top: -1px;
 }
 .steps-configure:hover ul {
   display: block;
@@ -676,7 +704,7 @@ Wizard flow - Prototype
 {% else %}
 {% set hasSteps = false %}
 {% endif %}
-<div class="route-block{% if depends %} route-depends{% endif %}{% if hasSteps %} route-has-steps{% endif %}{% if stepRoute._isa %} {{ stepRoute._isa | replace('view:', 'view__') }}{% endif %}" data-name-route="{{route}}">
+<div class="route-block{% if depends %} route-depends{% endif %}{% if hasSteps %} route-has-steps{% endif %}{% if stepRoute._isa %} {{ stepRoute._isa | replace('view:', 'view__') }}{% if not stepRoute._form %} route-exit{% endif %}{% endif %}" data-name-route="{{route}}">
 <div class="gutter{% if nextDepends %}{% if depends == nextDepends %} gutter-nextdepends{% endif %}{% endif %}{% if depends %}{% if not nextDepends %} gutter-nonextdepends{% endif %}{% if depends == previousDepends %} gutter-previousdepends{% endif %} gutter-depends{% endif %}" id="gutter-{{ stepRoute._id }}">
 <span class="button gutter--hide" data-action="hide">Hide</span>
 {% if depends %}
@@ -688,6 +716,7 @@ Wizard flow - Prototype
 {% endif %}
 </div>
 <div class="route">
+{% if stepRoute._form %}
 <div class="steps-configure">
 <h4>Steps</h4>
 <ul>
@@ -698,6 +727,9 @@ Wizard flow - Prototype
 {% endif %}
 </ul>
 </div>
+{% else %}
+<div class="step-exit">Exit</div>
+{% endif %}
 {% set firstStep = false %}
 {% set lastStep = false %}
 {% set flattened = routesFlattened[stepId] %}
@@ -719,7 +751,7 @@ Wizard flow - Prototype
 {% set stepUrlStub = stepUrlStub + '/{n}' %}
 {% endif %}
 {# {{ stepId }}, {{ skipMultiple }}, {{multipleIndex}} #}
-<p class="routeKey">{{stepId}} <small><a href="{{ stepUrl }}">{{ stepUrlStub }}</a> &nbsp;&nbsp;<a href="{% if stepUrl != '/' %}{{ stepUrl }}{% endif %}/edit">(edit view)</a>
+<p class="routeKey">{{stepId}} <small><a href="{{ stepUrl }}">{{ stepUrlStub }}</a> &nbsp;&nbsp;&nbsp;<a href="{% if stepUrl != '/' %}{{ stepUrl }}{% endif %}/edit">Edit view</a>
 {% if multiple %}
 <span class="mutiple-route">Multiple route: min={{ stepRoute.multiple_min }}; max={{ stepRoute.multiple_max }}</span>
 {% endif %}
