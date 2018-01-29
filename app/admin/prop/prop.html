@@ -52,6 +52,7 @@
 {{ Block.Text('value', value=valueItem, multiline=arrayObject) }}
 {% else %}
 {% if propSchema.items.blockReference %}
+<div class="js-hidden">{{ Block.Text('value', value=valueItem, multiline=arrayObject) }}</div>
 <span class="blockReferenceLink"><a href="/admin/block/{{ valueItem }}">{{valueItem }}</a></span>
 {% else %}
 {{ Block.Text('value', value=valueItem, multiline=arrayObject) }}
