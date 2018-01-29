@@ -1,5 +1,5 @@
 {
-  "title": "Text",
+  "title": "Date",
   "type": "object",
   "properties": {
     "_id": {
@@ -9,8 +9,8 @@
     "_blockType": {
       "title": "Type",
       "type": "string",
-      "default": "Text",
-      "enum": ["Text"]
+      "default": "Date",
+      "enum": ["Date"]
     },
     "label": {
       "title": "Label",
@@ -21,9 +21,15 @@
       "type": "string",
       "multiline": true
     },
-    "multiline": {
-      "title": "Multiline",
-      "type": "boolean"
+    "date_type": {
+      "title": "Date type",
+      "type": "string",
+      "enum": [
+        "day-month-year",
+        "month-year",
+        "day-month",
+        "year"
+      ]
     },
     "required": {
       "title": "Required",
@@ -51,41 +57,28 @@
       "title": "Required error message for header",
       "type": "string"
     },
-    "minLength": {
-      "title": "Minimum length",
-      "type": "number",
-      "minimum": 0
-    },
-    "error_minLength": {
-      "title": "Minimum length error message",
+    "date_before": {
+      "title": "Date before",
       "type": "string"
     },
-    "error-header_minLength": {
-      "title": "Minimum length error message for header",
+    "error_date_before": {
+      "title": "Date before error message",
       "type": "string"
     },
-    "maxLength": {
-      "title": "Maximum length",
-      "type": "number"
-    },
-    "error_maxLength": {
-      "title": "Maximum length error message",
+    "error-header_date_before": {
+      "title": "Date before error message for header",
       "type": "string"
     },
-    "error-header_maxLength": {
-      "title": "Maximum length error message for header",
+    "date_after": {
+      "title": "Date after",
       "type": "string"
     },
-    "pattern": {
-      "title": "Pattern to match string against",
+    "error_date_after": {
+      "title": "Date after error message",
       "type": "string"
     },
-    "error_pattern": {
-      "title": "Pattern error message",
-      "type": "string"
-    },
-    "error-header_pattern": {
-      "title": "Pattern error message for header",
+    "error-header_date_after": {
+      "title": "Date after error message for header",
       "type": "string"
     },
     "_isa": {
@@ -95,19 +88,16 @@
     }
   },
   "validationProperties": [
-    "minLength",
-    "maxLength",
-    "pattern"
+    "date_before",
+    "date_after"
   ],
   "errorProperties": [
     "error_required",
     "error-header_required",
-    "error_minLength",
-    "error-header_minLength",
-    "error_maxLength",
-    "error-header_maxLength",
-    "error_pattern",
-    "error-header_pattern"
+    "error_date_before",
+    "error-header_date_before",
+    "error_date_after",
+    "error-header_date_after"
   ],
   "required": [
     "_id",

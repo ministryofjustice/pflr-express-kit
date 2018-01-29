@@ -37,7 +37,8 @@
     },
     "_isa": {
       "title": "Based on",
-      "type": "string"
+      "type": "string",
+      "blockReference": true
     }
   },
   "required": [

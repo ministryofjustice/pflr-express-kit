@@ -1,5 +1,5 @@
 {
-  "title": "RadioGroup",
+  "title": "CheckboxGroup",
   "type": "object",
   "properties": {
     "_id": {
@@ -9,8 +9,8 @@
     "_blockType": {
       "title": "Type",
       "type": "string",
-      "default": "RadioGroup",
-      "enum": ["RadioGroup"]
+      "default": "CheckboxGroup",
+      "enum": ["CheckboxGroup"]
     },
     "label": {
       "title": "Label",

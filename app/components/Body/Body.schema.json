@@ -1,0 +1,41 @@
+{
+  "title": "Body",
+  "type": "object",
+  "properties": {
+    "_id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "_blockType": {
+      "title": "Type",
+      "type": "string",
+      "default": "Body",
+      "enum": ["Body"]
+    },
+    "body": {
+      "title": "Body text",
+      "type": "string",
+      "multiline": true
+    },
+    "depends": {
+      "title": "Show when",
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "_isa": {
+      "title": "Based on",
+      "type": "string",
+      "blockReference": true
+    }
+  },
+  "required": [
+    "_id",
+    "_blockType",
+    "body"
+  ],
+  "init": [
+    "body"
+  ]
+}
