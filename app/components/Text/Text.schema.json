@@ -29,6 +29,13 @@
       "title": "Required",
       "type": "boolean"
     },
+    "depends": {
+      "title": "Show when",
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
     "requiredWhen": {
       "title": "Required when",
       "type": "array",
@@ -105,5 +112,10 @@
     "_id",
     "_blockType",
     "label"
+  ],
+  "init": [
+    "label",
+    "hint",
+    "multiline"
   ]
 }

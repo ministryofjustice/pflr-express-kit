@@ -20,6 +20,21 @@
       "title": "Value",
       "type": "string"
     },
+    "subblock": {
+      "title": "Nested block",
+      "type": "string",
+      "blockReference": true,
+      "accepts": [
+        "Text",
+        "RadioGroup",
+        "CheckboxGroup",
+        "Checkbox",
+        "Date",
+        "Number",
+        "Password",
+        "Body"
+      ]
+    },
     "_isa": {
       "title": "Based on",
       "type": "string"
@@ -28,6 +43,10 @@
   "required": [
     "_id",
     "_blockType",
+    "label",
+    "value"
+  ],
+  "init": [
     "label",
     "value"
   ]

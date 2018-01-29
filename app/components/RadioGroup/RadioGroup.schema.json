@@ -23,7 +23,14 @@
     },
     "options": {
       "title": "Options",
-      "type": "array"
+      "type": "array",
+      "items": {
+        "type": "string",
+        "blockReference": true,
+        "accepts": [
+          "Option"
+        ]
+      }
     },
     "depends": {
       "title": "Depends",
