@@ -27,7 +27,8 @@
     },
     "required": {
       "title": "Required",
-      "type": "boolean"
+      "type": "boolean",
+      "default": true
     },
     "depends": {
       "title": "Show when",

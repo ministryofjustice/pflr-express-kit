@@ -54,6 +54,11 @@
         "Body"
       ]
     },
+    "required": {
+      "title": "Required",
+      "type": "boolean",
+      "default": true
+    },
     "error_required": {
       "title": "Required error message",
       "type": "string"
