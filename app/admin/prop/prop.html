@@ -232,7 +232,6 @@ jQuery('.objectPropContainer').each(function(){
   var $objectFields = jQuery('.objectFields', $container)
   Object.keys(objectJSON).forEach(function(key) {
     var value = objectJSON[key].toString()
-    console.log({value})
     var negate
     if (key.indexOf('!') === 0) {
       key = key.replace(/^!/, '')
