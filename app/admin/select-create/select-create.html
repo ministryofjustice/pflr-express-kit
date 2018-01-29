@@ -1,0 +1,21 @@
+{% extends 'admin/admin-base/admin-base.html' %}
+
+{% block page_title %}
+Select or create block
+{% endblock %}
+
+{% block admin_content %}
+{# <p><a class="link-back" href="/admin/blocks">Back to block types</a></p> #}
+<h1 class="{{ govukClassname('heading-large') }}">Select or create {{ _blockType }}</h1>
+
+<p><a href="/admin/select/{{ _blockType }}/{{ searchQuery }}">Select exisiting block</a></p>
+<p><a href="/admin/blocks/{{ _blockType }}/new{{ searchQuery }}">Create new block</a></p>
+{# <form>
+<ul class="{{ govukClassname('list-bullet') }}">
+{% for key in keys %}
+<li><button type="submit" value="{{ key }}">{{ key }}</button></li>
+{% endfor %}
+</ul>
+</form> #}
+
+{% endblock %}

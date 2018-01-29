@@ -35,11 +35,34 @@
     },
     "block": {
       "title": "Block",
-      "type": "string"
+      "type": "string",
+      "blockReference": true,
+      "accepts": [
+        "Text",
+        "RadioGroup",
+        "CheckboxGroup",
+        "Checkbox",
+        "Date",
+        "Number",
+        "Password"
+      ]
     },
     "blocks": {
       "title": "Blocks",
-      "type": "array"
+      "type": "array",
+      "items": {
+        "type": "string",
+        "blockReference": true,
+        "rejects": [
+          "DefaultString",
+          "ErrorRoute",
+          "Option",
+          "Service",
+          "String",
+          "Url",
+          "View"
+        ]
+      }
     },
     "extraBlocks": {
       "title": "Extra blocks",
@@ -48,11 +71,22 @@
     },
     "steps": {
       "title": "Steps",
-      "type": "array"
+      "type": "array",
+      "items": {
+        "type": "string",
+        "blockReference": true,
+        "accepts": [
+          "Route"
+        ]
+      }
     },
     "_isa": {
       "title": "Based on",
-      "type": "string"
+      "type": "string",
+      "blockReference": true,
+      "accepts": [
+        "View"
+      ]
     },
     "depends": {
       "title": "Depends",

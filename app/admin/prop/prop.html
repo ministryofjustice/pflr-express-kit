@@ -43,11 +43,19 @@
 {% set arrayObject = true %}
 {% endif %}
 {% for valueItem in value %}
-<div class="container propContainer">
+<div class="container propContainer{% if arrayObject %} objectPropContainer{% endif %}">
 {% if arrayType == 'object' %}
 {% set valueItem = jsonify(valueItem) %}
 {% endif %}
+{% if propSchema.items.type == 'object' %}
 {{ Block.Text('value', value=valueItem, multiline=arrayObject) }}
+{% else %}
+{% if propSchema.items.blockReference %}YYYYYY
+<span class="blockReferenceLink"><a href="/admin/block/{{ valueItem }}">{{valueItem }}</a></span>
+{% else %}{{ propSchema.items.type }}
+{{ Block.Text('value', value=valueItem, multiline=arrayObject) }}
+{% endif %}
+{% endif %}
 <div class="blockActions">
 {% if arrayType != 'object' %}
 <p class="blockLink"><a href="/admin/block/{{ valueItem }}" title="{{valueItem}} block">{}</a></p>
@@ -56,9 +64,14 @@
 </div>
 </div>
 {% endfor %}
-<div class="container propContainer">
+{% if propSchema.items.blockReference %}
+
+<p class="add--blockReferenceLink"><span class="blockReferenceLink"><a href="/admin/select/block/{{ block }}?blockRef={{ block }}&amp;propertyRef={{ prop }}">Add {{ prop }} item</a></span></p>
+{% else %}
+<div class="container propContainer{% if arrayObject %} objectPropContainer{% endif %}">
 {{ Block.Text('value', value='', multiline=arrayObject, placeholder='Add new item') }}
 </div>
+{% endif %}
 {% endif %}
 </div>
 
@@ -84,13 +97,245 @@
 {% endif %}
 </div>
 </form>
+
+{% if inheritedValue %}
+<p>Any value set will override the value inherited from <a href="/admin/block/{{ inheritedBlockReference }}">{{ inheritedBlockReference }}</a></p>
+<div role="note" aria-label="Information" class="value__inherited panel panel-border-wide info-notice TODO">
+{{ inheritedValue }}
+</div>
+{% endif %}
 {% endif %}
 
+
+
+{% endblock %}
+
+{% block stylesheet %}
+{{ super() }}
+<style>
+.propContainer {
+  border: solid 1px #000000;
+  margin-bottom: 1.5rem;
+}
+.propContainer .blockRemove {
+  left: auto;
+  right: 0.5rem;
+  top: 0;
+}
+.objectPropContainer {
+  border: solid 2px #000000;
+  min-height: 3.75rem;
+}
+.propContainer textarea {
+  margin: 0;
+}
+.propContainer .form-group {
+  margin: 0;
+}
+.blockReferenceLink {
+  display: inline-block;
+  padding: 0.75rem;
+}
+.propertyRow {
+  padding: 1rem;
+  border-bottom: solid 2px #000000;
+  margin: 0;
+  cursor: move;
+}
+.propertyRow input {
+  width: 25%;
+  margin-right: 1rem;
+  border: solid 2px #000000;
+  cursor: text;
+}
+.container.selected,
+.propertyRow.selected {
+  background-color: #ffcd99;
+}
+.addObjectField,
+.removePropertyRow {
+  color: #005ea5;
+  cursor: pointer;
+  font-size: 1.25rem;
+  margin: 0;
+}
+.addObjectField {
+  padding: 1rem 3rem 0.5rem 1rem;
+  display: inline-block;
+}
+.removePropertyRow:hover {
+  text-decoration: underline;
+}
+.propertyRow select {
+  width: 28rem;
+  margin-right: 1rem;
+}
+
+</style>
 {% endblock %}
 
 {% block body_end %}
 {{ super() }}
 <script>
+
+jQuery(document).on('mouseover', '.blockRemove', function () {
+  jQuery(this).closest('.container').addClass('selected')
+})
+jQuery(document).on('mouseout', '.blockRemove', function () {
+  jQuery(this).closest('.container').removeClass('selected')
+})
+
+jQuery(document).on('mouseover', '.removePropertyRow', function () {
+  jQuery(this).closest('.propertyRow').addClass('selected')
+})
+jQuery(document).on('mouseout', '.removePropertyRow', function () {
+  jQuery(this).closest('.propertyRow').removeClass('selected')
+})
+jQuery(document).on('click', '.removePropertyRow', function() {
+  jQuery(this).closest('.propertyRow').remove()
+})
+function outputPropertyRow (key, operator, value) {
+  var optionTypes = ['equals', 'starts', 'ends', 'contains', '<', '<=', '>', '>=']
+  var optionMap = {
+    'equals': 'is',
+    '!equals': 'is not',
+    'starts': 'starts with',
+    '!starts': 'does not start with',
+    'ends': 'ends with',
+    '!ends': 'does not end with',
+    'contains': 'contains',
+    '!contains': 'does not contain',
+    '<': 'is less than',
+    '!<': 'is not less than',
+    '<=': 'is less than or equal to',
+    '!<=': 'is not less than or equal to',
+    '>': 'is greater than',
+    '!>': 'is not greater than',
+    '>=': 'is greater than or equal to',
+    '!>=': 'is not greater than or equal to'
+  }
+  var options = ''
+  function outputOption(option) {
+    return '<option value="' + option + '"' + (option === operator ? ' selected="selected"' : '') + '>' + optionMap[option] + '</option>'
+  }
+  optionTypes.forEach(function(option){
+    options += outputOption(option) + outputOption('!' + option)
+  })
+  return '<p class="propertyRow container"><input type="text" name="key" value="' + key + '" class="form-control"> <select name="operator" class="form-control">' + options + '</select><input type="text" name="value" value="' + value + '" class="form-control"><span class="removePropertyRow">Remove</span></p>'
+}
+jQuery('.objectPropContainer').each(function(){ 
+  var $container = jQuery(this)
+  var $textarea = jQuery('textarea', $container)
+  var objectProp = $textarea.val()
+  var objectJSON = objectProp ? JSON.parse(objectProp) : {}
+  $container.append('<div class="objectFields"/>')
+  var $objectFields = jQuery('.objectFields', $container)
+  Object.keys(objectJSON).forEach(function(key) {
+    var value = objectJSON[key].toString()
+    console.log({value})
+    var negate
+    if (key.indexOf('!') === 0) {
+      key = key.replace(/^!/, '')
+      negate = true
+    }
+    var operator = 'equals'
+    if (value) {
+      if (value.match(/\.\*$/)) {
+        value = value.replace(/\.\*$/, '')
+        operator = 'ends'
+      }
+      if (value.match(/^\.\*/)) {
+        value = value.replace(/^\.\*/, '')
+        if (operator === 'ends') {
+          operator = 'contains'
+        } else {
+          operator = 'ends'
+        }
+      }
+      if (value.match(/^>\s*\d+$/)) {
+        value = value.replace(/^>\s*/, '')
+        operator = '>'
+      } else if (value.match(/^>=\s*\d+$/)) {
+        value = value.replace(/^>=\s*/, '')
+        operator = '>='
+      } else if (value.match(/^<\s*\d+$/)) {
+        value = value.replace(/^<\s*/, '')
+        operator = '<'
+      } else if (value.match(/^<=\s*\d+$/)) {
+        value = value.replace(/^<=\s*/, '')
+        operator = '<='
+      }
+    }
+    if (negate) {
+      operator = '!' + operator
+    }
+    $objectFields.append(outputPropertyRow(key, operator, value))
+  })
+  $objectFields.hover(function() {
+    window.canMove = false
+  }, function() {
+    window.canMove = true
+  })
+  $objectFields.append('<p class="addObjectField">Add property</p>')
+  $textarea.addClass('js-hidden')
+  jQuery('.addObjectField', $objectFields).on('click', function(){
+    jQuery(this).before(outputPropertyRow('', null, ''))
+  })
+})
+var objectFieldsContainer = document.querySelector('.objectFields')
+dragula([objectFieldsContainer], {
+  revertOnSpill: true,
+  ignoreInputTextSelection: true
+})
+jQuery('.admin-actions button').on('click', function(e) {
+  jQuery('.objectFields').each(function() {
+    var $objectFields = jQuery(this)
+    var $textarea = $objectFields.closest('.objectPropContainer').find('textarea')
+    var objectJson = {}
+    jQuery('.propertyRow', $objectFields).each(function() {
+      var $propertyRow = jQuery(this)
+      var key = jQuery('[name="key"]', $propertyRow).val()
+      var operator = jQuery('[name="operator"]', $propertyRow).val()
+      var value = jQuery('[name="value"]', $propertyRow).val()
+      if (operator.match(/^!/)) {
+        operator = operator.replace(/^!/, '')
+        if (key) {
+          key = '!' + key
+        }
+      }
+      if (operator === 'starts') {
+        value = value + '.*'
+      } else if (operator === 'ends') {
+        value = '.*' + value
+      } else if (operator === 'contains') {
+        value = '.*' + value + '.*'
+      } else if (operator === '<') {
+        value = '<' + value
+      } else if (operator === '<=') {
+        value = '<=' + value
+      } else if (operator === '>') {
+        value = '>' + value
+      } else if (operator === '>=') {
+        value = '>=' + value
+      }
+      if (value.match(/^(true|false)$/)) {
+        value = (value === 'true')
+      }
+      var testNumber = Number(value)
+      // if (!isNaN(testNumber)) {
+      //  value = testNumber
+      // }
+      if (key) {
+        objectJson[key] = value
+      }
+    })
+    $textarea.val(JSON.stringify(objectJson, null, 2))
+    $textarea.removeClass('js-hidden')
+    $objectFields.remove()
+    // e.preventDefault()
+    // e.stopPropagation()
+  })
+})
 if (window !== window.parent) {
   jQuery('.admin-actions button').on('click', function(e) {
     e.preventDefault()

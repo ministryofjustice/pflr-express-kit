@@ -105,10 +105,15 @@ setInterval(function () {
     autosize.update($textareas)
   }, 100)
 
+window.canMove = true
 var itemContainer = document.querySelector('.arrayProp')
 dragula([itemContainer], {
   revertOnSpill: true,
-  ignoreInputTextSelection: true
+  ignoreInputTextSelection: true,
+  allowNestedContainers: true,
+  moves: function() {
+    return window.canMove
+  }
 })
 
 jQuery('.blockRemove span').on('click', function() {
@@ -116,6 +121,7 @@ jQuery('.blockRemove span').on('click', function() {
   jQuery(this).closest('.propContainer').remove()
   $form.submit()
 })
+
 </script>
 <style type="text/css">
 h1 small {

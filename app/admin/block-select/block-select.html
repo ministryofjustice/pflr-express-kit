@@ -10,7 +10,7 @@ Choose block type - Prototype
 <ul class="{{ govukClassname('list-bullet') }}">
 {% for _blockType in blockTypes %}
 {% if _blockType %}
-<li><a href="/admin/blocks/{{ _blockType }}/new{{ searchQuery }}">{{ _blockType }}</a></li>
+<li><a href="/admin/select-create/{{ _blockType }}/{{ searchQuery }}">{{ _blockType }}</a></li>
 {% endif %}
 {% endfor %}
 </ul>

@@ -25,24 +25,75 @@
       "title": "Multiline",
       "type": "boolean"
     },
+    "required": {
+      "title": "Required",
+      "type": "boolean"
+    },
+    "error_required": {
+      "title": "Required error message",
+      "type": "string"
+    },
+    "error-header_required": {
+      "title": "Required error message for header",
+      "type": "string"
+    },
     "minLength": {
       "title": "Minimum length",
       "type": "number",
       "minimum": 0
     },
+    "error_minLength": {
+      "title": "Minimum length error message",
+      "type": "string"
+    },
+    "error-header_minLength": {
+      "title": "Minimum length error message for header",
+      "type": "string"
+    },
     "maxLength": {
       "title": "Maximum length",
       "type": "number"
     },
-    "required": {
-      "title": "Required",
-      "type": "boolean"
+    "error_maxLength": {
+      "title": "Maximum length error message",
+      "type": "string"
+    },
+    "error-header_maxLength": {
+      "title": "Maximum length error message for header",
+      "type": "string"
+    },
+    "pattern": {
+      "title": "Pattern to match string against",
+      "type": "string"
+    },
+    "error_pattern": {
+      "title": "Pattern error message",
+      "type": "string"
+    },
+    "error-header_pattern": {
+      "title": "Pattern error message for header",
+      "type": "string"
     },
     "_isa": {
       "title": "Based on",
       "type": "string"
     }
   },
+  "validationProperties": [
+    "minLength",
+    "maxLength",
+    "pattern"
+  ],
+  "errorProperties": [
+    "error_required",
+    "error-header_required",
+    "error_minLength",
+    "error-header_minLength",
+    "error_maxLength",
+    "error-header_maxLength",
+    "error_pattern",
+    "error-header_pattern"
+  ],
   "required": [
     "_id",
     "_blockType",

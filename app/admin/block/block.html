@@ -71,8 +71,8 @@ Create new {{ _blockType }}
  {% endif %}
  <div class="hidden">
 {{ Block.Hidden('init', value=true) }}
- {{ Block.Hidden('singleblock', value=req.query.singleblock) }}
-{{ Block.Hidden('steps', value=req.query.steps) }}
+ {{ Block.Hidden('blockRef', value=req.query.blockRef) }}
+{{ Block.Hidden('propertyRef', value=req.query.propertyRef) }}
 {{ Block.Text('block', value=blockJSON, multiline=true, rows=1) }}
  </div>
  <div class="admin-actions">
@@ -81,11 +81,11 @@ Create new {{ _blockType }}
 </form>
 {% else %}
 <div class="properties--section">
-{% set propsLabel = {other: 'Other properties', additional: 'Additional properties', advanced: 'Advanced properties', meta: 'Notes etc'} %}
+{% set propsLabel = {other: 'Other properties', additional: 'Additional properties', validation: 'Validation', error: 'Error messages', advanced: 'Advanced properties', meta: 'Notes etc'} %}
 {% if init %}
-{% set propRefs = { init: initProps, other: otherProps, advanced: advancedProps} %}
+{% set propRefs = { init: initProps, validation: validationProps, error: errorProps, other: otherProps, advanced: advancedProps} %}
 {% else %}
-{% set propRefs = { schema: schemaProps, advanced: advancedProps, additional: additionalProps, meta: metaProps} %}
+{% set propRefs = { schema: schemaProps, validation: validationProps, error: errorProps, advanced: advancedProps, additional: additionalProps, meta: metaProps} %}
 {% endif %}
 {% for propRef, propRefValue in propRefs %}
 {% if propRefValue %}
@@ -111,16 +111,17 @@ Create new {{ _blockType }}
 {% set propTitle = prop %}
 {% if schemaProperties[prop] %}
 {% set blockPropType = schemaProperties[prop].type %}
+{% set blockPropBlockReference = schemaProperties[prop].blockReference %}
 {% set propTitle = schemaProperties[prop].title %}
 {% endif %}
 {% set propBlockRef = '' %}
 {% if blockPropType == 'string' %}
 {% set propBlockRef = getBlockProp(blockProp, '_id') %}
 {% endif %}
-<li class="blockProp">{% if prop != 'xdepends' %}<a href="/admin/block/{{ block }}/{{ prop }}" class="edit-in-place">{% endif %}{{ propTitle }}{% if not requiredProps[prop] %} <small class="optional">(optional)</small>{% endif %}{% if prop != 'xdepends' %}</a>{% endif %}
-{% if blockPropType == 'string' %}
-{# {{ Block.Text(prop, value=blockProp)}} #}
-{% endif %}
+<li class="blockProp"><a href="{% if blockPropBlockReference %}/admin/select/block/{{ block }}?blockRef={{block}}&amp;propertyRef={{ prop }}{% else %}/admin/block/{{ block }}/{{ prop }}{% endif %}" class="edit-in-place">{{ propTitle }}</a>{% if not requiredProps[prop] %} <small class="optional">(optional)</small>{% endif %}
+{# {% if blockPropType == 'string' %}
+{{ Block.Text(prop, value=blockProp)}}
+{% endif %} #}
 <small class="blockProp__value">
 {% if prop == 'depends' %}
 {{ blockProp | json | replace('[{"', '')  | replace('}]', '') | replace('":', ':') }}
@@ -131,7 +132,7 @@ Create new {{ _blockType }}
 {% if propBlockRef %}</a>{% endif %}
 {% endif %}
 </small>
-{% if prop == 'block' %}<a href="/admin/select/block/{{ block }}?singleblock={{block}}" target="new-block" class="edit-in-place">Add new block</a>{% endif %}
+{# {% if prop == 'block' %}<a href="/admin/select/block/{{ block }}?blockRef={{block}}&amp;propertyRef=block" target="new-block" class="edit-in-place">Add new block</a>{% endif %} #}
 </li>
 {% endfor %}
 </ul>
@@ -181,7 +182,7 @@ Create new {{ _blockType }}
     <button name="action" value="clone" class="{{ govukClassname('button') }}">Clone block</button>
     </div>
   </details>
-  <button name="action" value="delete" class="{{ govukClassname('button') }} button--delete button--destructive"{% if blockUsed %} disabled="disabled"{% endif %}>Delete {{ block }}</button>
+  <button name="action" value="delete" class="{{ govukClassname('button') }} button--delete button--destructive"{% if blockUsed %} disabled="disabled" title="This block is used by another block cannot be deleted"{% endif %}>Delete {{ block }}</button>
   </div>
 
 </form>
