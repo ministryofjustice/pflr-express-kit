@@ -29,6 +29,13 @@
       "title": "Required",
       "type": "boolean"
     },
+    "requiredWhen": {
+      "title": "Required when",
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
     "error_required": {
       "title": "Required error message",
       "type": "string"

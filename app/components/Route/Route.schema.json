@@ -89,11 +89,15 @@
       ]
     },
     "depends": {
-      "title": "Depends",
+      "title": "Show when",
       "type": "array",
       "items": {
         "type": "object"
       }
+    },
+    "redirectConditions": {
+      "title": "Custom redirect conditions",
+      "type": "object"
     },
     "template": {
       "title": "Template",

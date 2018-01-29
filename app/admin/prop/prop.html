@@ -11,7 +11,8 @@
 {# <p><a class="link-back" href="/admin/blocks/{{ _blockType }}">Back to {{ _blockType }} blocks</a></p> #}
 <p class="edit-link-back"><a class="link-back" href="/admin/block/{{ block }}">Back to <strong>{{ block }}</strong></a></p>
 
-<h1 class="{{ govukClassname('heading-large') }}"><a class="header-link-back" href="/admin/block/{{ block }}">{{ block }}</a>{% if prop %}.{{ prop }}{% endif %}</h1>
+<p class="blockName"><a class="header-link-back" href="/admin/block/{{ block }}">{{ block }}</a></p>
+<h1 class="{{ govukClassname('heading-large') }}">{% if propSchema.title %}{{ propSchema.title }}{% else %}{{ prop }}{% endif %}</h1>
 
 {% if doesNotExist %}
 <p>{{ block }} doesn’t exist yet</p>
@@ -50,9 +51,9 @@
 {% if propSchema.items.type == 'object' %}
 {{ Block.Text('value', value=valueItem, multiline=arrayObject) }}
 {% else %}
-{% if propSchema.items.blockReference %}YYYYYY
+{% if propSchema.items.blockReference %}
 <span class="blockReferenceLink"><a href="/admin/block/{{ valueItem }}">{{valueItem }}</a></span>
-{% else %}{{ propSchema.items.type }}
+{% else %}
 {{ Block.Text('value', value=valueItem, multiline=arrayObject) }}
 {% endif %}
 {% endif %}
@@ -60,7 +61,7 @@
 {% if arrayType != 'object' %}
 <p class="blockLink"><a href="/admin/block/{{ valueItem }}" title="{{valueItem}} block">{}</a></p>
 {% endif %}
-<p class="blockRemove"><span title="Remove {{valueItem}}">Remove</span></p>{# ⌫ #}
+<p class="blockRemove"><span title="Remove {{valueItem}}">Remove{% if arrayType == 'object' %} rule{% endif %}</span></p>{# ⌫ #}
 </div>
 </div>
 {% endfor %}
@@ -90,6 +91,13 @@
 <input type="hidden" name="propType" value="{{ propType }}">
 {% endif %}
 
+{% if prop == 'depends' %}
+<div role="note" aria-label="Information" class="depends_explanation panel panel-border-wide info-notice">
+<p>The runtime value of ‘{{ propSchema.title}}’ property will be true if any of its rules evaluate to true.</p>
+<p>A rule evaluates to true if all of the conditions in it are true.</p>
+</div>
+{% endif %}
+
 <div class="admin-actions">
 <button class="{{ govukClassname('button') }}">{% if noValue %}Add{% else %}Save{% endif %} {{ prop }}</button>
 {% if not noValue %}
@@ -100,7 +108,7 @@
 
 {% if inheritedValue %}
 <p>Any value set will override the value inherited from <a href="/admin/block/{{ inheritedBlockReference }}">{{ inheritedBlockReference }}</a></p>
-<div role="note" aria-label="Information" class="value__inherited panel panel-border-wide info-notice TODO">
+<div role="note" aria-label="Information" class="value__inherited panel panel-border-wide info-notice">
 {{ inheritedValue }}
 </div>
 {% endif %}
@@ -113,18 +121,28 @@
 {% block stylesheet %}
 {{ super() }}
 <style>
+.blockName + h1.gv-u-heading-xlarge {
+  margin-top: -1.75rem;
+}
 .propContainer {
   border: solid 1px #000000;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 .propContainer .blockRemove {
   left: auto;
-  right: 0.5rem;
-  top: 0;
+  right: 0;
+  top: -2.75rem;
 }
 .objectPropContainer {
   border: solid 2px #000000;
   min-height: 3.75rem;
+}
+.objectPropContainer + .objectPropContainer .form-group::before {
+  content: 'or';
+  position: absolute;
+  top: -2rem;
+  font-size: 1.25rem;
+  left: 0;
 }
 .propContainer textarea {
   margin: 0;
@@ -221,7 +239,7 @@ function outputPropertyRow (key, operator, value) {
   optionTypes.forEach(function(option){
     options += outputOption(option) + outputOption('!' + option)
   })
-  return '<p class="propertyRow container"><input type="text" name="key" value="' + key + '" class="form-control"> <select name="operator" class="form-control">' + options + '</select><input type="text" name="value" value="' + value + '" class="form-control"><span class="removePropertyRow">Remove</span></p>'
+  return '<p class="propertyRow container"><input type="text" name="key" value="' + key + '" class="form-control"> <select name="operator" class="form-control">' + options + '</select><input type="text" name="value" value="' + value + '" class="form-control"><span class="removePropertyRow">Remove condition</span></p>'
 }
 jQuery('.objectPropContainer').each(function(){ 
   var $container = jQuery(this)
@@ -275,7 +293,7 @@ jQuery('.objectPropContainer').each(function(){
   }, function() {
     window.canMove = true
   })
-  $objectFields.append('<p class="addObjectField">Add property</p>')
+  $objectFields.append('<p class="addObjectField">Add condition</p>')
   $textarea.addClass('js-hidden')
   jQuery('.addObjectField', $objectFields).on('click', function(){
     jQuery(this).before(outputPropertyRow('', null, ''))
