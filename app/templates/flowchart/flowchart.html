@@ -431,7 +431,7 @@ a.block-edit {
 .route-block::before {
   content: '';
   position: absolute;
-  left: 0;
+  left: -4px;;
   top: 5rem;
   width: 10rem;
   border: solid 0.25rem #000000;
@@ -462,11 +462,12 @@ a.block-edit {
   position: absolute;
   top: -15rem;
   left: 20rem;
-  right: -5rem;
+  right: -4.925rem; /* 5rem */
   height: 17rem;
   border: solid 0.25rem #000000;
   border-radius: 4rem 4rem 0 0;
   border-bottom: none;
+  box-sing: border-box;
 }
 
 .route-depends .route-depends::after {
@@ -549,6 +550,20 @@ a.block-edit {
   border-left: 1rem solid #000000;
 }
 
+.depend-list a.block-edit {
+  position: absolute;
+  top: 2.75rem;
+  left: -1rem;
+  z-index: 100000;
+}
+
+span.no-depends {
+  position: absolute;
+  left: 9rem;
+  top: 4rem;
+  z-index: 100000;
+}
+
 .route:last-child {
   Xmargin-right: 0;
 }
@@ -571,7 +586,6 @@ a.block-edit {
   position: absolute;
   right: 0;
   top: -3rem;
-  margin-right: -1rem;
   z-index: 100;
   cursor: pointer;
   text-decoration: underline;
@@ -713,6 +727,8 @@ Wizard flow - Prototype
 <span class="depends__no">No</span>
 {{ matchProps(depends, type='depend', dataName=route+'/depends') }}
 {% endif %}
+{% else %}
+<span class="no-depends" data-block-name="{{route}}/depends" title="Add Show when"></span>
 {% endif %}
 </div>
 <div class="route">
