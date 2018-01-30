@@ -31,7 +31,9 @@
 {% endif %}
 {% set prefixedName = name %}
 {% if route._prefix %}{% set prefixedName = route._prefix + prefixedName %}{% endif %}
+{% if not getBlockProp(name, 'visuallyhidden') %}
 {{ BlockHeading(name, heading=heading) }}
+{% endif %}
 {% if name %}
 {% set blocks = getBlockProp(name, 'blocks') %}
 {% endif %}
