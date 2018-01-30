@@ -118,7 +118,7 @@ Create new {{ _blockType }}
 {% if blockPropType == 'string' %}
 {% set propBlockRef = getBlockProp(blockProp, '_id') %}
 {% endif %}
-<li class="blockProp"><a href="{% if blockPropBlockReference %}/admin/select/block/{{ block }}?blockRef={{block}}&amp;propertyRef={{ prop }}{% else %}/admin/block/{{ block }}/{{ prop }}{% endif %}" class="edit-in-place">{{ propTitle }}</a>{% if not requiredProps[prop] %} <small class="optional">(optional)</small>{% endif %}
+<li class="blockProp"><a href="{% if blockPropBlockReference and not rawBlock[prop] %}/admin/select/block/{{ block }}?blockRef={{block}}&amp;propertyRef={{ prop }}{% else %}/admin/block/{{ block }}/{{ prop }}{% endif %}" class="edit-in-place">{{ propTitle }}</a>{% if not requiredProps[prop] %} <small class="optional">(optional)</small>{% endif %}
 {# {% if blockPropType == 'string' %}
 {{ Block.Text(prop, value=blockProp)}}
 {% endif %} #}

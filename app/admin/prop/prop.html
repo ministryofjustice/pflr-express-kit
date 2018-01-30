@@ -19,8 +19,13 @@
 <p><a href="/admin/block/{{ block }}">Create {{ block }}</a></p>
 {% else %}
 <form method="post">
-<div class="propType {{ propType }}Prop">
+<div class="propType {{ propType }}Prop{% if propSchema.blockReference %} propBlockReference{% endif %}">
 {% if propType == 'string' %}
+{% if propSchema.blockReference %}
+
+<p>{% if value %}<a href="/admin/block/{{ value }}">{{ value }}</a>{% else %}Not set{% endif %}</p>
+
+{% endif %}
 {{ Block.Text('value', value=value, multiline=multiline, rows=1) }}
 {% endif %}
 {% if propType == 'object' %}
@@ -100,7 +105,11 @@
 {% endif %}
 
 <div class="admin-actions">
+{% if not propSchema.blockReference %}
 <button class="{{ govukClassname('button') }}">{% if noValue %}Add{% else %}Save{% endif %} {{ prop }}</button>
+{% else %}
+<a class="button edit-in-place" href="/admin/select/block/{{ block }}?blockRef={{block}}&amp;propertyRef={{ prop }}">{% if value %}Change{% else %}Set{% endif %} {{ prop }}</a>
+{% endif %}
 {% if not noValue %}
 <button name="action" value="delete" class="{{ govukClassname('button') }} button--delete">Delete {{ prop }}</button>
 {% endif %}
@@ -151,6 +160,10 @@
 .propContainer .form-group {
   margin: 0;
 }
+.propBlockReference .form-group {
+  display: none;
+}
+
 .blockReferenceLink {
   display: inline-block;
   padding: 0.75rem;
