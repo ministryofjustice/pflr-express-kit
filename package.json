@@ -1,6 +1,6 @@
 {
   "name": "pflr-express-kit",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "main": "lib/server.js",
   "repository": {},
   "license": "MIT",
@@ -109,7 +109,7 @@
     "build:javascript": "bin/build-javascript.sh",
     "clean:build": "bin/clean-build.sh",
     "githooks": "git config core.hooksPath .githooks",
-    "githooksUnset": "git config --unset core.hooksPath",
+    "githooks:unset": "git config --unset core.hooksPath",
     "lint": "npm-run-all lint:data lint:stylesheets lint:templates lint:javascript:client lint:javascript:server",
     "lint:data": "bin/lint-data.js",
     "lint:javascript:client": "bin/lint-javascript-client.js",
