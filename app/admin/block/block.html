@@ -80,6 +80,13 @@ Create new {{ _blockType }}
  </div>
 </form>
 {% else %}
+
+{% if isa == 'view:single-question' %}
+<div role="note" aria-label="Information" class="page_explanation panel panel-border-wide info-notice">
+<p>This page will use its block’s label as its heading</p>
+</div>
+{% endif %}
+
 <div class="properties--section">
 {% set propsLabel = {other: 'Other properties', additional: 'Additional properties', validation: 'Validation', error: 'Error messages', advanced: 'Advanced properties', meta: 'Notes etc'} %}
 {% if init %}
@@ -250,6 +257,10 @@ p.route__next {
 .route__next::before {
   right: 0;
   content: '›';
+}
+
+.page_explanation {
+  margin: 2rem 0;
 }
 
 .properties--section {
