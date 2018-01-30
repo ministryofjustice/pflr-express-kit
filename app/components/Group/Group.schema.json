@@ -1,0 +1,83 @@
+{
+  "title": "Route",
+  "type": "object",
+  "properties": {
+    "_id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "_blockType": {
+      "title": "Type",
+      "type": "string",
+      "default": "Route",
+      "enum": ["Route"]
+    },
+    "heading": {
+      "title": "Heading",
+      "type": "string"
+    },
+    "lede": {
+      "title": "Lede",
+      "type": "string"
+    },
+    "body": {
+      "title": "Body",
+      "type": "string",
+      "multiline": true
+    },
+    "blocks": {
+      "title": "Blocks",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "blockReference": true,
+        "rejects": [
+          "DefaultString",
+          "ErrorRoute",
+          "Option",
+          "Service",
+          "String",
+          "Url",
+          "Route",
+          "View"
+        ]
+      }
+    },
+    "_isa": {
+      "title": "Based on",
+      "type": "string",
+      "blockReference": true,
+      "accepts": [
+        "View"
+      ]
+    },
+    "depends": {
+      "title": "Show when",
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "required": [
+    "_id",
+    "_blockType",
+    "blocks"
+  ],
+  "init": [
+    "body",
+    "blocks"
+  ],
+  "propsToDealWith": [
+    "multiple",
+    "multiple_heading",
+    "multiple_counter",
+    "multiple_counter_ref",
+    "multiple_index",
+    "multiple_min",
+    "multiple_max",
+    "multiple_autosuffix",
+    "multiple_add",
+    "multiple_delete"
+  ]
+}
