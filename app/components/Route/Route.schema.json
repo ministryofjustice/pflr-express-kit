@@ -67,7 +67,15 @@
     "extraBlocks": {
       "title": "Extra blocks",
       "description": "Blocks which appear after the primary button",
-      "type": "array"
+      "type": "array",
+      "items": {
+        "type": "string",
+        "blockReference": true,
+        "accepts": [
+          "Body",
+          "DisclosureText"
+        ]
+      }
     },
     "steps": {
       "title": "Steps",
