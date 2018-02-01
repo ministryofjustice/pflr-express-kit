@@ -187,6 +187,7 @@ div#content {
 }
 a.block-edit {
   margin-left: -35px;
+  z-index: 200000000;
 }
 
 /* @media print */
@@ -584,6 +585,10 @@ span.no-depends {
   color: #ffffff;
 }
 
+.route-inactive {
+  opacity: 0.25;
+}
+
 .step-exit::before {
     content: '';
     width: 9rem;
@@ -667,6 +672,7 @@ Wizard flow - Prototype
 {% endblock %}
 
 {% block content %}
+{{ req.query.section }}
 <h1>Flowchart</h1>
 <div class="flow-container">
 {{ renderRoute(route.wizard) }}
@@ -707,7 +713,8 @@ Wizard flow - Prototype
 {% if nextStep %}
 {% set nextDepends = nextStep.depends %}
 {% endif %}
-{% set depends = stepRoute.depends %}
+{% set depends = getBlockProp(stepId, 'depends') %}
+{# {% stepRoute.depends %} #}
 {% if not depends %}
 {% for block in stepRoute.blocks %}
   {% if not depends %}
@@ -730,7 +737,7 @@ Wizard flow - Prototype
 {% else %}
 {% set hasSteps = false %}
 {% endif %}
-<div class="route-block{% if depends %} route-depends{% endif %}{% if hasSteps %} route-has-steps{% endif %}{% if stepRoute._isa %} {{ stepRoute._isa | replace('view:', 'view__') }}{% if not stepRoute._form %} route-exit{% endif %}{% endif %}" data-name-route="{{route}}">
+<div class="route-block{% if getBlockProp(route, '_inactive') %} route-inactive{% endif %}{% if depends %} route-depends{% endif %}{% if hasSteps %} route-has-steps{% endif %}{% if stepRoute._isa %} {{ stepRoute._isa | replace('view:', 'view__') }}{% if not stepRoute._form %} route-exit{% endif %}{% endif %}" data-name-route="{{route}}">
 <div class="gutter{% if nextDepends %}{% if depends == nextDepends %} gutter-nextdepends{% endif %}{% endif %}{% if depends %}{% if not nextDepends %} gutter-nonextdepends{% endif %}{% if depends == previousDepends %} gutter-previousdepends{% endif %} gutter-depends{% endif %}" id="gutter-{{ stepRoute._id }}">
 <span class="button gutter--hide" data-action="hide">Hide</span>
 {% if depends %}

@@ -30,7 +30,7 @@ Create new {{ _blockType }}
 {# {% set routeUrl = getBlockProp(block, 'url') %} #}
 {% set routeUrl = getRouteUrl(block) %}
 {% if routeUrl %}
-<p class="route__links"><small>Route URL <a href="{{ routeUrl }}">{{ routeUrl }}</a> &nbsp;&nbsp;<a href="{% if routeUrl != '/' %}{{ routeUrl }}{% endif %}/edit">(edit view)</a></small></p>
+<p class="route__links"><small>Route URL <a href="{{ routeUrl }}">{{ routeUrl }}</a> &nbsp;&nbsp;&nbsp;<a href="{% if routeUrl != '/' %}{{ routeUrl }}{% endif %}/edit">Edit view</a> &nbsp;&nbsp;&nbsp;<a href="{% if routeUrl != '/' %}{{ routeUrl }}{% endif %}/preview">Preview view</a></small></p>
 {% endif %}
 {% endif %}
 {% endif %}
@@ -130,12 +130,20 @@ Create new {{ _blockType }}
 {{ Block.Text(prop, value=blockProp)}}
 {% endif %} #}
 <small class="blockProp__value">
-{% if prop == 'depends' %}
-{{ blockProp | json | replace('[{"', '')  | replace('}]', '') | replace('":', ':') }}
-{% else %}{% if false and blockProp.trim %}{% set formatted = getFormattedBodyContent(block, prop) %}{% if formatted != blockProp %}{{ formatted  | truncate(120) }}{% endif %}{% endif %}
+{% if blockPropType == 'object' %}
+{{ blockProp | json }}
+{% else %}{% if false and blockProp.trim %}{% set formatted = getFormattedBodyContent(block, prop) %}{% if formatted != blockProp %}{{ formatted }}{% endif %}{% endif %}
 {% if propBlockRef %}<a href="/admin/block/{{ blockProp }}" class="edit-in-place">{% endif %}
-{% if blockProp %}{{ blockProp | json | replace(r/^"(.*)"$/, '$1') | truncate(120) }}{% else %}<em>
-{% set inheritedValue = getBlockProp(block, prop) %}{% if inheritedValue %}{{ inheritedValue | truncate(120) | safe }}{% else %}Not set{% endif %}</em>{% endif %}
+<div class="propDisplay">
+{% if blockProp %}{{ blockProp }}{% else %}
+<em>{% set inheritedValue = getBlockProp(block, prop) %}{% if inheritedValue %}{{ inheritedValue | safe }}{% else %}Not set{% endif %}</em>
+{% endif %}
+</div>
+
+{# 
+{% if inheritedValue %}{{ inheritedValue | truncate(120) | safe }}{% else %}Not set{% endif %} #}
+
+
 {% if propBlockRef %}</a>{% endif %}
 {% endif %}
 </small>
@@ -201,6 +209,22 @@ Create new {{ _blockType }}
 {% block stylesheet %}
 {{ super() }}
 <style>
+.propDisplay {
+  {# position: relative;
+  max-height: 3rem; #}
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+{# .propDisplay::after {
+  content: '…';
+  position: absolute;
+  right: 0;
+  top: 2rem;
+} #}
+
 #content .blockType {
   margin: -2rem 0 0 0;
 }

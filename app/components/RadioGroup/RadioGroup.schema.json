@@ -54,6 +54,10 @@
         "Body"
       ]
     },
+    "inline": {
+      "title": "Inline",
+      "type": "boolean"
+    },
     "required": {
       "title": "Required",
       "type": "boolean",
