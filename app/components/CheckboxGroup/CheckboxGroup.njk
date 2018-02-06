@@ -16,6 +16,7 @@
 <div class="form-group{% if error %} error{% endif %}"{% if name %} id="{% if id %}{{ id }}{% else %}{{name}}{% endif %}" data-block-name="{{name}}"{% endif %}>
 {% call Fieldset(name, label=label, inline=inline, visually_hidden=visually_hidden) %}
   {% set or = getBlockProp(name, 'or') %}
+  {# <div class="fieldset-options"> #}
   {% for option_name in options %}
     {% set checked = false %}
     {% if option_name.value or option_name.label %}
@@ -52,6 +53,7 @@
     </div>
     {% endif %}
   {% endfor %}
+  {# </div> #}
 {% endcall %}
 </div>
 {% endmacro %}

@@ -7,13 +7,13 @@
 {% set labelExtra = getFormattedBody(name, 'label_extra') %}
 {% set hintExtra = getFormattedBody(name, 'hint_extra') %}
 {% set visually_hidden = getBlockProp(name, 'visuallyhidden') %}
-  <label for="{{ name }}">
+  <label data-block-prop="{{ name }}/label" for="{{ name }}">
     <span class="form-label-bold{% if visually_hidden %} visuallyhidden{% endif %}">{{ label | safe }}{% if optional %} (optional){% endif %}</span>
       {% if sublabel %}
       <span class="form-sublabel">{{ sublabel | safe }}</span>
       {% endif %}
     {% if hint %}
-      <span class="form-hint">
+      <span data-block-prop="{{ name }}/hint" class="form-hint">
         {{ hint | safe }}
       </span>
     {% endif %}

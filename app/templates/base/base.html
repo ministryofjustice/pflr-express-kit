@@ -110,6 +110,30 @@
   top: -1.5rem;
 }
 </style>
+<style>
+.fieldset-options {
+  Xbackground: wheat;
+}
+.multiple-choice {
+  Xbackground: pink;
+}
+.container.gu-transit {
+  opacity: 0.25;
+}
+.container.gu-mirror {
+  position: fixed;
+  Xbackground: red;
+}
+</style>
+<script>
+var optionsContainer = [].slice.call(document.querySelectorAll('.fieldset-options'))
+optionsContainer.forEach(container => {
+  dragula([container], {
+    revertOnSpill: true,
+    ignoreInputTextSelection: true
+  })
+})
+</script>
 {% endif %}
 <style>
 .frameElement {

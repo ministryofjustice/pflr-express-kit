@@ -786,7 +786,7 @@ Wizard flow - Prototype
 {% set stepUrlStub = stepUrlStub + '/{n}' %}
 {% endif %}
 {# {{ stepId }}, {{ skipMultiple }}, {{multipleIndex}} #}
-<p class="routeKey">{{stepId}} <small><a href="{{ stepUrl }}">{{ stepUrlStub }}</a> &nbsp;&nbsp;&nbsp;<a href="{% if stepUrl != '/' %}{{ stepUrl }}{% endif %}/edit">Edit view</a>
+<p class="routeKey">{{stepId}} <small><a href="{{ stepUrl }}">{{ stepUrlStub }}</a> &nbsp;&nbsp;&nbsp;<a href="{% if stepUrl != '/' %}{{ stepUrl }}{% endif %}/edit">Edit view</a> &nbsp;&nbsp;&nbsp;<a href="{% if stepUrl != '/' %}{{ stepUrl }}{% endif %}/preview">Preview</a>
 {% if multiple %}
 <span class="mutiple-route">Multiple route: min={{ stepRoute.multiple_min }}; max={{ stepRoute.multiple_max }}</span>
 {% endif %}

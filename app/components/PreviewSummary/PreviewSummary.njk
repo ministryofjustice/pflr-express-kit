@@ -1,0 +1,19 @@
+{% macro PreviewSummary(previewData) %}
+{% if previewData %}
+<div class="PreviewSummary" role="group" aria-labelledby="preview-summary-heading" tabindex="-1">
+
+<p class="{{ govukClassname('heading-small') }} PreviewSummary__heading" id="preview-summary-heading">
+{{ Block.String('PreviewSummary__heading') }} &nbsp;&nbsp;&nbsp;<a class="xbutton" title="Form will advance to the next page that can be displayed given input data" href="{{ previewData.nextUrl }}">(Exit)</a>
+</p>
+
+<div class="PreviewSummary__links">
+{% if previewData.previousUrl %}
+<p class="route__previous"><a href="{{ previewData.previousUrl }}{% if previewData.previousUrl != '/' %}/{% endif %}preview"><span class="route__direction">Previous page</span> Previous page in preview mode</a></p>
+{% endif %}
+{% if previewData.nextUrl %}
+<p class="route__next"><a href="{{ previewData.nextUrl }}/preview"><span class="route__direction">Next page</span> Next page in preview mode</a></p>
+{% endif %}
+</div>
+</div>
+{% endif %}
+{% endmacro %}

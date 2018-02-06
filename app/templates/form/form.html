@@ -10,7 +10,9 @@
 {{ Back(app) }}
 {% endblock %}
 
-{% block grid_content_header_pre %}{{ ErrorSummary(errors) }}{% endblock %}
+{% block grid_content_header_pre %}
+{{ ErrorSummary(errors) }}
+{% endblock %}
 {% block grid_content_body %}
 {# app.wizard.steps.count - {{ app.wizard.steps.count }}
 {% if app.wizard.steps.count > 1 and route.template != 'step-by-step' %}

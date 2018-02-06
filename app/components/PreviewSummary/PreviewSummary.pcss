@@ -1,0 +1,67 @@
+.PreviewSummary {
+  border: solid 0.25rem #000;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.PreviewSummary__heading {
+  font-size: 1rem;
+  margin-top: 0;
+}
+
+.PreviewSummary__links {
+  margin: 0;
+  width: 100%;
+  display: table;
+
+  & p {
+    float: left;
+    width: 50%;
+    position: relative;
+    margin: 0;
+  }
+
+  & a {
+    padding-left: 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  & p.route__next {
+    float: right;
+    text-align: right;
+  }
+
+  & .route__next a {
+    padding: 0 2rem 0 0;
+  }
+
+  & span {
+    position: absolute;
+    left: -9999px;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
+
+  & p::before {
+    color: #2b8cc4;
+    font-size: 4rem;
+    position: absolute;
+    top: -1.875rem;
+  }
+
+  & .route__previous::before {
+    left: 0;
+    content: '‹';
+  }
+
+  & .route__next {
+    float: right;
+  }
+
+  & .route__next::before {
+    right: 0;
+    content: '›';
+  }
+}

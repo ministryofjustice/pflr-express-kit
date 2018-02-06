@@ -24,7 +24,7 @@ Create new {{ _blockType }}
 <p class="blockType"><small>Block type <a href="/admin/blocks/{{ _blockType }}" title="All {{ _blockType }} blocks">{{ _blockType }}</a></small></p>
 {% set isa = getBlockProp(block, '_isa') %}
 {% if isa %}
-<p class="basedOn"><small>Based on <a href="/admin/block/{{ isa }}" title="{{ getBlockProp(previousRoute, ['heading', 'label']) }}">{{ isa }}</a></small></p>
+<p class="basedOn"><small>Based on <a href="/admin/block/{{ isa }}" title="{{ getBlockProp(isa, ['heading', 'label']) }}">{{ isa }}</a></small></p>
 {% endif %}
 {% if _blockType == 'Route' %}
 {# {% set routeUrl = getBlockProp(block, 'url') %} #}

@@ -7,6 +7,7 @@
 {% from 'components/FeedbackBanner/FeedbackBanner.njk' import FeedbackBanner with context %}
 {% from 'components/TopNavigation/TopNavigation.njk' import TopNavigation with context %}
 {% from 'components/PhaseBanner/PhaseBanner.njk' import PhaseBanner with context %}
+{% from 'components/PreviewSummary/PreviewSummary.njk' import PreviewSummary with context %}
 {% from 'components/SupportLinks/SupportLinks.njk' import SupportLinks with context %}
 
 {% block page_title %}{{ getFormattedBodyContent(route.id, ['title', 'heading']) | striptags }}{% if route.id != route.homepage %} - {{ getFormattedBodyContent(route.homepage, ['title', 'heading']) | striptags }}{% endif %}{% endblock %}
@@ -48,6 +49,7 @@
 {% if route.breadcrumbs %}
 {{ Breadcrumbs(route) }}
 {% endif %}
+{{ PreviewSummary(previewData) }}
 {% endblock %}
 
 {% block grid_content %}

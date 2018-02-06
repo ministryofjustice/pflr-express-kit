@@ -33,6 +33,7 @@
       {% endif %}
       {% if checkReveals(name, option.value) %}{% set hasOptionReveals = true %}{% endif %}
     {% endfor %} #}
+    {# <div class="fieldset-options"> #}
     {% for option_name in options %}
       {% if option_name.value %}
         {% set option = option_name %}
@@ -74,6 +75,7 @@
       </div>
       {{ SubBlock(option.subblock) }}
     {% endfor %}
+    {# </div> #}
     {# {% if getBlockProp(name, 'subblock') %}
     {% set closed = !checkRevealRequired(getBlockProp(name, 'subblock') %}
     checkNoDependency {{ getBlockProp(name, 'subblock') }}:{{ checkNoDependency(getBlockProp(name, 'subblock')) }}
