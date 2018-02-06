@@ -8,10 +8,10 @@
 
 <div class="PreviewSummary__links">
 {% if previewData.previousUrl %}
-<p class="route__previous"><a href="{{ previewData.previousUrl }}{% if previewData.previousUrl != '/' %}/{% endif %}preview"><span class="route__direction">Previous page</span> Previous page in preview mode</a></p>
+<p class="route__previous"><a title="Previous page in preview mode" href="{{ previewData.previousUrl }}{% if previewData.previousUrl != '/' %}/{% endif %}preview"><span class="route__direction">Previous page</span> {{ getFormattedBodyContent(previewData.previousRoute, 'heading') }}</a></p>
 {% endif %}
 {% if previewData.nextUrl %}
-<p class="route__next"><a href="{{ previewData.nextUrl }}/preview"><span class="route__direction">Next page</span> Next page in preview mode</a></p>
+<p class="route__next"><a href="{{ previewData.nextUrl }}/preview"><span class="route__direction">Next page</span> {{ getFormattedBodyContent(previewData.nextRoute, 'heading') }}</a></p>
 {% endif %}
 </div>
 </div>
