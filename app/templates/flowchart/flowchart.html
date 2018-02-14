@@ -802,7 +802,7 @@ hierarchy:<br>{{ stepRoute.hierarchy.join('<br>') | safe }}
 {{ route.flowchartOutput[stepId] | safe }}
 {% else %}
 {# update per-route id and vars #}
-{% set updateRouteFormatSink = updateRouteFormat(step) %}
+{% set updateRouteFormatSink = updateRouteFormat(stepId) %}
 
 <div class="route-header">{{ Block.PageHeader(stepId, start_page=stepRoute.start_page) }}</div>
 {{ Block.Body(stepId) }}
