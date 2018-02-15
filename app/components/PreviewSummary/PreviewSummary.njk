@@ -8,13 +8,9 @@
 
 <div class="PreviewSummary__links">
 {% if previewData.previousUrl %}
-{% set previousBlockVars = getBlockVars(previewData.previousRoute) %}
-{% set blockVarsSink = updateFormat(previousBlockVars) %}
 <p class="route__previous"><a title="Previous page in preview mode" href="{{ previewData.previousUrl }}{% if previewData.previousUrl != '/' %}/{% endif %}preview"><span class="route__direction">Previous page</span> {{ getFormattedBodyContent(previewData.previousRoute, 'heading') | safe }}</a></p>
 {% endif %}
 {% if previewData.nextUrl %}
-{% set nextBlockVars = getBlockVars(previewData.nextRoute) %}
-{% set blockVarsSink = updateFormat(nextBlockVars) %}
 <p class="route__next"><a href="{{ previewData.nextUrl }}/preview"><span class="route__direction">Next page</span> {{ getFormattedBodyContent(previewData.nextRoute, 'heading') | safe }}</a></p>
 {% endif %}
 </div>
