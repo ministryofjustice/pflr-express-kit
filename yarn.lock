@@ -423,9 +423,9 @@
     "@types/unist" "*"
     "@types/vfile-message" "*"
 
-"HTML_CodeSniffer@https://github.com/squizlabs/HTML_CodeSniffer#master":
+"HTML_CodeSniffer@git+https://github.com/squizlabs/HTML_CodeSniffer.git#master":
   version "2.3.0"
-  resolved "https://github.com/squizlabs/HTML_CodeSniffer#a604a66b3d27d02d42f23190fd2b6afb9e93e5d6"
+  resolved "git+https://github.com/squizlabs/HTML_CodeSniffer.git#a604a66b3d27d02d42f23190fd2b6afb9e93e5d6"
 
 JSV@^4.0.x:
   version "4.0.2"
