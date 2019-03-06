@@ -15,4 +15,4 @@ if [ "$SYMLINKPATH" != "" ]
 fi
 CONFIGDIR=$(echo $SCRIPTPATH | sed 's/bin\/build-css.sh//')
 
-node_modules/.bin/postcss -c ${CONFIGDIR}postcss.config.js app/css/*.css --dir public/stylesheets $@
+node_modules/.bin/postcss --config ${CONFIGDIR}postcss.config.js app/css/*.css --dir public/stylesheets $@
