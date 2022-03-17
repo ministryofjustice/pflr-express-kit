@@ -27,7 +27,7 @@
     "govuk_frontend_alpha": "https://github.com/alphagov/govuk_frontend_alpha/releases/download/0.0.1-alpha/govuk_frontend_alpha-0.0.1-npm.tgz",
     "jsonlint": "^1.6.2",
     "jsonschema": "^1.1.1",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.21",
     "markdown": "^0.5.0",
     "markdown-it": "^8.3.1",
     "markdown-it-deflist": "^2.0.2",
