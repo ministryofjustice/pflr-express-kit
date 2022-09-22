@@ -423,9 +423,10 @@
     "@types/unist" "*"
     "@types/vfile-message" "*"
 
-"HTML_CodeSniffer@git+https://github.com/squizlabs/HTML_CodeSniffer.git#master":
-  version "2.3.0"
-  resolved "git+https://github.com/squizlabs/HTML_CodeSniffer.git#a604a66b3d27d02d42f23190fd2b6afb9e93e5d6"
+"HTML_CodeSniffer@https://github.com/squizlabs/HTML_CodeSniffer#master":
+  version "2.5.1"
+  uid c187a4b42716b26cd913a18c2205cd873aaffddf
+  resolved "https://github.com/squizlabs/HTML_CodeSniffer#c187a4b42716b26cd913a18c2205cd873aaffddf"
 
 JSV@^4.0.x:
   version "4.0.2"
@@ -6931,7 +6932,7 @@ postcss-value-parser@^3.0.2, postcss-value-parser@^3.2.3, postcss-value-parser@^
   resolved "https://registry.yarnpkg.com/postcss-value-parser/-/postcss-value-parser-3.3.1.tgz#9ff822547e2893213cf1c30efa51ac5fd1ba8281"
   integrity sha512-pISE66AbVkp4fDQ7VHBwRNXzAAKJjw4Vw7nWI/+Q3vuly7SNfgYXvm6i5IgFylHGK5sP/xHAbB7N49OS4gWNyQ==
 
-postcss@^5.0.0, postcss@^5.0.14, postcss@^5.0.16, postcss@^5.0.19, postcss@^5.0.2, postcss@^5.0.21, postcss@^5.0.3, postcss@^5.0.4, postcss@^5.1.1, postcss@^5.2.0, postcss@^5.2.12, postcss@^5.2.16, postcss@^5.2.17:
+postcss@^5.0.0, postcss@^5.0.14, postcss@^5.0.16, postcss@^5.0.19, postcss@^5.0.2, postcss@^5.0.21, postcss@^5.0.3, postcss@^5.0.4, postcss@^5.1.1, postcss@^5.2.0, postcss@^5.2.12, postcss@^5.2.16:
   version "5.2.18"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-5.2.18.tgz#badfa1497d46244f6390f58b319830d9107853c5"
   integrity sha512-zrUjRRe1bpXKsX1qAJNJjqZViErVuyEkMTRrwu4ud4sbTtIBRmtaYDrHmcGgmrbsW3MHfmtIf+vJumgQn+PrXg==
@@ -6950,10 +6951,10 @@ postcss@^6.0.1:
     source-map "^0.6.1"
     supports-color "^5.4.0"
 
-postcss@^7.0.0, postcss@^7.0.1, postcss@^7.0.13, postcss@^7.0.14, postcss@^7.0.2, postcss@^7.0.7:
-  version "7.0.14"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-7.0.14.tgz#4527ed6b1ca0d82c53ce5ec1a2041c2346bbd6e5"
-  integrity sha512-NsbD6XUUMZvBxtQAJuWDJeeC4QFsmWsfozWxCJPWf3M55K9iu2iMDaKqyoOdTJ1R4usBXuxlVFAIo8rZPQD4Bg==
+postcss@^7.0.0, postcss@^7.0.1, postcss@^7.0.13, postcss@^7.0.14, postcss@^7.0.2, postcss@^7.0.36, postcss@^7.0.7:
+  version "7.0.36"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-7.0.36.tgz#056f8cffa939662a8f5905950c07d5285644dfcb"
+  integrity sha512-BebJSIUMwJHRH0HAQoxN4u1CN86glsrwsW0q7T+/m44eXOUAxSNdHRkNZPYz5vVUbg17hFgOQDE7fZk7li3pZw==
   dependencies:
     chalk "^2.4.2"
     source-map "^0.6.1"

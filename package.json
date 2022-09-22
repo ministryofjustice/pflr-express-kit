@@ -45,7 +45,7 @@
     "nunjucks": "^3.0.0",
     "pa11y-ci": "^1.2.0",
     "phantomjs-prebuilt": "^2.1.14",
-    "postcss": "^5.2.17",
+    "postcss": "^7.0.36",
     "postcss-cli": "^6.1.2",
     "postcss-cssnext": "^2.10.0",
     "postcss-discard-comments": "^2.0.4",
