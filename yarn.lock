@@ -423,9 +423,10 @@
     "@types/unist" "*"
     "@types/vfile-message" "*"
 
-"HTML_CodeSniffer@git+https://github.com/squizlabs/HTML_CodeSniffer.git#master":
-  version "2.3.0"
-  resolved "git+https://github.com/squizlabs/HTML_CodeSniffer.git#a604a66b3d27d02d42f23190fd2b6afb9e93e5d6"
+"HTML_CodeSniffer@https://github.com/squizlabs/HTML_CodeSniffer#master":
+  version "2.5.1"
+  uid c187a4b42716b26cd913a18c2205cd873aaffddf
+  resolved "https://github.com/squizlabs/HTML_CodeSniffer#c187a4b42716b26cd913a18c2205cd873aaffddf"
 
 JSV@^4.0.x:
   version "4.0.2"
@@ -8673,9 +8674,9 @@ trim-newlines@^2.0.0:
   integrity sha1-tAPQuRvlDDMd/EuC7s6yLD3hbSA=
 
 trim-off-newlines@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/trim-off-newlines/-/trim-off-newlines-1.0.1.tgz#9f9ba9d9efa8764c387698bcbfeb2c848f11adb3"
-  integrity sha1-n5up2e+odkw4dpi8v+sshI8RrbM=
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/trim-off-newlines/-/trim-off-newlines-1.0.3.tgz#8df24847fcb821b0ab27d58ab6efec9f2fe961a1"
+  integrity sha512-kh6Tu6GbeSNMGfrrZh6Bb/4ZEHV1QlB4xNDBeog8Y9/QwFlKTRyWvY3Fs9tRDAMZliVUwieMgEdIeL/FtqjkJg==
 
 trim-right@^1.0.1:
   version "1.0.1"
