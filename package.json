@@ -42,7 +42,7 @@
     "morgan": "^1.8.1",
     "multi-tape": "^1.1.1",
     "npm-run-all": "^4.0.2",
-    "nunjucks": "^3.0.0",
+    "nunjucks": "^3.2.4",
     "pa11y-ci": "^1.2.0",
     "phantomjs-prebuilt": "^2.1.14",
     "postcss": "^5.2.17",
