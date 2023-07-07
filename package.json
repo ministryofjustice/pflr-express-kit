@@ -60,7 +60,7 @@
     "shortid": "^2.2.8",
     "sinon": "^7.2.7",
     "sitemap-generator": "^6.0.0",
-    "stylelint": "^9.10.1",
+    "stylelint": "^15.10.1",
     "stylelint-config-standard": "^16.0.0",
     "tap-spec": "^5.0.0",
     "tape": "^4.7.0",
